@@ -1,3 +1,9 @@
+*
+{
+    margin: 0;
+    padding: 0;   
+}
+
 body{
     background-color: #454545;
     color: white;
@@ -7,6 +13,7 @@ body{
 #container{
     margin-left: auto;
     margin-right: auto;
+    margin-top: 10%;
 
 }
 
@@ -15,10 +22,12 @@ body{
     margin: 2%;
     font-size: 60px;
     color: deeppink;
+    transition-duration: 0.5s;
 }
 
 #logo:hover{
     color: limegreen;
+    
 }
 
 .login-box label{
@@ -35,6 +44,7 @@ body{
 
 .login-box{
     padding: 20px;
+    margin-top: 10%;
 
 }
 
