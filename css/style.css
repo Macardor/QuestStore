@@ -1,0 +1,45 @@
+body{
+    background-color: #454545;
+    color: white;
+    font-family: 'Black Ops One', cursive;
+}
+
+#container{
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+#logo{
+    text-align: center;
+    margin: 2%;
+    font-size: 60px;
+    color: deeppink;
+}
+
+#logo:hover{
+    color: limegreen;
+}
+
+.login-box label{
+    display:block;
+}
+
+.login-box{
+    text-align: center;
+    padding: 20px;
+    border: deeppink dotted;
+    margin-left: 35%;
+    margin-right: 35%;
+}
+
+.login-box{
+    padding: 20px;
+
+}
+
+.login-box .input-box{
+    padding-bottom:15px;
+    margin-bottom: 15px;
+}
+
