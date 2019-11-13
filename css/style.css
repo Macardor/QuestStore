@@ -22,11 +22,17 @@ body{
     margin: 2%;
     font-size: 60px;
     color: deeppink;
-    transition-duration: 0.5s;
+    transition-duration: 0.3s;
+    -webkit-animation: colorchange 2s infinite alternate;
 }
 
-#logo:hover{
-    color: limegreen;
+@-webkit-keyframes colorchange {
+    0% {
+      color: deeppink;
+    }
+    100% {
+      color: limegreen;
+    }
     
 }
 
@@ -37,7 +43,7 @@ body{
 .login-box{
     text-align: center;
     padding: 20px;
-    border: deeppink dotted;
+    background-color: deeppink;
     margin-left: 35%;
     margin-right: 35%;
 }
@@ -45,11 +51,12 @@ body{
 .login-box{
     padding: 20px;
     margin-top: 10%;
-
+    border-radius: 25px;
+    background-color: rgb(255, 20, 145);
 }
 
 .login-box .input-box{
     padding-bottom:15px;
     margin-bottom: 15px;
+    
 }
-
