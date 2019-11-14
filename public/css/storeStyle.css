@@ -1,27 +1,167 @@
-#card-deck
+*
 {
-    margin: 200px;
+    margin:0;
+    padding: 0;
+}
+body
+{
+    background-image: url("../templates/background-image.jpg");
+    font-family: 'Quantico', sans-serif;
 }
 
-img
+#background
 {
-    width: 300px;
-    height: 400px;
-}
-
-#card-deck
-{
-    display: inline;
+    background-image: url("../templates/background-image.jpg");
     position: fixed;
-    margin: 30px;
+    z-index: -1;
+}
 
+
+#menu
+{
+    font-weight: 700;
+    font-size: 12px;
+    display: inline;
+}
+.nav
+{
+    white-space: nowrap;
+    background-color: rgba(16, 16, 33, 0.64);
+    height: 8.5%;
+    width: 100%;
+    position: fixed;
+    display: inline;
+    text-align: left;
+    font-size: 25px;
+    color: whitesmoke;
+    text-decoration: none;
+}
+
+.nav li{
+    display: inline;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    margin-left: 3%;
+}
+
+.nav a
+{
+    text-decoration: none;
+    color: #f008b7;
+}
+
+.nav li:hover
+{
+    font-size: 28px;
+    transition-duration: 300ms;
+    -webkit-filter: drop-shadow(2px 2px 20px #f008b7);
+}
+
+.nav a:hover
+{
+    color: #e64fb3;
+
+}
+
+
+#container
+{
+    list-style-type: none;
     overflow: hidden;
 }
 
-.card
+.nav-right
 {
-    padding: 200px;
-    margin: 200px;
-    width: 300px;
-    height: 300px;
+    float: right;
+    margin: 5%;
+    color: deeppink;
 }
+
+.nav-left
+{
+    float: left;
+    margin: 2%;
+}
+
+
+
+.centered {
+    margin: 0 auto;
+    padding: 0 1em;
+}
+
+
+.main-area
+{
+    padding-top: 10%;
+    padding-right: 200px;
+    padding-left: 200px;
+}
+
+h2
+{
+    color: white;
+}
+
+p
+{
+    color: #c2c2c2;
+}
+
+
+.card {
+    background: rgba(44, 44, 44, 0.82);
+    margin-bottom: 2em;
+}
+
+.card a {
+    color: black;
+    text-decoration: none;
+}
+
+.card a:hover {
+    box-shadow: 3px 3px 8px hsl(320, 100%, 45%);
+}
+
+.card-content {
+    padding: 1.4em;
+}
+
+.card-content h2 {
+    margin-top: 0;
+    margin-bottom: .5em;
+    font-weight: normal;
+}
+
+.card-content p {
+    font-size: 95%;
+}
+
+img {
+    width: 100%;
+    height: auto;
+}
+
+.cards {
+    margin-top: -1em;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.card {
+    margin-bottom: 1em;
+    display: flex;
+    flex: 0 1 calc(50% - 0.5em);
+}
+
+.cards {
+    margin-top: inherit;
+}
+
+.card {
+    margin-bottom: 2em;
+    display: flex;
+    flex: 0 1 calc(33% - 0.5em);
+}
+
