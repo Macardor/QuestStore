@@ -12,13 +12,12 @@
     background-repeat: no-repeat;
     background-position: center;
     border-radius: 8px;
-    box-shadow: 0 0 6px 2px rgba(255, 230, 0, 0.75), 0 35px 25px -15px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 6px 2px #f008b7, 0 35px 25px -15px rgba(0, 0, 0, 0.5);
     position: relative;
     overflow: hidden;
     display: inline-block;
 
-// Animation ready
-will-change: transform;
+/ / Animation ready will-change: transform;
 
     transition: transform 100ms ease;
     transition-property: transform;
@@ -28,28 +27,10 @@ will-change: transform;
 
     transform: translate3d(0%, 0%, -400px);
 
-&:hover {
+}
+card:hover {
      z-index: 2;
  }
-}
-
-.card.charizard {
-    background-image: url( https://upload.wikimedia.org/wikipedia/commons/4/41/Sunflower_from_Silesia2.jpg );
-}
-.card.mewtwo {
-    background-image: url(https://images.pokemontcg.io/xy12/52_hires.png);
-&:before,
-&:after {
-     animation-delay: 0.33s;
- }
-}
-.card.dragonite {
-    background-image: url(https://images.pokemontcg.io/xy12/72_hires.png);
-&:before,
-&:after {
-     animation-delay: 0.66s;
- }
-}
 
 .card:before,
 .card:after {

@@ -28,7 +28,7 @@ body
 {
     white-space: nowrap;
     background-color: rgba(16, 16, 33, 0.64);
-    height: 8.5%;
+    /*height: 8.5%;*/
     width: 100%;
     position: fixed;
     display: inline;
@@ -36,6 +36,7 @@ body
     font-size: 25px;
     color: whitesmoke;
     text-decoration: none;
+    z-index: 10;
 }
 
 .nav li{
@@ -120,9 +121,9 @@ p
     text-decoration: none;
 }
 
-.card a:hover {
-    box-shadow: 3px 3px 8px hsl(320, 100%, 45%);
-}
+/*.card a:hover {*/
+/*    box-shadow: 3px 3px 8px hsl(320, 100%, 45%);*/
+/*}*/
 
 .card-content {
     padding: 1.4em;
