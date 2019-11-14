@@ -1,6 +1,12 @@
 @import url(https://fonts.googleapis.com/css?family=Titillium+Web:900);
 @import url(https://fonts.googleapis.com/css?family=Mr+Dafoe);
+@import url(https://fonts.googleapis.com/css?family=Rubik+Mono+One);
 
+@media only screen and (max-device-width: 480px){
+    body{
+        font-size: 24px;
+    }
+}
 *
 {
     margin: 0;
@@ -8,7 +14,6 @@
 }
 
 body{
-    background-color: #454545;
     color: white;
     font-family: 'Black Ops One', cursive;
 }
@@ -27,30 +32,31 @@ body{
     color: deeppink;
 }
 
+input{
+    margin: 1em 0;
+    padding: 0.5em;
+    outline: none;
+    border: 1px solid #bbb;
+    border-radius: 2em;
+}
+
+
+
+.login-box{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 3em;
+    padding: 2em;
+    text-align: center;
+    z-index: 99;
+}
 
 .login-box label{
     display:block;
-}
-
-.login-box{
-    text-align: center;
-    padding: 20px;
-    background-color: deeppink;
-    margin-left: 35%;
-    margin-right: 35%;
-}
-
-.login-box{
-    padding: 20px;
-    margin-top: 10%;
-    border-radius: 25px;
-    background-color: rgb(255, 20, 145);
-}
-
-.login-box .input-box{
-    padding-bottom:15px;
-    margin-bottom: 15px;
-    
 }
 
 .chrome {
@@ -73,7 +79,7 @@ body{
     content: 'CYBER';
     position: absolute;
     /*left: 0;*/
-    top: 0;
+    /*top: 0;*/
     z-index: 10;
     background-image: -webkit-linear-gradient(-40deg, transparent 0%, transparent 40%, #fff 50%, transparent 60%, transparent 100%);
     background-position:-680px 0;
@@ -90,7 +96,7 @@ body{
 }
 
 .dreams {
-    margin: 0px;
+    position: relative;
     font-family: 'Mr Dafoe', cursive;
     font-size: 200px;
     color: #F975F7 ;
@@ -115,16 +121,10 @@ body{
     100% {background-position:420px 0;}
 }
 
-
-label
-{
-   
-}
-
-@import 'https://fonts.googleapis.com/css?family=Rubik+Mono+One';
 body {
     background-color:#181818;
 }
+
 #grid {
     width: 200%;
     overflow:hidden;
