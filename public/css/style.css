@@ -40,9 +40,7 @@ input{
     border-radius: 2em;
 }
 
-.login-box label{
-    display:block;
-}
+
 
 .login-box{
     position: absolute;
@@ -51,20 +49,14 @@ input{
     justify-content: center;
     align-items: center;
     width: 100%;
+    margin-top: 3em;
+    padding: 2em;
     text-align: center;
     z-index: 99;
-
 }
 
-.login-box{
-    padding: 2em;
-    margin-top: 3em;
-
-}
-
-.login-box input[type="text"][type="password"]{
-    padding:5px;
-    width:5%;
+.login-box label{
+    display:block;
 }
 
 .chrome {
