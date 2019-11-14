@@ -54,10 +54,20 @@ input{
     border-radius: 2em;
 }
 
+button{
+    height: 2em;
+    width: 8em;
+    position: relative;
+    margin: 1em 0;
+    padding: 0.5em;
+    border: 1px solid #bbb;
+    border-radius: 2em;
+}
+
 .login-button{
     display: inline-block;
     height: 2em;
-    width: 16em;
+    width: 8em;
     position: relative;
     outline: none;
 }
