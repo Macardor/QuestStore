@@ -62,6 +62,7 @@ button{
     padding: 0.5em;
     border: 1px solid #bbb;
     border-radius: 2em;
+    z-index: 99;
 }
 
 .login-button{
