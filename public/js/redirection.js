@@ -5,10 +5,10 @@ function redirection() {
             window.location.replace("student/student-homepage.html");
         }
         case "mentor":{
-            window.location.replace("student/mentor-homepage.html");
+            window.location.replace("mentor/mentor-homepage.html");
         }
         case "creep":{
-            window.location.replace("student/creep-homepage.html");
+            window.location.replace("creep/creep-homepage.html");
         }
     }
     console.log(input)
