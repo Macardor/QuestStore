@@ -87,7 +87,7 @@ input{
     position: relative;
 }
 
-.chrome {
+.cyber {
     position: relative;
     background-image: -webkit-linear-gradient(#378DBC 0%, #B6E8F1 46%, #ffffff 50%, #32120E 54%, #FFC488 58%, #582C11 90%, #EC9B4E 100%);
     -webkit-background-clip: text;
@@ -102,7 +102,7 @@ input{
     line-height: 1;
 }
 
-.chrome:before {
+.cyber:before {
     content: 'CYBER';
     position: absolute;
     z-index: 10;
@@ -120,7 +120,7 @@ input{
     margin: 0;
 }
 
-.dreams {
+.store {
     position: relative;
     display: inline-block;
     font-family: 'Mr Dafoe', cursive;
@@ -138,7 +138,7 @@ input{
     z-index: 20;
 }
 
-.windows .dreams {
+.windows .store {
     -webkit-text-stroke: 4px #f008b7;
 }
 
