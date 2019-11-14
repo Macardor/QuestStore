@@ -132,7 +132,7 @@ body {
     height: 300px;
     position: fixed;
     box-sizing: border-box;
-    -webkit-transform: perspective(100) rotate3d(1, 0, 0, 40deg);
+    -webkit-transform: perspective(100px) rotate3d(1, 0, 0, 40deg);
     -webkit-transform-style: preserve-3d;
     left: -49%;
     top: 40%;
