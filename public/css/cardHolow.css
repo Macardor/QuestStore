@@ -1,0 +1,141 @@
+#app {
+    height: 100%;
+    perspective-origin: 50% 50%;
+    perspective: 800px;
+}
+
+.card {
+    /*width: 340px;*/
+    /*height: 480px;*/
+
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 8px;
+    box-shadow: 0 0 6px 2px rgba(255, 230, 0, 0.75), 0 35px 25px -15px rgba(0, 0, 0, 0.5);
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+
+// Animation ready
+will-change: transform;
+
+    transition: transform 100ms ease;
+    transition-property: transform;
+
+    transform-style: preserve-3d;
+    transform-origin: 50% 50%;
+
+    transform: translate3d(0%, 0%, -400px);
+
+&:hover {
+     z-index: 2;
+ }
+}
+
+.card.charizard {
+    background-image: url( https://upload.wikimedia.org/wikipedia/commons/4/41/Sunflower_from_Silesia2.jpg );
+}
+.card.mewtwo {
+    background-image: url(https://images.pokemontcg.io/xy12/52_hires.png);
+&:before,
+&:after {
+     animation-delay: 0.33s;
+ }
+}
+.card.dragonite {
+    background-image: url(https://images.pokemontcg.io/xy12/72_hires.png);
+&:before,
+&:after {
+     animation-delay: 0.66s;
+ }
+}
+
+.card:before,
+.card:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    background-image: linear-gradient(
+            115deg,
+            transparent 0%,
+            rgb(0, 231, 255) 30%,
+            rgb(255, 0, 231) 70%,
+            transparent 100%
+    );
+    background-position: 0% 0%;
+    background-repeat: no-repeat;
+    background-size: 300% 300%;
+    mix-blend-mode: color-dodge;
+    opacity: 0;
+    z-index: 1;
+    transform: translate3d(0,0,0);
+    animation: holoGradient 15s ease infinite;
+}
+.card:after {
+
+    background-position: center;
+    background-size: 180%;
+    opacity: 0;
+    z-index: 2;
+
+}
+
+.card.active:before {
+    opacity: 0.5;
+    animation: none;
+    transition: none;
+    background-image: linear-gradient(
+            115deg,
+            transparent 0%,
+            transparent 25%,
+            rgb(0, 231, 255) 45%,
+            rgb(255, 0, 231) 55%,
+            transparent  70%,
+            transparent 100%
+    );
+}
+
+
+
+@keyframes holoGradient {
+    3% {
+        opacity: 0;
+    }
+    5% {
+        background-position: 0% 0%;
+    }
+    7% {
+        opacity: 0.5;
+    }
+    9% {
+        background-position: 100% 100%;
+    }
+    11% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 0;
+        background-position: 100% 100%;
+    }
+    55% {
+        opacity: 0.3;
+    }
+    70% {
+        opacity: 0;
+        background-position: 0% 0%;
+    }
+}
+
+/*body {*/
+/*    color: white;*/
+/*    background: #333844;*/
+/*    font-family: "Heebo", sans-serif;*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*// height: 100%;*/
+/*    text-align: center;*/
+/*}*/
