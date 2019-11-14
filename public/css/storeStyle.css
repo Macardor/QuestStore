@@ -1,0 +1,27 @@
+#card-deck
+{
+    margin: 200px;
+}
+
+img
+{
+    width: 300px;
+    height: 400px;
+}
+
+#card-deck
+{
+    display: inline;
+    position: fixed;
+    margin: 30px;
+
+    overflow: hidden;
+}
+
+.card
+{
+    padding: 200px;
+    margin: 200px;
+    width: 300px;
+    height: 300px;
+}
