@@ -33,9 +33,8 @@ body{
 }
 
 input{
-    padding: 2%;
     margin: 1em 0;
-    padding: 1em;
+    padding: 0.5em;
     outline: none;
     border: 1px solid #bbb;
     border-radius: 2em;
@@ -57,15 +56,15 @@ input{
 
 }
 
-.login-box .input-box{
-    padding:15px;
-    margin-bottom: 15px;
+.login-box{
+    padding: 2em;
+    margin-top: 3em;
 
 }
 
 .login-box input[type="text"][type="password"]{
-    padding:8px;
-    width:10%;
+    padding:5px;
+    width:5%;
 }
 
 .chrome {
