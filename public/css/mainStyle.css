@@ -64,8 +64,9 @@ body
 
 .nav-right
 {
-    float: right;
-    margin: 5%;
+    float: left;
+    margin: 10%;
+    padding-left: 5%;
     color: deeppink;
 }
 
@@ -82,6 +83,41 @@ body
     background-color: rgba(16, 16, 33, 0.5);
 
 }
+
+
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    padding-right: 3%;
+    margin-right: 3%;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: rgba(16, 16, 33, 0.64);
+    min-width: 500px;
+    z-index: 1;
+}
+
+.dropdown-content a {
+    padding: 30px 50px;
+    text-decoration: none;
+    display: block;
+    font-weight: 500;
+}
+
+.dropdown-content a:hover {
+    color: #e64fb3;
+}
+
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+
 
 
 
