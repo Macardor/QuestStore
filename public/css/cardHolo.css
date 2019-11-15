@@ -54,7 +54,6 @@ card:hover {
     opacity: 0;
     z-index: 1;
     transform: translate3d(0,0,0);
-    animation: holoGradient 15s ease infinite;
 }
 .card:after {
 
@@ -79,7 +78,6 @@ card:hover {
             transparent 100%
     );
 }
-
 
 
 @keyframes holoGradient {
@@ -110,13 +108,3 @@ card:hover {
         background-position: 0% 0%;
     }
 }
-
-/*body {*/
-/*    color: white;*/
-/*    background: #333844;*/
-/*    font-family: "Heebo", sans-serif;*/
-/*    display: flex;*/
-/*    justify-content: center;*/
-/*// height: 100%;*/
-/*    text-align: center;*/
-/*}*/
