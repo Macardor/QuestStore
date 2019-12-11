@@ -1,4 +1,7 @@
 package interfaces;
 
-public interface StudentDAO implements CRUD {
+public interface StudentDAO extends ReadableDAO {
+    @Override
+    Object read(String table);
+
 }
