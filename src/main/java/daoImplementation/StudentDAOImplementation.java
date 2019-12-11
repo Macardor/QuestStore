@@ -8,7 +8,7 @@ import models.users.User;
 public class StudentDAOImplementation implements StudentDAO, ModificableDAO {
 
     @Override
-    public Object create(User user) {
+    public Object create(Object user) {
         return null;
     }
 
