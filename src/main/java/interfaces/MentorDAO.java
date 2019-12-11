@@ -1,6 +1,6 @@
 package interfaces;
 
-public interface MentorDAO extends ModificableDAO {
+public interface MentorDAO extends ModificableDAO, ReadableDAO {
     @Override
     Object create(Object user);
 

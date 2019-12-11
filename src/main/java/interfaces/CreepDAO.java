@@ -1,6 +1,6 @@
 package interfaces;
 
-public interface CreepDAO extends ModificableDAO {
+public interface CreepDAO extends ModificableDAO, ReadableDAO {
     @Override
     Object create(Object user);
 
