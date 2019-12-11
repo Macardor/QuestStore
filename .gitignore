@@ -78,6 +78,6 @@ fabric.properties
 
 /workspace.xml
 *.xml
-
+.idea/compiler.xml
 src/test/
 target/
