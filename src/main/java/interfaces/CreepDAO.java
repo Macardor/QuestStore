@@ -1,4 +1,5 @@
 package interfaces;
 
-public interface CreepDAO implements CRUD{
+public interface CreepDAO extends CRUD {
+
 }
