@@ -5,8 +5,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class PostgreSQLJDBC {
-    public void connectWithDB() {
-        Connection connection = null;
+    Connection connection = null;
+
+    public Connection connect() {
         try {
             connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/codecoolers", "adam", "admin");
             System.out.println("bartek to kupa");
@@ -15,6 +16,16 @@ public class PostgreSQLJDBC {
             e.printStackTrace();
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
+        }
+        return connection;
+    }
+
+
+    public void disconnect(){
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }
