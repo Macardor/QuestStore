@@ -6,6 +6,7 @@ import models.components.Item;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Scanner;
 
 public class ItemDAOImplementation implements ItemDAO {
@@ -79,5 +80,10 @@ public class ItemDAOImplementation implements ItemDAO {
         } catch (SQLException e) {
             System.out.println(e);
         }
+    }
+
+    @Override
+    public List<Item> getEquipment() {
+        return null;
     }
 }
