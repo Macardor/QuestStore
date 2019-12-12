@@ -1,7 +1,7 @@
 package daoImplementation;
 
-import interfaces.ModificableDAO;
 import interfaces.CreepDAO;
+import models.users.Mentor;
 
 public class CreepDAOImplementation implements ModificableDAO, CreepDAO {
     @Override
@@ -18,4 +18,15 @@ public class CreepDAOImplementation implements ModificableDAO, CreepDAO {
     public void delete(int id, boolean isActive) {
 
     }
+
+    @Override
+    public Object read(String table) {
+        return null;
+    }
+
+
+    public Mentor read(int number){
+        return null;
+    }
+
 }

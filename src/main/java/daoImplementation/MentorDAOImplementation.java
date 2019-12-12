@@ -1,6 +1,5 @@
 package daoImplementation;
 
-import interfaces.ModificableDAO;
 import interfaces.MentorDAO;
 
 public class MentorDAOImplementation implements ModificableDAO, MentorDAO {

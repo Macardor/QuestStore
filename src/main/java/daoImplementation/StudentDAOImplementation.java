@@ -1,9 +1,6 @@
 package daoImplementation;
 
-import interfaces.ModificableDAO;
 import interfaces.StudentDAO;
-import models.users.Mentor;
-import models.users.User;
 
 public class StudentDAOImplementation implements StudentDAO, ModificableDAO {
 
