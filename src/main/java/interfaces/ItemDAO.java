@@ -1,7 +1,7 @@
 package interfaces;
 
 public interface ItemDAO {
-    void addItem();
-    void deleteItem();
-    void editItem();
+    void addItem(String name, int price, String description, boolean isActive);
+    void deleteItem(int id);
+    void editItem(int id);
 }
