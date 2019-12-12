@@ -1,0 +1,1 @@
+INSERT INTO public.creeps (id, user_id) VALUES (1, 7);
