@@ -2,19 +2,6 @@ package daoImplementation;
 
 import interfaces.MentorDAO;
 
-public class MentorDAOImplementation implements ModificableDAO, MentorDAO {
-    @Override
-    public Object create(Object user) {
-        return null;
-    }
+public class MentorDAOImplementation {
 
-    @Override
-    public Object update(int id) {
-        return null;
-    }
-
-    @Override
-    public void delete(int id, boolean isActive) {
-
-    }
 }
