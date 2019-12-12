@@ -2,6 +2,6 @@ package daoImplementation;
 
 import interfaces.MentorDAO;
 
-public class MentorDAOImplementation {
+public class MentorDAOImplementation implements MentorDAO {
 
 }
