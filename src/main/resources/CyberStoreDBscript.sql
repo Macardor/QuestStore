@@ -37,7 +37,7 @@ create table quests
 alter table quests
     owner to postgres;
 
-create table coincubator
+create table coincubators
 (
     name             text    not null,
     description      text,
@@ -49,7 +49,7 @@ create table coincubator
             primary key
 );
 
-alter table coincubator
+alter table coincubators
     owner to postgres;
 
 create table user_details
@@ -83,7 +83,7 @@ create table users
 alter table users
     owner to postgres;
 
-create table student
+create table students
 (
     id      serial  not null
         constraint equipment_pk
@@ -94,7 +94,7 @@ create table student
             references users
 );
 
-alter table student
+alter table students
     owner to postgres;
 
 create table user_items
@@ -110,7 +110,7 @@ create table user_items
     used_date    date,
     student_id   integer
         constraint user_items_equipment_id_fk
-            references student
+            references students
 );
 
 alter table user_items
@@ -120,7 +120,7 @@ create table user_quests
 (
     student_id      integer not null
         constraint user_quests_equipment_id_fk
-            references student,
+            references students,
     quest_id        integer not null
         constraint user_quests_quests_id_fk
             references quests,
@@ -137,7 +137,7 @@ create table donators
     id             serial not null,
     coincubator_id integer
         constraint donators_coincubator_id_fk
-            references coincubator,
+            references coincubators,
     user_id        integer
         constraint donators_users_id_fk
             references users,

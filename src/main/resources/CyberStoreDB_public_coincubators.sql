@@ -1,0 +1,1 @@
+INSERT INTO public.coincubators (name, description, current_donation, target_donation, is_active, id) VALUES ('power rangers', 'all mentors coming to cc in favourite power ranger character''s costume', 0, 400, true, 1);
