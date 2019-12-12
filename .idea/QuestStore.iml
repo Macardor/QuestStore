@@ -4,6 +4,13 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
     </content>
+<<<<<<< Updated upstream
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>
+=======
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
+>>>>>>> Stashed changes
