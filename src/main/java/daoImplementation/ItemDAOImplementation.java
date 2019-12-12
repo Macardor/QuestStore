@@ -15,7 +15,7 @@ public class ItemDAOImplementation implements ItemDAO {
     public void addItem(String name, int price, String description, boolean isActive) {
         PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
         PreparedStatement preparedStatement = null;
-        String sqlQuery = "INSERT INTO items (name, price, description, isActive) VALUES(?, ?, ?, ?) ";
+        String sqlQuery = "INSERT INTO items (name, price, description, is_active) VALUES(?, ?, ?, ?) ";
 
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(sqlQuery);
@@ -23,7 +23,8 @@ public class ItemDAOImplementation implements ItemDAO {
             preparedStatement.setInt(2, price);
             preparedStatement.setString(3, description);
             preparedStatement.setBoolean(4, isActive);
-            int resultSet = preparedStatement.executeUpdate();
+            System.out.println(preparedStatement.toString());
+            preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -84,6 +85,10 @@ public class ItemDAOImplementation implements ItemDAO {
 
     @Override
     public List<Item> getEquipment() {
+        PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
+        PreparedStatement ps = null;
+        String orderForSql = ("UPDATE item SET name = ?, price = ?, description = ? is_active WHERE id = ?");
+
         return null;
     }
 }

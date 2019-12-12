@@ -2,7 +2,7 @@ package daoImplementation;
 
 import SQL.PostgreSQLJDBC;
 import interfaces.QuestDAO;
-
+import models.components.Quest;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -14,15 +14,17 @@ public class QuestDAOImplementation implements QuestDAO {
     public void addQuest(String name, String description, int reward, boolean isActive) {
         PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
         PreparedStatement preparedStatement = null;
-        String sqlQuery = "INSERT INTO quests (name, description, reward, is_active) VALUES(?, ?, ?, ?) ";
+        String sqlQuery = "INSERT INTO quests (name, description, reward, is_active) VALUES(?, ?, ?, ?)";
 
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(sqlQuery);
+
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, description);
             preparedStatement.setInt(3, reward);
             preparedStatement.setBoolean(4, isActive);
-            int resultSet = preparedStatement.executeUpdate();
+
+            preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -65,14 +67,11 @@ public class QuestDAOImplementation implements QuestDAO {
             System.out.println("enter reward: ");
             int reward = scanner.nextInt();
 
-            System.out.println("is quest active: ");
-            boolean isActive = scanner.nextBoolean();
-
 
             ps.setString(1, name);
             ps.setString(2, description);
             ps.setInt(3, reward);
-            ps.setBoolean(4, isActive);
+            ps.setBoolean(4, true);
 
             int row = ps.executeUpdate();
 
