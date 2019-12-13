@@ -15,8 +15,6 @@ import java.util.List;
 
 public class ExtractDAOImplementation implements ExtractDAO {
 
-    //metody showStudent showMentor showCreep w roznych klasach
-
     PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
@@ -24,7 +22,9 @@ public class ExtractDAOImplementation implements ExtractDAO {
 
     @Override
     public List<User> extract(int userType) {
-        String orderToSql = ("SELECT * FROM users u JOIN user_details ud ON u.user_details_id = ud.id WHERE u.user_type_id = ?");
+        String orderToSql = "SELECT * FROM users" +
+                "join user_details" +
+                "on users.user_details_id = user_details.id WHERE users.user_type_id = ?";
         List<User> userList = new ArrayList<>();
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
@@ -34,7 +34,7 @@ public class ExtractDAOImplementation implements ExtractDAO {
                 int id = resultSet.getInt("id");
                 String login = resultSet.getString("login");
                 String password = resultSet.getString("password");
-                int userTypeId = resultSet.getInt("user_type_id");
+                int userTypeId = resultSet.getInt("user_type");
                 String firstName = resultSet.getString("first_name");
                 String lastName = resultSet.getString("last_name");
                 if (userType == 1) {
