@@ -87,7 +87,9 @@ public class ItemDAOImplementation implements ItemDAO {
     public List<Item> getEquipment() {
         PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
         PreparedStatement ps = null;
-        String orderForSql = ("UPDATE item SET name = ?, price = ?, description = ? is_active WHERE id = ?");
+        String orderForSql = ("SELECT * FROM user_items");
+
+
 
         return null;
     }
