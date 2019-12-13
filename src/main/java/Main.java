@@ -4,6 +4,9 @@ import daoImplementation.AddUserDAOImplementation;
 import daoImplementation.ExtractDAOImplementation;
 import daoImplementation.StudentDAOImplementation;
 import models.users.Student;
+import daoImplementation.ItemDAOImplementation;
+import daoImplementation.QuestDAOImplementation;
+import models.components.Quest;
 
 public class Main {
     public static void main(String[] args) {
@@ -15,5 +18,7 @@ public class Main {
         studentController.run();
 
 
+        QuestDAOImplementation qdi = new QuestDAOImplementation();
+        qdi.getQuests();
     }
 }
