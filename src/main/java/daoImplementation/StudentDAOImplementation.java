@@ -158,7 +158,34 @@ public class StudentDAOImplementation implements StudentDAO{
     }
 
     @Override
-    public void removeStudent() {
-
+    public void removeStudent(int userId) {
+        String orderToSql = "DELETE FROM user_details WHERE id = ?";
+        String orderToSqlUser = "DELETE FROM users WHERE id = ?";
+        try {
+            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            preparedStatement.setInt(1, userId);
+            int row = preparedStatement.executeUpdate();
+        }catch (Exception e){
+            System.out.println(e);
+        }finally {
+            try {
+                preparedStatement.close();
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+        try {
+            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSqlUser);
+            preparedStatement.setInt(1,userId);
+            int row = preparedStatement.executeUpdate();
+        }catch (Exception e){
+            System.out.println(e);
+        }finally {
+            try {
+                preparedStatement.close();
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
     }
 }

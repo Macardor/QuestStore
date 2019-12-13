@@ -27,14 +27,17 @@ public class StudentController implements BaseController {
             case "3":
                 editStudentByStudentId();
                 break;
+            case "4":
+                deteleStudentByStudentId();
         }
     }
 
     private void printStudentMenu(){
-        System.out.println("Select number to: " +
-                "1. Add new student" +
-                "2. Show all students" +
-                "3. Edit student");
+        System.out.println("Select number to: \n" +
+                "1. Add new student\n" +
+                "2. Show all students\n" +
+                "3. Edit student\n" +
+                "4. Delete student\n");
     }
 
     private void enterNewUser(){
@@ -60,5 +63,12 @@ public class StudentController implements BaseController {
         int studentId = scanner.nextInt();
         studentDAOImplementation.editStudent(studentId);
     }
+
+    private void deteleStudentByStudentId(){
+        System.out.println("Insert id of student you want to be removed: ");
+        int studentId = scanner.nextInt();
+        studentDAOImplementation.removeStudent(studentId);
+    }
+
 
 }
