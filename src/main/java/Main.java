@@ -1,9 +1,6 @@
 import SQL.PostgreSQLJDBC;
 import controllers.StudentController;
-import daoImplementation.AddUserDAOImplementation;
-import daoImplementation.ExtractDAOImplementation;
-import daoImplementation.StudentDAOImplementation;
-import models.users.Student;
+import daoImplementation.QuestDAOImplementation;
 
 public class Main {
     public static void main(String[] args) {
