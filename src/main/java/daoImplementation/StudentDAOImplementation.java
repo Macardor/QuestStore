@@ -66,8 +66,8 @@ public class StudentDAOImplementation implements StudentDAO{
 
     @Override
     public List<User> extractStudent() {
-        String orderToSql = "SELECT * FROM users" +
-                "join user_details" +
+        String orderToSql = "SELECT * FROM users " +
+                "join user_details " +
                 "on users.user_details_id = user_details.id WHERE users.user_type_id = ?";
         List<User> studentList = new ArrayList<>();
         try {
