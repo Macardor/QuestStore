@@ -12,7 +12,7 @@ public class Main {
         studentController.run();
 
 
-        QuestDAOImplementation qdi = new QuestDAOImplementation();
-        qdi.getQuests();
+//        QuestDAOImplementation qdi = new QuestDAOImplementation();
+//        qdi.getQuests();
     }
 }
