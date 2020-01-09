@@ -9,7 +9,7 @@ public class PostgreSQLJDBC {
 
     public Connection connect() {
         try {
-            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/CyberStoreDb", "adam", "admin");
+            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/CyberStoreDB", "postgres", "admin");
             System.out.println("bartek to kupa");
             System.out.println("Opened database successfully");
         } catch (SQLException e) {
