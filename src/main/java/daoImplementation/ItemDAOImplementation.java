@@ -12,17 +12,17 @@ import java.util.Scanner;
 public class ItemDAOImplementation implements ItemDAO {
 
     @Override
-    public void addItem(String name, int price, String description, boolean isActive) {
+    public void addItem(Item item) {
         PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
         PreparedStatement preparedStatement = null;
         String sqlQuery = "INSERT INTO items (name, price, description, is_active) VALUES(?, ?, ?, ?) ";
 
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(sqlQuery);
-            preparedStatement.setString(1, name);
-            preparedStatement.setInt(2, price);
-            preparedStatement.setString(3, description);
-            preparedStatement.setBoolean(4, isActive);
+            preparedStatement.setString(1, item.getName());
+            preparedStatement.setInt(2, item.getPrice());
+            preparedStatement.setString(3, item.getDescription());
+            preparedStatement.setBoolean(4, item.isActive());
             System.out.println(preparedStatement.toString());
             preparedStatement.executeUpdate();
             preparedStatement.close();
@@ -49,7 +49,7 @@ public class ItemDAOImplementation implements ItemDAO {
     }
 
     @Override
-    public void editItem(int id) {
+    public void editItem(Item item) {
         PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
         PreparedStatement ps = null;
         String orderForSql = ("UPDATE item SET name = ?, price = ?, description = ? is_active WHERE id = ?");
