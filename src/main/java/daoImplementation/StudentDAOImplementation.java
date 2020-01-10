@@ -2,10 +2,8 @@ package daoImplementation;
 
 import SQL.PostgreSQLJDBC;
 import interfaces.StudentDAO;
-import models.users.Creep;
-import models.users.Mentor;
-import models.users.Student;
-import models.users.User;
+import models.Student;
+import models.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

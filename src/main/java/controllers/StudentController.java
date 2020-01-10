@@ -69,6 +69,4 @@ public class StudentController implements BaseController {
         int studentId = scanner.nextInt();
         studentDAOImplementation.removeStudent(studentId);
     }
-
-
 }

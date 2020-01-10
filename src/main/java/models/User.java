@@ -1,4 +1,4 @@
-package models.users;
+package models;
 
 public abstract class User {
     private int id;
@@ -11,6 +11,13 @@ public abstract class User {
     public User(int id, String login, String password, int userType, String firstname, String lastname){
 
         this.id = id;
+        this.login = login;
+        this.password = password;
+        this.userType = userType;
+        this.firstname = firstname;
+        this.lastname = lastname;
+    }
+    public User(String login, String password, int userType, String firstname, String lastname){
         this.login = login;
         this.password = password;
         this.userType = userType;

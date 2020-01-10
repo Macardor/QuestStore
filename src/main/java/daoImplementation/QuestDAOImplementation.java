@@ -2,7 +2,7 @@ package daoImplementation;
 
 import SQL.PostgreSQLJDBC;
 import interfaces.QuestDAO;
-import models.components.Quest;
+import models.Quest;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
