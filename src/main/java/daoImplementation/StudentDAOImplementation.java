@@ -66,14 +66,13 @@ public class StudentDAOImplementation implements StudentDAO{
 
     @Override
     public List<User> extractStudent() {
-        String orderToSql = "SELECT * FROM users" +
-                "join user_details" +
-                "on users.user_details_id = user_details.id WHERE users.user_type_id = ?";
+        String orderToSql = "SELECT * FROM users join user_details on users.user_details_id = user_details.id WHERE users.user_type_id = ?";
         List<User> studentList = new ArrayList<>();
         try {
             int studentTypeId = 1;
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
             preparedStatement.setInt(1, studentTypeId);
+            resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
                 int id = resultSet.getInt("id");
                 String login = resultSet.getString("login");

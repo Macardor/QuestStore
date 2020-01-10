@@ -1,6 +1,7 @@
 import SQL.PostgreSQLJDBC;
 import controllers.StudentController;
 import daoImplementation.QuestDAOImplementation;
+import daoImplementation.StudentDAOImplementation;
 
 public class Main {
     public static void main(String[] args) {
@@ -8,11 +9,12 @@ public class Main {
         PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
         postgreSQLJDBC.connect();
 
-        StudentController studentController = new StudentController();
-        studentController.run();
+        StudentDAOImplementation studentDAOImplementation = new StudentDAOImplementation();
+        studentDAOImplementation.extractStudent();
 
-
-        QuestDAOImplementation qdi = new QuestDAOImplementation();
-        qdi.getQuests();
+//        StudentController studentController = new StudentController();
+//        studentController.run();
+//
+//        QuestDAOImplementation qdi = new QuestDAOImplementation();
     }
 }

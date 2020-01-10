@@ -15,46 +15,32 @@ body
     font-size: 12px;
     display: inline;
 }
-.nav
-{
-    white-space: nowrap;
-    background-color: rgba(16, 16, 33, 0.64);
-    height: 8.5%;
-    width: 100%;
-    position: fixed;
-    display: inline;
-    text-align: left;
-    font-size: 25px;
-    color: whitesmoke;
-    text-decoration: none;
+
+/*navbar settings*/
+.navbar.navbar-expand-sm.navbar-light.bg-dark{
+    background: rgba(12, 12, 13, 0.8) !important;
 }
 
-.nav li{
-    display: inline;
-    margin-top: 30px;
-    margin-bottom: 30px;
-    margin-left: 3%;
+.navbar.navbar-expand-sm.navbar-light.bg-dark a{
+    color: deeppink;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: .1rem;
 }
 
-.nav a
-{
-    text-decoration: none;
-    color: #f008b7;
+.navbar.navbar-expand-sm.navbar-light.bg-dark li{
+    padding-right: 10px;
 }
 
-.nav li:hover
-{
-    font-size: 28px;
+.navbar.navbar-expand-sm.navbar-light.bg-dark li:hover {
     transition-duration: 300ms;
     -webkit-filter: drop-shadow(2px 2px 20px #f008b7);
 }
 
-.nav a:hover
-{
+.navbar.navbar-expand-sm.navbar-light.bg-dark a:hover {
     color: #e64fb3;
 
 }
-
 
 #container
 {
@@ -62,17 +48,8 @@ body
     overflow: hidden;
 }
 
-.nav-right
-{
-    float: right;
-    margin: 5%;
-    color: deeppink;
-}
-
-.nav-left
-{
-    float: left;
-    margin: 2%;
+.nav-link.dropdown-toggle {
+@include float-right;
 }
 
 #front
