@@ -1,6 +1,6 @@
 package interfaces;
 
-import models.components.Item;
+import models.Item;
 
 import java.util.List;
 

@@ -2,7 +2,7 @@ package daoImplementation;
 
 import SQL.PostgreSQLJDBC;
 import interfaces.ItemDAO;
-import models.components.Item;
+import models.Item;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

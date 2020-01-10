@@ -1,6 +1,6 @@
-package models.components;
+package models;
 
-import models.users.User;
+import models.User;
 
 import java.util.List;
 

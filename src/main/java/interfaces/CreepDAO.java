@@ -1,7 +1,6 @@
 package interfaces;
 
-import models.users.Mentor;
-import models.users.User;
+import models.Mentor;
 
 public interface CreepDAO {
     void addMentor(Mentor mentor);

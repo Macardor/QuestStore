@@ -1,4 +1,4 @@
-package models.components;
+package models;
 
 public class Quest {
     private int id;
@@ -10,6 +10,12 @@ public class Quest {
     public Quest(int id, String name, String description, int reward, boolean isActive){
 
         this.id = id;
+        this.name = name;
+        this.description = description;
+        this.reward = reward;
+        this.isActive = isActive;
+    }
+    public Quest(String name, String description, int reward, boolean isActive){
         this.name = name;
         this.description = description;
         this.reward = reward;

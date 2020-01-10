@@ -1,4 +1,4 @@
-package models.components;
+package models;
 
 public class Item {
     private int id;
@@ -10,6 +10,13 @@ public class Item {
     public Item(int id, String name, int price, String description, boolean isActive){
 
         this.id = id;
+        this.name = name;
+        this.price = price;
+        this.description = description;
+        this.isActive = isActive;
+    }
+
+    public Item(String name, int price, String description, boolean isActive){
         this.name = name;
         this.price = price;
         this.description = description;
