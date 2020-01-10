@@ -10,7 +10,7 @@ body
 
 #background
 {
-    background-image: url("../templates/background-image.jpg");
+    background-image: url("../../templates/background-image.jpg");
     position: fixed;
     z-index: -1;
     width: 100%;
