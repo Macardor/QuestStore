@@ -21,4 +21,24 @@ public class Quest {
         this.reward = reward;
         this.isActive = isActive;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public int getReward() {
+        return reward;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
 }

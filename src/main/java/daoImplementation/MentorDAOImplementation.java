@@ -21,45 +21,32 @@ public class MentorDAOImplementation{
 
 
     public void addStudent(Student student) {
-        String orderToSqlUsers = "INSERT INTO user_details (login, password, first_name, last_name) VALUES (?,?,?,?)";
-        String orderToSqlDetails = "INSERT INTO users (user_type_id, is_active, user_details_id) VALUES (?,?,?)";
+        String insertIntoTwoTables = "WITH insertIntoUserDetails AS (\n" +
+                "    INSERT INTO user_details (login, password, first_name, last_name) VALUES\n" +
+                "    (?, ?, ?, ?)\n" +
+                "    RETURNING id\n" +
+                "),\n" +
+                " inserIntoUsers AS (\n" +
+                "    INSERT INTO users (user_type_id, is_active, user_details_id) VALUES\n" +
+                "    (1, 'true', (SELECT id FROM insertIntoUserDetails))\n" +
+                "    RETURNING id\n" +
+                ")\n" +
+                "INSERT INTO students (coins, user_id) VALUES\n" +
+                "(0 , (SELECT id FROM inserIntoUsers));";
 
         try {
-            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSqlUsers);
+            preparedStatement = postgreSQLJDBC.connect().prepareStatement(insertIntoTwoTables);
             preparedStatement.setString(1, student.getLogin());
             preparedStatement.setString(2, student.getPassword());
             preparedStatement.setString(3, student.getFirstname());
             preparedStatement.setString(4, student.getLastname());
-            int row = preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
 
         } catch (Exception e) {
             System.out.println(e);
-        } finally {
-            try {
-                preparedStatement.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
 
-        try {
-            int userTypeId = 1;
-            boolean setIsActive = true;
-            int userDetailId = 1;
-            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSqlDetails);
-            preparedStatement.setInt(1, userTypeId);
-            preparedStatement.setBoolean(2,setIsActive);
-            preparedStatement.setInt(3, userDetailId);
-            int row = preparedStatement.executeUpdate();
-        } catch (Exception e) {
-            System.out.println(e);
-        } finally {
-            try {
-                preparedStatement.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     public void editStudent(Student student) {
@@ -107,57 +94,34 @@ public class MentorDAOImplementation{
             preparedStatement.setInt(1, userTypeId);
             preparedStatement.setBoolean(2,setIsActive);
             preparedStatement.setInt(3, userDetailId);
-            int row = preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
         } catch (Exception e) {
             System.out.println(e);
-        } finally {
-            try {
-                preparedStatement.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
     }
 
     public void deleteStudent(int id) {
-        String orderToSql = "DELETE FROM user_details WHERE id = ?";
-        String orderToSqlUser = "DELETE FROM users WHERE id = ?";
+        String orderToSql = "UPDATE users SET is_active = ? WHERE id = ? ";
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
-            preparedStatement.setInt(1, id);
-            int row = preparedStatement.executeUpdate();
+            preparedStatement.setBoolean(1, false);
+            preparedStatement.setInt(2, id);
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
         }catch (Exception e){
             System.out.println(e);
-        }finally {
-            try {
-                preparedStatement.close();
-            }catch (SQLException e){
-                e.printStackTrace();
-            }
-        }
-        try {
-            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSqlUser);
-            preparedStatement.setInt(1, id);
-            int row = preparedStatement.executeUpdate();
-        }catch (Exception e){
-            System.out.println(e);
-        }finally {
-            try {
-                preparedStatement.close();
-            }catch (SQLException e){
-                e.printStackTrace();
-            }
         }
     }
-    public List<User> getStudentList() {
+
+    public List<User> getStudentsList() {
         String orderToSql = "SELECT * FROM users " +
                 "join user_details " +
                 "on users.user_details_id = user_details.id WHERE users.user_type_id = ?";
         List<User> studentList = new ArrayList<>();
         try {
-            int studentTypeId = 1;
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
-            preparedStatement.setInt(1, studentTypeId);
+            preparedStatement.setInt(1, 1);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
@@ -172,17 +136,10 @@ public class MentorDAOImplementation{
                 System.out.println(id + "| " + login + "| " + password + "| " + userTypeId + "| " + firstName + "| " + lastName);
 
             }
-            preparedStatement.executeQuery();
+            preparedStatement.close();
+
         } catch (SQLException e) {
             System.out.println(e);
-        } finally {
-            try {
-                preparedStatement.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-
-            }
-
         }
         return studentList;
     }
