@@ -22,13 +22,12 @@ public class StudentController implements BaseController {
                 enterNewUser();
                 break;
             case "2":
-                extractStudents();
+
                 break;
             case "3":
-                editStudentByStudentId();
+
                 break;
             case "4":
-                deteleStudentByStudentId();
         }
     }
 
@@ -51,22 +50,22 @@ public class StudentController implements BaseController {
         System.out.println("Insert last name: ");
         String lastName = scanner.next();
 
-        studentDAOImplementation.addStudent(login, password, firstName, lastName);
+        //studentDAOImplementation.addStudent(login, password, firstName, lastName);
     }
 
-    private void extractStudents(){
-        studentDAOImplementation.extractStudent();
-    }
-
-    private void editStudentByStudentId(){
-        //extractStudents();
-        int studentId = scanner.nextInt();
-        studentDAOImplementation.editStudent(studentId);
-    }
-
-    private void deteleStudentByStudentId(){
-        System.out.println("Insert id of student you want to be removed: ");
-        int studentId = scanner.nextInt();
-        studentDAOImplementation.removeStudent(studentId);
-    }
+//    private void extractStudents(){
+//        studentDAOImplementation.extractStudent();
+//    }
+//
+//    private void editStudentByStudentId(){
+//        //extractStudents();
+//        int studentId = scanner.nextInt();
+//        studentDAOImplementation.editStudent(studentId);
+//    }
+//
+//    private void deteleStudentByStudentId(){
+//        System.out.println("Insert id of student you want to be removed: ");
+//        int studentId = scanner.nextInt();
+//        studentDAOImplementation.removeStudent(studentId);
+//    }
 }

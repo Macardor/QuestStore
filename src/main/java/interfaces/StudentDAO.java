@@ -1,12 +1,13 @@
 package interfaces;
 
+import models.Item;
 import models.User;
 
 import java.util.List;
 
 public interface StudentDAO{
 
-    public void showItems();
+    public List<Item> showItems();
     public void showCoincubatos();
     public void showUserItems();
     public void showUserCoins();

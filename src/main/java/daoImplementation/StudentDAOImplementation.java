@@ -2,8 +2,7 @@ package daoImplementation;
 
 import SQL.PostgreSQLJDBC;
 import interfaces.StudentDAO;
-import models.Student;
-import models.User;
+import models.Item;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,9 +19,37 @@ public class StudentDAOImplementation implements StudentDAO {
     Scanner scanner = new Scanner(System.in);
 
     @Override
-    public void showItems() {
+    public List<Item> showItems() {
+        String orderToSql = "SELECT * FROM items";
+        List<Item> studentList = new ArrayList<>();
+        try {
+            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                int price = resultSet.getInt("price");
+                String description = resultSet.getString("description");
+                boolean isActive = resultSet.getBoolean("is_active");
+                Item item = new Item(id, name, price, description, isActive);
+                studentList.add(item);
+                System.out.println(id+ "| " + name+ "| " + price+ "| " + description+ "| " + isActive);
 
+            }
+            preparedStatement.executeQuery();
+        }catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            try {
+                preparedStatement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+
+            }
+
+        }return studentList;
     }
+
 
     @Override
     public void showCoincubatos() {
