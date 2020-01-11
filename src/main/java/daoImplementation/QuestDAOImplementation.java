@@ -10,21 +10,19 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
-public class QuestDAOImplementation implements QuestDAO {
+public class QuestDAOImplementation{
 
-    @Override
-    public void addQuest(String name, String description, int reward, boolean isActive) {
+    public void addQuest(Quest quest) {
         PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
         PreparedStatement preparedStatement = null;
-        String sqlQuery = "INSERT INTO quests (name, description, reward, is_active) VALUES(?, ?, ?, ?)";
+        String sqlQuery = "INSERT INTO quests (name, description, reward) VALUES(?, ?, ?)";
 
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(sqlQuery);
 
-            preparedStatement.setString(1, name);
-            preparedStatement.setString(2, description);
-            preparedStatement.setInt(3, reward);
-            preparedStatement.setBoolean(4, isActive);
+            preparedStatement.setString(1, quest.getName());
+            preparedStatement.setString(2, quest.getDescription());
+            preparedStatement.setInt(3, quest.getReward());
 
             preparedStatement.executeUpdate();
             preparedStatement.close();
@@ -33,8 +31,7 @@ public class QuestDAOImplementation implements QuestDAO {
         }
     }
 
-    @Override
-    public void deleteQuest(int id) {
+    public void deleteQuest(Quest quest) {
         PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
         PreparedStatement preparedStatement = null;
         String orderForSql = "UPDATE quests SET is_active = ? WHERE id = ?";
@@ -42,7 +39,7 @@ public class QuestDAOImplementation implements QuestDAO {
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderForSql);
             preparedStatement.setBoolean(1, false);
-            preparedStatement.setInt(2, id);
+            preparedStatement.setInt(2, quest.getId());
             int row = preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (SQLException e) {
@@ -50,39 +47,26 @@ public class QuestDAOImplementation implements QuestDAO {
         }
     }
 
-    @Override
-    public void editQuest(int id) {
+    public void editQuest(Quest quest) {
         PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
         PreparedStatement ps = null;
         String orderForSql = ("UPDATE quests SET name = ?, description = ?, reward = ?, is_active = ? WHERE id = ?");
 
         try {
-            Scanner scanner = new Scanner(System.in);
-            ps = postgreSQLJDBC.connect().prepareStatement(orderForSql);
-
-            System.out.println("enter name: "); //
-            String name = scanner.nextLine();
-
-            System.out.println("enter description: ");
-            String description = scanner.nextLine();
-
-            System.out.println("enter reward: ");
-            int reward = scanner.nextInt();
-
-
-            ps.setString(1, name);
-            ps.setString(2, description);
-            ps.setInt(3, reward);
-            ps.setBoolean(4, true);
+            ps.setString(1, quest.getName());
+            ps.setString(2, quest.getDescription());
+            ps.setInt(3, quest.getReward());
+            ps.setBoolean(4, quest.isActive());
+            ps.setInt(5, quest.getId());
 
             int row = ps.executeUpdate();
+            ps.close();
 
         } catch (SQLException e) {
             System.out.println(e);
         }
     }
 
-    @Override
     public void markQuest(int id) {
         //waiting for changes in DB
     }
@@ -91,19 +75,14 @@ public class QuestDAOImplementation implements QuestDAO {
         PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
         PreparedStatement ps = null;
         String orderForSql = ("select u.id, ud.first_name, ud.last_name, q.name, q.description, q.reward from students as s\n" +
-                "\n" +
                 "join users u\n" +
                 "on s.user_id = u.id\n" +
-                "\n" +
                 "join user_details ud\n" +
                 "on u.user_details_id = ud.id\n" +
-                "\n" +
                 "join user_quests uq\n" +
                 "on s.id = uq.student_id\n" +
-                "\n" +
                 "join quests q\n" +
-                "on uq.quest_id = q.id\n" +
-                "\n");
+                "on uq.quest_id = q.id\n");
         try{
             ps = postgreSQLJDBC.connect().prepareStatement(orderForSql);
             //ps.setInt(1, id);

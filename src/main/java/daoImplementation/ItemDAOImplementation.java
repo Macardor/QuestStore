@@ -5,18 +5,20 @@ import interfaces.ItemDAO;
 import models.Item;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
-public class ItemDAOImplementation implements ItemDAO {
+public class ItemDAOImplementation{
+    PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
+    PreparedStatement preparedStatement = null;
+    ResultSet resultSet = null;
 
-    @Override
     public void addItem(Item item) {
-        PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
-        PreparedStatement preparedStatement = null;
         String sqlQuery = "INSERT INTO items (name, price, description, is_active) VALUES(?, ?, ?, ?) ";
-
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(sqlQuery);
             preparedStatement.setString(1, item.getName());
@@ -31,12 +33,8 @@ public class ItemDAOImplementation implements ItemDAO {
         }
     }
 
-    @Override
     public void deleteItem(int id) {
-        PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
-        PreparedStatement preparedStatement = null;
         String orderForSql = "UPDATE items SET is_active = ? WHERE id = ?";
-
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderForSql);
             preparedStatement.setBoolean(1, false);
@@ -48,49 +46,78 @@ public class ItemDAOImplementation implements ItemDAO {
         }
     }
 
-    @Override
     public void editItem(Item item) {
         PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
         PreparedStatement ps = null;
-        String orderForSql = ("UPDATE item SET name = ?, price = ?, description = ? is_active WHERE id = ?");
+        String orderForSql = ("UPDATE item SET name = ?, price = ?, description = ?, is_active = ? WHERE id = ?");
 
         try {
-            Scanner scanner = new Scanner(System.in);
-            ps = postgreSQLJDBC.connect().prepareStatement(orderForSql);
-
-            System.out.println("enter name: "); //
-            String name = scanner.nextLine();
-
-            System.out.println("enter price: ");
-            int price = scanner.nextInt();
-
-            System.out.println("enter description: ");
-            String description = scanner.nextLine();
-
-            System.out.println("is item active: ");
-            boolean isActive = scanner.nextBoolean();
-
-
-            ps.setString(1, name);
-            ps.setInt(2, price);
-            ps.setString(3, description);
-            ps.setBoolean(4, isActive);
+            ps.setString(1, item.getName());
+            ps.setInt(2, item.getPrice());
+            ps.setString(3, item.getDescription());
+            ps.setBoolean(4, item.isActive());
 
             int row = ps.executeUpdate();
-
+            ps.close();
         } catch (SQLException e) {
             System.out.println(e);
         }
     }
 
-    @Override
-    public List<Item> getEquipment() {
+
+    public List<Item> getItemsList() {
         PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
-        PreparedStatement ps = null;
-        String orderForSql = ("SELECT * FROM user_items");
+        PreparedStatement preparedStatement = null;
+        String orderForSql = ("SELECT * FROM items");
+        List<Item> itemList = new ArrayList<>();
+        try{
+            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderForSql);
+            while (resultSet.next()){
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                int price = resultSet.getInt("price");
+                String description = resultSet.getString("description");
+                boolean isActive = resultSet.getBoolean("is_active");
+                Item item = new Item(id, name, price, description, isActive);
+                itemList.add(item);
+                //test method
+                System.out.println(id + " | " + name + " | " + price + " | " + description + " | " + isActive);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return itemList;
+    }
+
+    public List<Item> getUserItemsList(int userId) {
+        PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
+        PreparedStatement preparedStatement = null;
+        String orderForSql = ("SELECT * FROM items join user_items ui on items.id = ui.item_id where student_id = ?;");//TODO
+        List<Item> itemList = new ArrayList<>();
+        try{
+            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderForSql);
+            while (resultSet.next()){
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                int price = resultSet.getInt("price");
+                String description = resultSet.getString("description");
+                boolean isActive = resultSet.getBoolean("is_active");
+                //TODO what whit joined id, not ready for tests
+                int idInUI = resultSet.getInt("id");
+                boolean isAvailable = resultSet.getBoolean("is_available");
+                Date boughtDate = resultSet.getDate("bought_date");
+                Date usedDate = resultSet.getDate("used_date");
+                int studentId = resultSet.getInt("student_id");
 
 
-
-        return null;
+                Item item = new Item(id, name, price, description, isActive);
+                itemList.add(item);
+                //test method
+                System.out.println(id + " | " + name + " | " + price + " | " + description + " | " + isActive);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return itemList;
     }
 }

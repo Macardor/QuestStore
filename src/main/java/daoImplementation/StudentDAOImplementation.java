@@ -114,6 +114,7 @@ public class StudentDAOImplementation implements StudentDAO{
             String firstName = scanner.next();
             System.out.println("Insert new student surrname: ");
             String lastName = scanner.next();
+            // tu brakuje sout'a moze dlatego nie działało
             int studentTypeId = scanner.nextInt();
 
             preparedStatement.setString(1, login);
