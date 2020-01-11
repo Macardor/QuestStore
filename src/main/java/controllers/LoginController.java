@@ -1,5 +1,6 @@
 package controllers;
 
+import services.LoginService;
 import view.StaticUi;
 
 import java.util.Scanner;
@@ -8,6 +9,7 @@ public class LoginController implements BaseController{
 
     Scanner scanner = new Scanner(System.in);
     StaticUi staticUi = new StaticUi();
+    LoginService loginService = new LoginService();
 
     @Override
     public void run() {
@@ -28,7 +30,9 @@ public class LoginController implements BaseController{
     }
 
     private void login(){
-
+//if (loginService.loginChecker())
+        //TODO
     }
+
 }
 
