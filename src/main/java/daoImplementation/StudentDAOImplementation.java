@@ -19,6 +19,30 @@ public class StudentDAOImplementation implements StudentDAO {
     ResultSet resultSet = null;
     Scanner scanner = new Scanner(System.in);
 
+    @Override
+    public void showItems() {
+
+    }
+
+    @Override
+    public void showCoincubatos() {
+
+    }
+
+    @Override
+    public void showUserItems() {
+
+    }
+
+    @Override
+    public void showUserCoins() {
+
+    }
+
+    @Override
+    public void showUserQuests() {
+
+    }
 }
 //
 //    public void addStudent(String login, String password, String firstName, String lastName) {
