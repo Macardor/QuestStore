@@ -21,7 +21,7 @@ public class LoginController implements BaseController{
         String option = scanner.next();
         switch (option){
             case "1":
-
+                loginManager();
                 break;
             default:
                 staticUi.errorMassage();
@@ -29,8 +29,8 @@ public class LoginController implements BaseController{
         }
     }
 
-    private void login(){
-//if (loginService.loginChecker())
+    private void loginManager(){
+        System.out.println(loginService.loginChecker());
         //TODO
     }
 

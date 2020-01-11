@@ -1,8 +1,9 @@
 package daoImplementation;
 
 import SQL.PostgreSQLJDBC;
-import javafx.application.Application;
-import javafx.stage.Stage;
+
+import models.Creep;
+import models.Mentor;
 import models.Student;
 import models.User;
 
@@ -18,13 +19,14 @@ public class LoginDAOImplementation  {
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
 
-    public User isLoginAndPasswordInDB (String login, String password){
+
+    public Object isLoginAndPasswordInDB (String login, String password){
         String orderToSql = "SELECT * FROM users " +
                 "join user_details " +
                 "on users.user_details_id = user_details.id " +
                 "where login = ? and password = ?";
 
-        User result = null;
+        Object result = null;
         try {
 
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
@@ -40,6 +42,7 @@ public class LoginDAOImplementation  {
 
                 System.out.println(id+ "| " + login+ "| " + password+ "| " + userTypeId+ "| " + firstName+ "| " + lastName);
 
+                result = userCreatorByUserType(id, login,password,userTypeId,firstName,lastName);
             }
             preparedStatement.executeQuery();
         }catch (SQLException e) {
@@ -56,4 +59,20 @@ public class LoginDAOImplementation  {
 
         return result;
     }
+
+    public Object userCreatorByUserType (int id, String login, String password, int userType, String firstName, String lastName){
+        Object user;
+        if(userType == 1){
+            user = new Student(id,login,password,userType,firstName,lastName);
+        }
+        else if(userType == 2){
+            user = new Mentor(id,login,password,userType,firstName,lastName);
+        }
+        else{
+            user = new Creep(id,login,password,userType,firstName,lastName);
+        }
+        return user;
+    }
+
+
 }
