@@ -19,10 +19,10 @@ public class StudentController implements BaseController {
         String option = scanner.next();
         switch (option){
             case "1":
-                enterNewUser();
+                studentDAOImplementation.showItems();
                 break;
             case "2":
-
+                studentDAOImplementation.showCoincubatos();
                 break;
             case "3":
 
@@ -33,25 +33,24 @@ public class StudentController implements BaseController {
 
     private void printStudentMenu(){
         System.out.println("Select number to: \n" +
-                "1. Add new student\n" +
-                "2. Show all students\n" +
-                "3. Edit student\n" +
-                "4. Delete student\n");
+                "1. Show all items in the store\n" +
+                "2. Show all coincubators in the store\n" +
+                "3. ");
     }
-
-    private void enterNewUser(){
-
-        System.out.println("Insert login: ");
-        String login =  scanner.next();
-        System.out.println("Insert password: ");
-        String password = scanner.next();
-        System.out.println("Insert first name: ");
-        String firstName = scanner.next();
-        System.out.println("Insert last name: ");
-        String lastName = scanner.next();
-
-        //studentDAOImplementation.addStudent(login, password, firstName, lastName);
-    }
+//
+//    private void enterNewUser(){
+//
+//        System.out.println("Insert login: ");
+//        String login =  scanner.next();
+//        System.out.println("Insert password: ");
+//        String password = scanner.next();
+//        System.out.println("Insert first name: ");
+//        String firstName = scanner.next();
+//        System.out.println("Insert last name: ");
+//        String lastName = scanner.next();
+//
+//        //studentDAOImplementation.addStudent(login, password, firstName, lastName);
+//    }
 
 //    private void extractStudents(){
 //        studentDAOImplementation.extractStudent();

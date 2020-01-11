@@ -1,5 +1,6 @@
 package interfaces;
 
+import models.Coincubator;
 import models.Item;
 import models.User;
 
@@ -8,7 +9,7 @@ import java.util.List;
 public interface StudentDAO{
 
     public List<Item> showItems();
-    public void showCoincubatos();
+    public List<Coincubator> showCoincubatos();
     public void showUserItems();
     public void showUserCoins();
     public void showUserQuests();

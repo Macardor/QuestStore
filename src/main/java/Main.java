@@ -1,6 +1,8 @@
 import SQL.PostgreSQLJDBC;
+import controllers.CreepController;
 import controllers.LoginController;
 import controllers.StudentController;
+import daoImplementation.CreepDAOImplementation;
 import daoImplementation.QuestDAOImplementation;
 import daoImplementation.StudentDAOImplementation;
 
@@ -19,7 +21,8 @@ public class Main {
 //        QuestDAOImplementation qdi = new QuestDAOImplementation();
 //        qdi.getQuests();
 
-        StudentDAOImplementation studentDAOImplementation = new StudentDAOImplementation();
-        studentDAOImplementation.showItems();
+        CreepController creepController = new CreepController();
+        creepController.run();
+
     }
 }

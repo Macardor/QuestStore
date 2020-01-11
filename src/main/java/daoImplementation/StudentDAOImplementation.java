@@ -2,6 +2,7 @@ package daoImplementation;
 
 import SQL.PostgreSQLJDBC;
 import interfaces.StudentDAO;
+import models.Coincubator;
 import models.Item;
 
 import java.sql.PreparedStatement;
@@ -21,7 +22,7 @@ public class StudentDAOImplementation implements StudentDAO {
     @Override
     public List<Item> showItems() {
         String orderToSql = "SELECT * FROM items";
-        List<Item> studentList = new ArrayList<>();
+        List<Item> itemList = new ArrayList<>();
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
             resultSet = preparedStatement.executeQuery();
@@ -32,7 +33,7 @@ public class StudentDAOImplementation implements StudentDAO {
                 String description = resultSet.getString("description");
                 boolean isActive = resultSet.getBoolean("is_active");
                 Item item = new Item(id, name, price, description, isActive);
-                studentList.add(item);
+                itemList.add(item);
                 System.out.println(id+ "| " + name+ "| " + price+ "| " + description+ "| " + isActive);
 
             }
@@ -47,13 +48,40 @@ public class StudentDAOImplementation implements StudentDAO {
 
             }
 
-        }return studentList;
+        }return itemList;
     }
 
 
     @Override
-    public void showCoincubatos() {
+    public List<Coincubator> showCoincubatos() {
+        String orderToSql = "SELECT * FROM coincubators";
+        List<Coincubator> coincubatorsList = new ArrayList<>();
+        try {
+            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                String description = resultSet.getString("description");
+                int currentDonation = resultSet.getInt("current_donation");
+                int targetDonation = resultSet.getInt("target_donation");
+                boolean isActive = resultSet.getBoolean("is_active");
+                Coincubator coincubator = new Coincubator(id, name, description, currentDonation, targetDonation, isActive);
+                coincubatorsList.add(coincubator);
+                System.out.println(id+ "| " + name+ "| " + description+ "| " + currentDonation + "| " + targetDonation+ "| " + isActive);
+            }
+            preparedStatement.executeQuery();
+        }catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            try {
+                preparedStatement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
 
+            }
+
+        }return coincubatorsList;
     }
 
     @Override
