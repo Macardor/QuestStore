@@ -1,5 +1,7 @@
 package controllers;
 
+import models.Student;
+import models.User;
 import services.LoginService;
 import view.StaticUi;
 
@@ -23,6 +25,8 @@ public class LoginController implements BaseController{
             case "1":
                 loginManager();
                 break;
+            case "2":
+                break;
             default:
                 staticUi.errorMassage();
                 loginMenu();
@@ -30,8 +34,25 @@ public class LoginController implements BaseController{
     }
 
     private void loginManager(){
-        System.out.println(loginService.loginChecker());
-        //TODO
+        User user = loginService.loginChecker();
+        if (user == null){
+            StaticUi.errorMessageBadLoginOrPassword();
+            loginMenu();
+        } else {
+            if (user.getClass().getSimpleName().equals("Student")){
+                System.out.println("you log in as Student");
+                StudentController studentController = new StudentController();
+                studentController.run();
+            } else if (user.getClass().getSimpleName().equals("Mentor")){
+                System.out.println("you log in as Mentor");
+                MentorController mentorController = new MentorController();
+                mentorController.run();
+            }else {
+                System.out.println("you log in as Creep");
+                CreepController creepController = new CreepController();
+                creepController.run();
+            }
+        }
     }
 
 }

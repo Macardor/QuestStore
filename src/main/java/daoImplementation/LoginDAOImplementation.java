@@ -20,13 +20,13 @@ public class LoginDAOImplementation  {
     ResultSet resultSet = null;
 
 
-    public Object isLoginAndPasswordInDB (String login, String password){
+    public User isLoginAndPasswordInDB (String login, String password){
         String orderToSql = "SELECT * FROM users " +
                 "join user_details " +
                 "on users.user_details_id = user_details.id " +
                 "where login = ? and password = ?";
 
-        Object result = null;
+        User result = null;
         try {
 
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
@@ -60,8 +60,8 @@ public class LoginDAOImplementation  {
         return result;
     }
 
-    public Object userCreatorByUserType (int id, String login, String password, int userType, String firstName, String lastName){
-        Object user;
+    public User userCreatorByUserType (int id, String login, String password, int userType, String firstName, String lastName){
+        User user;
         if(userType == 1){
             user = new Student(id,login,password,userType,firstName,lastName);
         }

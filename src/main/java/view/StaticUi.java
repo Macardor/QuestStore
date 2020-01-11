@@ -10,7 +10,8 @@ public class StaticUi {
 
     public static void showLoginMenu(){
         String loginMenu = "Login menu\n" +
-                "1) Login.";
+                            "1) Login.\n" +
+                            "2) Exit.";
         System.out.println(loginMenu);
 
     }
@@ -28,6 +29,10 @@ public class StaticUi {
         list.add(login);
         list.add(password);
         return list;
+    }
+
+    public static void errorMessageBadLoginOrPassword(){
+        System.out.println("Bad login or password. Please try again.");
     }
 
 }
