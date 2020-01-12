@@ -25,7 +25,7 @@ public class StudentController implements BaseController {
                 studentDAOImplementation.showCoincubatos();
                 break;
             case "3":
-
+                studentDAOImplementation.showUserCoins(2);
                 break;
             case "4":
         }
@@ -35,7 +35,8 @@ public class StudentController implements BaseController {
         System.out.println("Select number to: \n" +
                 "1. Show all items in the store\n" +
                 "2. Show all coincubators in the store\n" +
-                "3. ");
+                "3. Show all your coins\n" +
+                "4. Show user's items");
     }
 //
 //    private void enterNewUser(){

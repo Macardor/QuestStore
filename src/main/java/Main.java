@@ -21,8 +21,11 @@ public class Main {
 //        QuestDAOImplementation qdi = new QuestDAOImplementation();
 //        qdi.getQuests();
 
-        CreepController creepController = new CreepController();
-        creepController.run();
+//        CreepController creepController = new CreepController();
+//        creepController.run();
+
+        StudentController studentController = new StudentController();
+        studentController.run();
 
     }
 }

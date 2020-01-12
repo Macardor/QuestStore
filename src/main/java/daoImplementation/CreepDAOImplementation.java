@@ -59,31 +59,32 @@ public class CreepDAOImplementation implements CreepDAO {
 
     @Override
     public void addMentor(Mentor mentor) {
-//        String insertIntoTwoTables = "WITH insertIntoUserDetails AS (" +
-//                "    INSERT INTO user_details (login, password, first_name, last_name) VALUES" +
-//                "    (?, ?, ?, ?)" +
-//                "    RETURNING id" +
-//                ")," +
-//                " insertIntoUsers AS (" +
-//                "    INSERT INTO users (user_type_id, is_active, user_details_id) VALUES" +
-//                "    (2, 'true', (SELECT id FROM insertIntoUserDetails))\n" +
-//                "    RETURNING id" +
-//                ")" +
-//                "INSERT INTO mentors (user_id) VALUES;";
-//
-//        try {
-//            preparedStatement = postgreSQLJDBC.connect().prepareStatement(insertIntoTwoTables);
-//            preparedStatement.setString(1, mentor.getLogin());
-//            preparedStatement.setString(2, mentor.getPassword());
-//            preparedStatement.setString(3, mentor.getFirstname());
-//            preparedStatement.setString(4, mentor.getLastname());
-//            preparedStatement.executeUpdate();
-//            preparedStatement.close();
-//
-//
-//        } catch (Exception e) {
-//            System.out.println(e);
-//        }
+        String insertIntoTwoTables = "WITH insertIntoUserDetails AS (\n" +
+                "    INSERT INTO user_details (login, password, first_name, last_name) VALUES\n" +
+                "    (?, ?, ?, ?)\n" +
+                "    RETURNING id\n" +
+                "),\n" +
+                " inserIntoUsers AS (\n" +
+                "    INSERT INTO users (user_type_id, is_active, user_details_id) VALUES\n" +
+                "    (2, 'true', (SELECT id FROM insertIntoUserDetails))\n" +
+                "    RETURNING id\n" +
+                ")\n" +
+                "INSERT INTO mentors (user_id) VALUES\n" +
+                "(SELECT id FROM inserIntoUsers);";
+
+        try {
+            preparedStatement = postgreSQLJDBC.connect().prepareStatement(insertIntoTwoTables);
+            preparedStatement.setString(1, mentor.getLogin());
+            preparedStatement.setString(2, mentor.getPassword());
+            preparedStatement.setString(3, mentor.getFirstname());
+            preparedStatement.setString(4, mentor.getLastname());
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     @Override
@@ -93,6 +94,33 @@ public class CreepDAOImplementation implements CreepDAO {
 
     @Override
     public void deleteMentor(int id) {
-
+        String orderToSql = "DELETE FROM user_details WHERE id = ?";
+        String orderToSqlUser = "DELETE FROM users WHERE id = ?";
+        try {
+            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            preparedStatement.setInt(1, id);
+            int row = preparedStatement.executeUpdate();
+        }catch (Exception e){
+            System.out.println(e);
+        }finally {
+            try {
+                preparedStatement.close();
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+        try {
+            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSqlUser);
+            preparedStatement.setInt(1,id);
+            int row = preparedStatement.executeUpdate();
+        }catch (Exception e){
+            System.out.println(e);
+        }finally {
+            try {
+                preparedStatement.close();
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
     }
 }

@@ -32,6 +32,7 @@ public class CreepController implements BaseController {
 
                 break;
             case "4":
+                deleteMentorById();
         }
     }
 
@@ -56,6 +57,13 @@ public class CreepController implements BaseController {
         Mentor mentor = new Mentor(login, password, studentTypeId, firstName, lastName);
 
         creepDAOImplementation.addMentor(mentor);
+        creepDAOImplementation.showAllMentors();
+    }
+
+    private void deleteMentorById(){
+        creepDAOImplementation.showAllMentors();
+        int mentorId = scanner.nextInt();
+        creepDAOImplementation.deleteMentor(mentorId);
         creepDAOImplementation.showAllMentors();
     }
 
