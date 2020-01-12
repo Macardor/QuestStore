@@ -1,6 +1,7 @@
 package controllers;
 
 import daoImplementation.StudentDAOImplementation;
+import models.Student;
 
 import java.util.Scanner;
 
@@ -25,9 +26,10 @@ public class StudentController implements BaseController {
                 studentDAOImplementation.showCoincubatos();
                 break;
             case "3":
-                studentDAOImplementation.showUserCoins(2);
+                showUserCoins();
                 break;
             case "4":
+                studentDAOImplementation.showUserItems();
         }
     }
 
@@ -37,6 +39,10 @@ public class StudentController implements BaseController {
                 "2. Show all coincubators in the store\n" +
                 "3. Show all your coins\n" +
                 "4. Show user's items");
+    }
+
+    private void showUserCoins(){
+        studentDAOImplementation.showUserCoins();
     }
 //
 //    private void enterNewUser(){

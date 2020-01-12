@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -87,16 +88,40 @@ public class StudentDAOImplementation implements StudentDAO {
 
     @Override
     public void showUserItems() {
+        Student student = new Student(3);
+        String orderToSql = "SELECT * FROM user_items JOIN items ON user_items.item_id = items.id WHERE user_items.id = ?";
+        try {
+            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            preparedStatement.setInt(1, student.getId());
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                boolean isAvailable = resultSet.getBoolean("is_available");
+                Date boughtDate = resultSet.getDate("bought_date");
+                Date usedDate = resultSet.getDate("used_date");
+                String itemName = resultSet.getString("name");
+                String description = resultSet.getString("description");
+                System.out.println("Your items:\n" +
+                        "Item name  |   Description     |   Bought date     |   Used date   |   Is Available    \n" +
+                        itemName + " | " + description + " | " + boughtDate + " | " + usedDate + " | " + isAvailable);
+            }
+            preparedStatement.executeQuery();
+        }catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            try {
+                preparedStatement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
 
+            }
+
+        }
     }
+
+
 
     @Override
-    public void showUserCoins(Student student) {
-
-    }
-
-    // @Override
-    public void showUserCoins(/*Student student*/ int id) {
+    public void showUserCoins() {
         String orderToSql = "SELECT coins FROM students WHERE id = ?";
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);

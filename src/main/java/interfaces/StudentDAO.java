@@ -12,7 +12,7 @@ public interface StudentDAO{
     public List<Item> showItems();
     public List<Coincubator> showCoincubatos();
     public void showUserItems();
-    public void showUserCoins(Student student);
+    public void showUserCoins();
     public void showUserQuests();
 
 

@@ -10,6 +10,10 @@ public class Student extends User {
         super(login, password, userType, firstname, lastname);
     }
 
+    public Student(int id) {
+        super(id);
+    }
+
     @Override
     public int getUserType() {
         return super.getUserType();

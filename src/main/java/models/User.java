@@ -25,6 +25,10 @@ public abstract class User {
         this.lastname = lastname;
     }
 
+    public User(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }
