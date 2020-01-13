@@ -3,27 +3,31 @@
     perspective-origin: 50% 50%;
     perspective: 800px;
 }
+.card *{
+    background-color: rgba(44, 44, 44, 0.82);
+}
 
-.card {
+.card{
     /*width: 340px;*/
     /*height: 480px;*/
 
     background-size: 100%;
     background-repeat: no-repeat;
     background-position: center;
+    background-color: rgba(44, 44, 44, 0.82);
     border-radius: 8px;
     box-shadow: 0 0 6px 2px #f008b7, 0 35px 25px -15px rgba(0, 0, 0, 0.5);
     position: relative;
     overflow: hidden;
     display: inline-block;
 
-/ / Animation ready will-change: transform;
+/*/ / Animation ready will-change: transform;*/
 
     transition: transform 100ms ease;
     transition-property: transform;
 
     transform-style: preserve-3d;
-    transform-origin: 50% 50%;
+    transform-origin: -50% 50%;
 
     transform: translate3d(0%, 0%, -400px);
 
