@@ -13,7 +13,6 @@ public class MentorController implements BaseController {
     private void mentorMenu(){
         displayMentorMenu();
         String option = scanner.next();
-        int idInput = scanner.nextInt();
         switch (option){
             case "1":
                 mentorDAOImplementation.getStudentsList();
@@ -22,11 +21,12 @@ public class MentorController implements BaseController {
                 break;
             case "2":
                 mentorDAOImplementation.getStudentsList();
+                int idInput = scanner.nextInt();
                 mentorDAOImplementation.deleteStudent(idInput);
                 mentorDAOImplementation.getStudentsList();
                 break;
             case "3":
-                mentorDAOImplementation.getStudentsList().toString();
+                mentorDAOImplementation.getStudentsList();
                 break;
             case "4":
                 break;

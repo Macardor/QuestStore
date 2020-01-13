@@ -77,7 +77,6 @@ public class MentorDAOImplementation{
         List<User> studentList = new ArrayList<>();
         try {
             ps = postgreSQLJDBC.connect().prepareStatement(orderToSql);
-
             ps.setInt(1, 1);
 
             resultSet = ps.executeQuery();
