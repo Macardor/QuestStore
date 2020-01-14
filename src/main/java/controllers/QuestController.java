@@ -24,7 +24,7 @@ public class QuestController {
         displayAllQuests(questDAOImplementation.getAllQuests());
         switch (option){
             case "1":
-                questDAOImplementation.addQuest(new Quest(getNameInput(), getDescriptionInput(), getRewardInput(), getBoolInput(option)));
+                questDAOImplementation.addQuest(new Quest(getNameInput(), getDescriptionInput(), getRewardInput(), getBoolInput()));
                 break;
             case "2":
                 displayAllQuests(questDAOImplementation.getAllQuests());

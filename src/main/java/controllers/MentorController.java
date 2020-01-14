@@ -1,6 +1,8 @@
 package controllers;
 import daoImplementation.MentorDAOImplementation;
+import models.Coincubator;
 import models.Student;
+import services.CoincubatorService;
 
 import java.util.Scanner;
 
@@ -29,6 +31,10 @@ public class MentorController implements BaseController {
                 break;
             case "4":
                 break;
+            case "5":
+                CoincubatorService coincubatorService = new CoincubatorService();
+                coincubatorService.showAllCoincubators();
+                break;
         }
     }
 
@@ -37,7 +43,8 @@ public class MentorController implements BaseController {
                 "1. Add new student\n" +
                 "2. Delete student\n" +
                 "3. Get All Students\n" +
-                "4. Delete student\n");
+                "4. Delete student\n" +
+                "5. Show all Coincubators");
     }
 
     private void enterNewStudent(){
@@ -63,7 +70,7 @@ public class MentorController implements BaseController {
 
     @Override
     public void run() {
-
+        mentorMenu();
     }
 
 
