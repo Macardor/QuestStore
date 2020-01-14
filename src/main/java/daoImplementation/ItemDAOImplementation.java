@@ -52,7 +52,7 @@ public class ItemDAOImplementation{
 
     public void editItem(Item item) {
         PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
-        String orderForSql = ("UPDATE item SET name = ?, price = ?, description = ?, is_active = ? WHERE id = ?");
+        String orderForSql = ("UPDATE items SET name = ?, price = ?, description = ?, is_active = ? WHERE id = ?");
 
         try {
             ps = postgreSQLJDBC.connect().prepareStatement(orderForSql);
@@ -60,6 +60,7 @@ public class ItemDAOImplementation{
             ps.setInt(2, item.getPrice());
             ps.setString(3, item.getDescription());
             ps.setBoolean(4, item.isActive());
+            ps.setInt(5, item.getId());
 
             System.out.println(ps.toString()); //test method
 
@@ -126,4 +127,5 @@ public class ItemDAOImplementation{
         }
         return itemList;
     }
+
 }

@@ -1,7 +1,6 @@
 package daoImplementation;
 
 import SQL.PostgreSQLJDBC;
-import interfaces.QuestDAO;
 import models.Quest;
 
 import java.sql.PreparedStatement;
@@ -9,48 +8,45 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class QuestDAOImplementation{
-
+    PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
+    PreparedStatement ps = null;
     public void addQuest(Quest quest) {
-        PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
-        PreparedStatement preparedStatement = null;
+
         String sqlQuery = "INSERT INTO quests (name, description, reward) VALUES(?, ?, ?)";
 
         try {
-            preparedStatement = postgreSQLJDBC.connect().prepareStatement(sqlQuery);
+            ps = postgreSQLJDBC.connect().prepareStatement(sqlQuery);
 
-            preparedStatement.setString(1, quest.getName());
-            preparedStatement.setString(2, quest.getDescription());
-            preparedStatement.setInt(3, quest.getReward());
+            ps.setString(1, quest.getName());
+            ps.setString(2, quest.getDescription());
+            ps.setInt(3, quest.getReward());
 
-            preparedStatement.executeUpdate();
-            preparedStatement.close();
+            ps.executeUpdate();
+            ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public void deleteQuest(Quest quest) {
-        PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
-        PreparedStatement preparedStatement = null;
+    public void deleteQuest(int id) {
+
         String orderForSql = "UPDATE quests SET is_active = ? WHERE id = ?";
 
         try {
-            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderForSql);
-            preparedStatement.setBoolean(1, false);
-            preparedStatement.setInt(2, quest.getId());
-            int row = preparedStatement.executeUpdate();
-            preparedStatement.close();
+            ps = postgreSQLJDBC.connect().prepareStatement(orderForSql);
+            ps.setBoolean(1, false);
+            ps.setInt(2, id);
+            int row = ps.executeUpdate();
+            ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     public void editQuest(Quest quest) {
-        PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
-        PreparedStatement ps = null;
+
         String orderForSql = ("UPDATE quests SET name = ?, description = ?, reward = ?, is_active = ? WHERE id = ?");
 
         try {
@@ -73,8 +69,7 @@ public class QuestDAOImplementation{
     }
 
     public List<Quest> getAllQuests(){
-        PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
-        PreparedStatement ps = null;
+
 //        String orderForSql = ("select u.id, ud.first_name, ud.last_name, q.name, q.description, q.reward from students as s\n" +
 //                "join users u\n" +
 //                "on s.user_id = u.id\n" +
@@ -139,5 +134,23 @@ public class QuestDAOImplementation{
             System.out.println(e);
         }
         return quests;
+    }
+    public Quest getQuestById(int id){
+        String orderToSql =  "SELECT * FROM quests where id = ?";
+        Quest quest = null;
+        try {
+            ps = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            ps.setInt(1, id);
+            ResultSet resultSet = ps.executeQuery();
+            String name = resultSet.getString("name");
+            String description = resultSet.getString("description");
+            int reward = resultSet.getInt("reward");
+            boolean isActive = resultSet.getBoolean("is_active");
+            quest = new Quest(id, name, description, reward, isActive);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return quest;
     }
 }

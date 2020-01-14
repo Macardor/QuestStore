@@ -1,14 +1,13 @@
 package controllers;
-
 import daoImplementation.MentorDAOImplementation;
 import models.Student;
-import view.StaticUi;
 
 import java.util.Scanner;
 
 public class MentorController implements BaseController {
     Scanner scanner = new Scanner(System.in);
     MentorDAOImplementation mentorDAOImplementation;
+    Student student;
 
     private void mentorMenu(){
         displayMentorMenu();
@@ -56,10 +55,10 @@ public class MentorController implements BaseController {
     }
 
 
-    public static void main(String[] args) {
-        MentorController mentorController = new MentorController();
-        mentorController.mentorMenu();
-    }
+//    public static void main(String[] args) {
+//        MentorController mentorController = new MentorController();
+//        mentorController.mentorMenu();
+//    }
 
 
     @Override
