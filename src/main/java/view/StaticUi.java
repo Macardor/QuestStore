@@ -35,4 +35,6 @@ public class StaticUi {
         System.out.println("Bad login or password. Please try again.");
     }
 
+    public static void addStudentMenu() {
+    }
 }
