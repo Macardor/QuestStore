@@ -15,7 +15,6 @@ public class MentorDAOImplementation{
     PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
     PreparedStatement ps = null;
     ResultSet resultSet = null;
-    Scanner scanner = new Scanner(System.in);
 
 
     public void addStudent(Student student) {
@@ -54,7 +53,7 @@ public class MentorDAOImplementation{
     }
 
     public void deleteStudent(int id) {
-        String orderToSql = "UPDATE users SET is_active = ? WHERE id = ? ";
+        String orderToSql = "UPDATE users SET is_active = ? WHERE id = ? and user_type_id = 1 ";
         try {
             ps = postgreSQLJDBC.connect().prepareStatement(orderToSql);
 
@@ -70,12 +69,11 @@ public class MentorDAOImplementation{
         }
     }
 
-    public List<User> getStudentsList() {
-        System.out.println("123");
+    public List<Student> getStudentsList() {
         String orderToSql = "SELECT * FROM users " +
                 "join user_details " +
                 "on users.user_details_id = user_details.id WHERE users.user_type_id = ?";
-        List<User> studentList = new ArrayList<>();
+        List<Student> studentList = new ArrayList<>();
         try {
             ps = postgreSQLJDBC.connect().prepareStatement(orderToSql);
             ps.setInt(1, 1);
@@ -87,13 +85,14 @@ public class MentorDAOImplementation{
                 String login = resultSet.getString("login");
                 String password = resultSet.getString("password");
                 int userTypeId = resultSet.getInt("user_type_id");
+                boolean isActive = resultSet.getBoolean("is_active");
                 String firstName = resultSet.getString("first_name");
                 String lastName = resultSet.getString("last_name");
 
-                User student = new Student(id, login, password, userTypeId, firstName, lastName);
+                Student student = new Student(id, login, password, userTypeId, isActive, firstName, lastName);
                 studentList.add(student);
 
-                System.out.println(id + "| " + login + "| " + password + "| " + userTypeId + "| " + firstName + "| " + lastName); //test method
+                System.out.println(id + "| " + login + "| " + password + "| " + userTypeId + "| " + isActive + "| " + firstName + "| " + lastName); //test method
 
             }
             ps.close();
@@ -102,6 +101,74 @@ public class MentorDAOImplementation{
             System.out.println(e);
         }
         return studentList;
+    }
+
+    public List<Student> getActiveStudentsList() {
+        String orderToSql = "SELECT * FROM users " +
+                "join user_details " +
+                "on users.user_details_id = user_details.id WHERE users.user_type_id = ? and users.is_active = ?";
+        List<Student> studentList = new ArrayList<>();
+        try {
+            ps = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            ps.setInt(1, 1);
+            ps.setBoolean(2, true);
+
+            resultSet = ps.executeQuery();
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String login = resultSet.getString("login");
+                String password = resultSet.getString("password");
+                int userTypeId = resultSet.getInt("user_type_id");
+                boolean isActive = resultSet.getBoolean("is_active");
+                String firstName = resultSet.getString("first_name");
+                String lastName = resultSet.getString("last_name");
+
+                Student student = new Student(id, login, password, userTypeId, isActive, firstName, lastName);
+                studentList.add(student);
+
+                System.out.println(id + "| " + login + "| " + password + "| " + userTypeId + "| " + isActive + "| " + firstName + "| " + lastName); //test method
+
+            }
+            ps.close();
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return studentList;
+    }
+
+    public Student getStudentByUserId(int userId) {
+        Student student = null;
+        String orderToSql = "SELECT * FROM users " +
+                "join user_details " +
+                "on users.user_details_id = user_details.id WHERE users.user_type_id = ? and users.id = ?";
+        try{
+            ps = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            ps.setInt(1, Student.userType);
+            ps.setInt(2, userId);
+            resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String login = resultSet.getString("login");
+                String password = resultSet.getString("password");
+                int userTypeId = resultSet.getInt("user_type_id");
+                boolean isActive = resultSet.getBoolean("is_active");
+                String firstName = resultSet.getString("first_name");
+                String lastName = resultSet.getString("last_name");
+
+                student = new Student(id, login, password, userTypeId, isActive, firstName, lastName);
+
+                System.out.println(id + "| " + login + "| " + password + "| " + userTypeId + "| " + isActive + "| " + firstName + "| " + lastName); //test method
+
+            }
+            ps.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return student;
     }
 }
 
