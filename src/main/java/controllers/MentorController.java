@@ -33,6 +33,7 @@ public class MentorController implements BaseController {
             case "4":
                 break;
             case "5":
+                coincubatorService.addNewCoincubator();
                 break;
             case "6":
                 coincubatorService.showAllCoincubators();

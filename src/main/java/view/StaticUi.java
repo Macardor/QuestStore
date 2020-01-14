@@ -40,16 +40,38 @@ public class StaticUi {
 
     public static Coincubator coincubatorEditor(Coincubator coincubator){
         Scanner scannerForEdit = new Scanner(System.in);
+        Scanner scannerForDescription = new Scanner(System.in);
 
         System.out.println("Pleas enter a new Name: ");
-        String name = scanner.next();
+        String name = scannerForEdit.nextLine();
         coincubator.setName(name);
         System.out.println("Pleas enter a new Description: ");
-        String description = scannerForEdit.next();
+        String description = scannerForDescription.nextLine();
         coincubator.setDescription(description);
         System.out.println("Pleas enter a new Donation price: ");
         int targetDonation = scanner.nextInt();
         coincubator.setTargetDonation(targetDonation);
+
+        return coincubator;
+    }
+
+    public static Coincubator newCoincubator(){
+        Scanner scannerForName = new Scanner(System.in);
+        Scanner scannerForNew = new Scanner(System.in);
+        Scanner scannerForInt = new Scanner(System.in);
+        boolean isActive = true;
+        int currentDonation = 0;
+
+        System.out.println("Pleas enter a Name: ");
+        String name = scannerForName.nextLine();
+
+        System.out.println("Pleas enter a Description: ");
+        String description = scannerForNew.nextLine();
+
+        System.out.println("Pleas enter a Donation price: ");
+        int targetDonation = scannerForInt.nextInt();
+
+        Coincubator coincubator = new Coincubator(name,description,currentDonation,targetDonation,isActive);
 
         return coincubator;
     }

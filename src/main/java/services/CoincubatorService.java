@@ -14,7 +14,15 @@ public class CoincubatorService {
         List<Coincubator> coincubators;
             coincubators = coincubatorDAOImplementation.getAllCoincubators();
         return coincubators;
+
+
     };
+
+    public void addNewCoincubator() {
+        Coincubator coincubator;
+        coincubator = StaticUi.newCoincubator();
+        coincubatorDAOImplementation.addCoincubator(coincubator);
+    }
 
     public void editCoincubatorById() {
         int coincubatorIdToEdit = StaticUi.idToEdit();

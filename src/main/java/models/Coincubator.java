@@ -22,6 +22,15 @@ public class Coincubator {
         this.isActive = isActive;
         this.donators = donators;
     }
+    public Coincubator(String name, String description, int currentDonation, int targetDonation, boolean isActive){
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.currentDonation = currentDonation;
+        this.targetDonation = targetDonation;
+        this.isActive = isActive;
+        this.donators = donators;
+    }
 
     public Coincubator(int id, String name, String description, int currentDonation, int targetDonation, boolean isActive, List<User> donators){
         this.id = id;

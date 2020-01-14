@@ -16,6 +16,25 @@ public class CoincubatorDAOImplementation {
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
 
+    public void addCoincubator(Coincubator coincubator) {
+        String sqlQuery = "INSERT INTO coincubators (name, description, current_donation, target_donation, is_active) VALUES(?, ?, ?, ?, ?) ";
+        try {
+            preparedStatement = postgreSQLJDBC.connect().prepareStatement(sqlQuery);
+
+            preparedStatement.setString(1, coincubator.getName());
+            preparedStatement.setString(2, coincubator.getDescription());
+            preparedStatement.setInt(3, coincubator.getCurrentDonation());
+            preparedStatement.setInt(4, coincubator.getTargetDonation());
+            preparedStatement.setBoolean(5, coincubator.isActive());
+
+
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public List<Coincubator> getAllCoincubators(){
         List<Coincubator> coincubators = new ArrayList<>();
         String orderToSql = "SELECT * FROM coincubators " +
