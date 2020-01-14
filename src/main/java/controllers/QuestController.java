@@ -19,8 +19,8 @@ public class QuestController {
                 "5. Get quest by id\n");
     }
     public void questMenu(){
+        displayQuestMenu();
         String option = scanner.nextLine();
-
         displayAllQuests(questDAOImplementation.getAllQuests());
         switch (option){
             case "1":
@@ -50,7 +50,7 @@ public class QuestController {
                         quest.setReward(newReward);
                         break;
                     case "4":
-                        boolean newBool = getBoolInput(option);
+                        boolean newBool = getBoolInput();
                         quest.setActive(newBool);
                         break;
                     default:
@@ -94,8 +94,13 @@ public class QuestController {
         int rewardInput = scanner.nextInt();
         return rewardInput;
     }
-    public boolean getBoolInput(String option){
+    public boolean getBoolInput(){
         System.out.println("Enter is quest active");
-        return option == "t";
+        String bool = scanner.nextLine();
+        if (bool == "t"){
+            return true;
+        }else {
+            return false;
+        }
     }
 }

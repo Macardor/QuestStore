@@ -93,7 +93,7 @@ public class QuestDAOImplementation{
                 boolean isActive = resultSet.getBoolean("is_active");
                 Quest quest = new Quest(id, name, description, reward, isActive);
                 quests.add(quest);
-                System.out.println(id + " | " + name + " | " + description + " | " + reward + " | " + isActive);
+//                System.out.println(id + " | " + name + " | " + description + " | " + reward + " | " + isActive);
             }
             ps.close();
         }catch (SQLException e){
