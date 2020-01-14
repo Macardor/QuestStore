@@ -7,20 +7,23 @@ public abstract class User {
     private int userType;
     private String firstname;
     private String lastname;
+    private boolean isActive;
 
-    public User(int id, String login, String password, int userType, String firstname, String lastname){
+    public User(int id, String login, String password, int userType, boolean isActive, String firstname, String lastname){
 
         this.id = id;
         this.login = login;
         this.password = password;
         this.userType = userType;
+        this.isActive = isActive;
         this.firstname = firstname;
         this.lastname = lastname;
     }
-    public User(String login, String password, int userType, String firstname, String lastname){
+    public User(String login, String password, int userType, boolean isActive, String firstname, String lastname){
         this.login = login;
         this.password = password;
         this.userType = userType;
+        this.isActive = isActive;
         this.firstname = firstname;
         this.lastname = lastname;
     }
@@ -71,5 +74,13 @@ public abstract class User {
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 }

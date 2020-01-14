@@ -2,63 +2,99 @@ package controllers;
 import daoImplementation.MentorDAOImplementation;
 import models.Student;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class MentorController implements BaseController {
     Scanner scanner = new Scanner(System.in);
     MentorDAOImplementation mentorDAOImplementation;
-    Student student;
-
-    private void mentorMenu(){
-        displayMentorMenu();
-        String option = scanner.next();
-        switch (option){
-            case "1":
-                mentorDAOImplementation.getStudentsList();
-                enterNewStudent();
-                mentorDAOImplementation.getStudentsList();
-                break;
-            case "2":
-                mentorDAOImplementation.getStudentsList();
-                int idInput = scanner.nextInt();
-                mentorDAOImplementation.deleteStudent(idInput);
-                mentorDAOImplementation.getStudentsList();
-                break;
-            case "3":
-                mentorDAOImplementation.getStudentsList();
-                break;
-            case "4":
-                break;
-        }
-    }
 
     private void displayMentorMenu(){
         System.out.println("Select number to: \n" +
                 "1. Add new student\n" +
                 "2. Delete student\n" +
                 "3. Get All Students\n" +
-                "4. Delete student\n");
+                "4. Get all active students\n" +
+                "5. Get student by user id");
     }
 
-    private void enterNewStudent(){
-
-        System.out.println("Insert login: ");
-        String login =  scanner.next();
-        System.out.println("Insert password: ");
-        String password = scanner.next();
-        System.out.println("Insert first name: ");
-        String firstName = scanner.next();
-        System.out.println("Insert last name: ");
-        String lastName = scanner.next();
-
-        mentorDAOImplementation.addStudent(new Student(login, password, Student.userType, firstName, lastName));
+    public void mentorMenu(){
+        displayMentorMenu();
+        String option = scanner.next();
+        boolean isRunning = true;
+        while (isRunning) {
+            switch (option) {
+                case "1":
+                    mentorDAOImplementation.addStudent(new Student(getFirstNameInput(), getLastNameInput(), Student.userType, true, getLoginInput(), getPasswordInput()));
+                    break;
+                case "2":
+                    mentorDAOImplementation.deleteStudent(getIdInput());
+                    break;
+                case "3":
+                    displayAllStudents(mentorDAOImplementation.getStudentsList());
+                    break;
+                case "4":
+                    displayAllStudents(mentorDAOImplementation.getActiveStudentsList());
+                    break;
+                case "5":
+                    mentorDAOImplementation.getStudentByUserId(getIdInput());
+                    break;
+                case "6":
+                    isRunning = false;
+            }
+        }
     }
 
 
-//    public static void main(String[] args) {
-//        MentorController mentorController = new MentorController();
-//        mentorController.mentorMenu();
-//    }
+
+    public void displayAllStudents(List<Student> studentList){
+        for (Student student : studentList) {
+            System.out.println(student.getId() + " | " + student.getLogin() + " | " + student.getPassword() + " | " + student.getFirstname() + " | " + student.getLastname() + " | " + student.isActive());
+        }
+    }
+
+    public int getIdInput(){
+        System.out.println("Enter id: ");
+        int idInput = scanner.nextInt();
+        return idInput;
+    }
+    public String getFirstNameInput(){
+        System.out.println("Enter first name: ");
+        String nameInput = scanner.next();
+        return nameInput;
+    }
+    public String getLastNameInput(){
+        System.out.println("Enter last name: ");
+        String lNameInput = scanner.next();
+        return lNameInput;
+    }
+    public int getUserTypeInput(){
+        System.out.println("Enter user type: ");
+        int userTypeInput = scanner.nextInt();
+        return userTypeInput;
+    }
+    public String getLoginInput(){
+        System.out.println("Enter login: ");
+        String loginInput = scanner.next();
+        return loginInput;
+    }
+    public String getPasswordInput(){
+        System.out.println("Enter password: ");
+        String passwordInput = scanner.next();
+        return passwordInput;
+    }
+    public boolean getBoolInput(){
+        System.out.println("Enter is student active");
+        String bool = scanner.next();
+        if (bool == "t"){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+
+
 
 
     @Override
@@ -66,3 +102,45 @@ public class MentorController implements BaseController {
 
     }
 }
+
+//    public void editMentorSubmenu(){
+//        Scanner sc = new Scanner(System.in);
+//
+//        System.out.println("Which student do you want to edit?");
+//        int idToEdit = getIdInput();
+//        Student student = mentorDAOImplementation.getStudentById(idToEdit);
+//
+//        boolean isRunning = true;
+//        while (isRunning) {
+//            System.out.println("Edit student. What do you want to edit?\n" +
+//                    "1. To edit name student\n" +
+//                    "2. To edit student price\n" +
+//                    "3. To edit student description\n" +
+//                    "4. To activate or deactivate quest\n" +
+//                    "6. To submit");
+//            String submenu = sc.next();
+//            switch (submenu) {
+//                case "1":
+//                    String newName = getNameInput();
+//                    student.setName(newName);
+//                    break;
+//                case "2":
+//                    int newPrice = getPriceInput();
+//                    student.setPrice(newPrice);
+//                    break;
+//                case "3":
+//                    String newDescription = getDescriptionInput();
+//                    student.setDescription(newDescription);
+//                    break;
+//                case "4":
+//                    boolean newBool = getBoolInput();
+//                    student.setActive(newBool); // TODO nie przestawia się na true
+//                    break;
+//                case "6":
+//                    isRunning = false;
+//                    break;
+//            }
+//        }
+//        System.out.println("success");
+//        mentorDAOImplementation.editStudent(student);
+//    }
