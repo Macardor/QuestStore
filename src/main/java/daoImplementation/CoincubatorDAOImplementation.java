@@ -2,6 +2,7 @@ package daoImplementation;
 
 import SQL.PostgreSQLJDBC;
 import models.Coincubator;
+import models.Item;
 import models.User;
 
 import java.sql.PreparedStatement;
@@ -52,5 +53,61 @@ public class CoincubatorDAOImplementation {
         }
 
         return  coincubators;
+    }
+
+    public Coincubator isCoincubatorWithIdInDB(int id){
+        Coincubator coincubator = null;
+
+        String orderToSql = "SELECT * FROM coincubators " +
+                "WHERE id = ?;";
+
+        try {
+
+            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()){
+                String name = resultSet.getString("name");
+                String description = resultSet.getString("description");
+                int currentDonation = resultSet.getInt("current_donation");
+                int targetDonation = resultSet.getInt("target_donation");
+                boolean isActive = resultSet.getBoolean("is_active");
+                coincubator = new Coincubator(id,name,description,currentDonation, targetDonation,isActive);
+
+            }
+            preparedStatement.executeQuery();
+        }catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            try {
+                preparedStatement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+
+            }
+
+        }
+
+        return  coincubator;
+    }
+
+    public void ediCoincubator(Coincubator coincubator) {
+        PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
+        String orderForSql = ("UPDATE coincubators SET name = ?, description = ?, target_donation = ? WHERE id = ?");
+
+        try {
+            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderForSql);
+            preparedStatement.setString(1, coincubator.getName());
+            preparedStatement.setString(2, coincubator.getDescription());
+            preparedStatement.setInt(3, coincubator.getTargetDonation());
+            preparedStatement.setInt(4, coincubator.getId());
+
+
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
     }
 }

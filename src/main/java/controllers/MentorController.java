@@ -9,6 +9,7 @@ import java.util.Scanner;
 public class MentorController implements BaseController {
     Scanner scanner = new Scanner(System.in);
     MentorDAOImplementation mentorDAOImplementation;
+    private CoincubatorService coincubatorService = new CoincubatorService();
     Student student;
 
     private void mentorMenu(){
@@ -32,10 +33,14 @@ public class MentorController implements BaseController {
             case "4":
                 break;
             case "5":
-                CoincubatorService coincubatorService = new CoincubatorService();
                 coincubatorService.showAllCoincubators();
                 break;
+                case "6":
+                coincubatorService.showAllCoincubators();
+                coincubatorService.editCoincubatorById();
+                break;
         }
+        scanner.close();
     }
 
     private void displayMentorMenu(){
@@ -44,7 +49,8 @@ public class MentorController implements BaseController {
                 "2. Delete student\n" +
                 "3. Get All Students\n" +
                 "4. Delete student\n" +
-                "5. Show all Coincubators");
+                "5. Show all Coincubators\n" +
+                "6. Edit Coincubator");
     }
 
     private void enterNewStudent(){

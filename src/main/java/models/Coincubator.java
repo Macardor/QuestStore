@@ -32,4 +32,60 @@ public class Coincubator {
         this.isActive = isActive;
         this.donators = donators;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getCurrentDonation() {
+        return currentDonation;
+    }
+
+    public void setCurrentDonation(int currentDonation) {
+        this.currentDonation = currentDonation;
+    }
+
+    public int getTargetDonation() {
+        return targetDonation;
+    }
+
+    public void setTargetDonation(int targetDonation) {
+        this.targetDonation = targetDonation;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public List<User> getDonators() {
+        return donators;
+    }
+
+    public void setDonators(List<User> donators) {
+        this.donators = donators;
+    }
 }
