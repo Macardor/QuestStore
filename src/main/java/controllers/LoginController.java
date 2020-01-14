@@ -1,6 +1,5 @@
 package controllers;
 
-import models.Student;
 import models.User;
 import services.LoginService;
 import view.StaticUi;

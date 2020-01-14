@@ -41,4 +41,24 @@ public class Quest {
     public boolean isActive() {
         return isActive;
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setReward(int reward) {
+        this.reward = reward;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
 }
