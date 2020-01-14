@@ -48,8 +48,8 @@ public class QuestDAOImplementation{
     public void editQuest(Quest quest) {
 
         String orderForSql = ("UPDATE quests SET name = ?, description = ?, reward = ?, is_active = ? WHERE id = ?");
-
         try {
+            ps = postgreSQLJDBC.connect().prepareStatement(orderForSql);
             ps.setString(1, quest.getName());
             ps.setString(2, quest.getDescription());
             ps.setInt(3, quest.getReward());
@@ -142,12 +142,13 @@ public class QuestDAOImplementation{
             ps = postgreSQLJDBC.connect().prepareStatement(orderToSql);
             ps.setInt(1, id);
             ResultSet resultSet = ps.executeQuery();
-            String name = resultSet.getString("name");
-            String description = resultSet.getString("description");
-            int reward = resultSet.getInt("reward");
-            boolean isActive = resultSet.getBoolean("is_active");
-            quest = new Quest(id, name, description, reward, isActive);
-
+            while (resultSet.next()) {
+                String name = resultSet.getString("name");
+                String description = resultSet.getString("description");
+                int reward = resultSet.getInt("reward");
+                boolean isActive = resultSet.getBoolean("is_active");
+                quest = new Quest(id, name, description, reward, isActive);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
