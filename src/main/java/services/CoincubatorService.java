@@ -28,4 +28,7 @@ public class CoincubatorService {
         }
 
     }
+
+    public void deleteCoincubatorById() {
+    }
 }

@@ -33,12 +33,17 @@ public class MentorController implements BaseController {
             case "4":
                 break;
             case "5":
+                break;
+            case "6":
                 coincubatorService.showAllCoincubators();
                 break;
-                case "6":
+            case "7":
                 coincubatorService.showAllCoincubators();
                 coincubatorService.editCoincubatorById();
                 break;
+            case "8":
+                coincubatorService.showAllCoincubators();
+                coincubatorService.deleteCoincubatorById();
         }
         scanner.close();
     }
@@ -49,8 +54,10 @@ public class MentorController implements BaseController {
                 "2. Delete student\n" +
                 "3. Get All Students\n" +
                 "4. Delete student\n" +
-                "5. Show all Coincubators\n" +
-                "6. Edit Coincubator");
+                "5. Add new Coincubator\n" +
+                "6. Show all Coincubators\n" +
+                "7. Edit Coincubator\n" +
+                "8. Delete Coincubator");
     }
 
     private void enterNewStudent(){

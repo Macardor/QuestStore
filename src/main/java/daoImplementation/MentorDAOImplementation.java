@@ -71,6 +71,7 @@ public class MentorDAOImplementation{
     }
 
     public List<User> getStudentsList() {
+        System.out.println("123");
         String orderToSql = "SELECT * FROM users " +
                 "join user_details " +
                 "on users.user_details_id = user_details.id WHERE users.user_type_id = ?";
