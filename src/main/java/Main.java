@@ -12,8 +12,8 @@ public class Main {
         PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
         postgreSQLJDBC.connect();
 //
-//        LoginController loginController = new LoginController();
-//        loginController.run();
+        LoginController loginController = new LoginController();
+        loginController.run();
 //        StudentController studentController = new StudentController();
 //        studentController.run();
 
@@ -21,9 +21,9 @@ public class Main {
 //        QuestDAOImplementation qdi = new QuestDAOImplementation();
 //        qdi.getQuests();
 
-        StudentDAOImplementation studentDAOImplementation = new StudentDAOImplementation();
-        studentDAOImplementation.showItems();
-        CreepController creepController = new CreepController();
-        creepController.run();
+//        StudentDAOImplementation studentDAOImplementation = new StudentDAOImplementation();
+//        studentDAOImplementation.showItems();
+//        CreepController creepController = new CreepController();
+//        creepController.run();
     }
 }
