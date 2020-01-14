@@ -1,6 +1,7 @@
 package controllers;
 import daoImplementation.MentorDAOImplementation;
 import models.Student;
+import view.StaticUi;
 
 import java.util.List;
 import java.util.Scanner;
@@ -9,35 +10,26 @@ public class MentorController implements BaseController {
     Scanner scanner = new Scanner(System.in);
     MentorDAOImplementation mentorDAOImplementation;
 
-    private void displayMentorMenu(){
-        System.out.println("Select number to: \n" +
-                "1. Add new student\n" +
-                "2. Delete student\n" +
-                "3. Get All Students\n" +
-                "4. Get all active students\n" +
-                "5. Get student by user id");
-    }
-
     public void mentorMenu(){
-        displayMentorMenu();
+        StaticUi.displayMentorMenu();
         String option = scanner.next();
         boolean isRunning = true;
         while (isRunning) {
             switch (option) {
                 case "1":
-                    mentorDAOImplementation.addStudent(new Student(getFirstNameInput(), getLastNameInput(), Student.userType, true, getLoginInput(), getPasswordInput()));
+                    mentorDAOImplementation.addStudent(new Student(StaticUi.getFirstNameInput(), StaticUi.getLastNameInput(), Student.userType, true, StaticUi.getLoginInput(), StaticUi.getPasswordInput()));
                     break;
                 case "2":
-                    mentorDAOImplementation.deleteStudent(getIdInput());
+                    mentorDAOImplementation.deleteStudent(StaticUi.getIdInput());
                     break;
                 case "3":
-                    displayAllStudents(mentorDAOImplementation.getStudentsList());
+                    StaticUi.displayAllStudents(mentorDAOImplementation.getStudentsList());
                     break;
                 case "4":
-                    displayAllStudents(mentorDAOImplementation.getActiveStudentsList());
+                    StaticUi.displayAllStudents(mentorDAOImplementation.getActiveStudentsList());
                     break;
                 case "5":
-                    mentorDAOImplementation.getStudentByUserId(getIdInput());
+                    mentorDAOImplementation.getStudentByUserId(StaticUi.getIdInput());
                     break;
                 case "6":
                     isRunning = false;
@@ -45,63 +37,61 @@ public class MentorController implements BaseController {
         }
     }
 
-
-
-    public void displayAllStudents(List<Student> studentList){
-        for (Student student : studentList) {
-            System.out.println(student.getId() + " | " + student.getLogin() + " | " + student.getPassword() + " | " + student.getFirstname() + " | " + student.getLastname() + " | " + student.isActive());
-        }
-    }
-
-    public int getIdInput(){
-        System.out.println("Enter id: ");
-        int idInput = scanner.nextInt();
-        return idInput;
-    }
-    public String getFirstNameInput(){
-        System.out.println("Enter first name: ");
-        String nameInput = scanner.next();
-        return nameInput;
-    }
-    public String getLastNameInput(){
-        System.out.println("Enter last name: ");
-        String lNameInput = scanner.next();
-        return lNameInput;
-    }
-    public int getUserTypeInput(){
-        System.out.println("Enter user type: ");
-        int userTypeInput = scanner.nextInt();
-        return userTypeInput;
-    }
-    public String getLoginInput(){
-        System.out.println("Enter login: ");
-        String loginInput = scanner.next();
-        return loginInput;
-    }
-    public String getPasswordInput(){
-        System.out.println("Enter password: ");
-        String passwordInput = scanner.next();
-        return passwordInput;
-    }
-    public boolean getBoolInput(){
-        System.out.println("Enter is student active");
-        String bool = scanner.next();
-        if (bool == "t"){
-            return true;
-        }else {
-            return false;
-        }
-    }
-
-
-
-
-
     @Override
     public void run() {
-
+        mentorMenu();
     }
 }
+
+
+
+
+//    public int getIdInput(){
+//        System.out.println("Enter id: ");
+//        int idInput = scanner.nextInt();
+//        return idInput;
+//    }
+//    public String getFirstNameInput(){
+//        System.out.println("Enter first name: ");
+//        String nameInput = scanner.next();
+//        return nameInput;
+//    }
+//    public String getLastNameInput(){
+//        System.out.println("Enter last name: ");
+//        String lNameInput = scanner.next();
+//        return lNameInput;
+//    }
+//    public int getUserTypeInput(){
+//        System.out.println("Enter user type: ");
+//        int userTypeInput = scanner.nextInt();
+//        return userTypeInput;
+//    }
+//    public String getLoginInput(){
+//        System.out.println("Enter login: ");
+//        String loginInput = scanner.next();
+//        return loginInput;
+//    }
+//    public String getPasswordInput(){
+//        System.out.println("Enter password: ");
+//        String passwordInput = scanner.next();
+//        return passwordInput;
+//    }
+//    public boolean getBoolInput(){
+//        System.out.println("Enter is student active");
+//        String bool = scanner.next();
+//        if (bool == "t"){
+//            return true;
+//        }else {
+//            return false;
+//        }
+//    }
+
+
+
+
+
+
+
 
 //    public void editMentorSubmenu(){
 //        Scanner sc = new Scanner(System.in);
