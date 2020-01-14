@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class MentorDAOImplementation{
+public class MentorDAOImplementation {
     PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
@@ -72,12 +72,12 @@ public class MentorDAOImplementation{
 
             int row = preparedStatement.executeUpdate();
 
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
-        }finally {
+        } finally {
             try {
                 preparedStatement.close();
-            }catch (SQLException e){
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
@@ -92,7 +92,7 @@ public class MentorDAOImplementation{
             int userDetailId = 1;
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSqlUsers);
             preparedStatement.setInt(1, userTypeId);
-            preparedStatement.setBoolean(2,setIsActive);
+            preparedStatement.setBoolean(2, setIsActive);
             preparedStatement.setInt(3, userDetailId);
             preparedStatement.executeUpdate();
             preparedStatement.close();
@@ -109,7 +109,7 @@ public class MentorDAOImplementation{
             preparedStatement.setInt(2, id);
             preparedStatement.executeUpdate();
             preparedStatement.close();
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
@@ -146,47 +146,9 @@ public class MentorDAOImplementation{
 }
 
 
-//    public void addStudent(String login, String password, String firstName, String lastName) {
-//        String orderToSqlUsers = "INSERT INTO user_details (login, password, first_name, last_name) VALUES (?,?,?,?)";
-//        String orderToSqlDetails = "INSERT INTO users (user_type_id, is_active, user_details_id) VALUES (?,?,?)";
-//
-//        try {
-//            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSqlUsers);
-//            preparedStatement.setString(1, login);
-//            preparedStatement.setString(2, password);
-//            preparedStatement.setString(3, firstName);
-//            preparedStatement.setString(4, lastName);
-//            int row = preparedStatement.executeUpdate();
-//
-//        } catch (Exception e) {
-//            System.out.println(e);
-//        } finally {
-//            try {
-//                preparedStatement.close();
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//
-//        try {
-//            int userTypeId = 1;
-//            boolean setIsActive = true;
-//            int userDetailId = 1;
-//            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSqlDetails);
-//            preparedStatement.setInt(1, userTypeId);
-//            preparedStatement.setBoolean(2,setIsActive);
-//            preparedStatement.setInt(3, userDetailId);
-//            int row = preparedStatement.executeUpdate();
-//        } catch (Exception e) {
-//            System.out.println(e);
-//        } finally {
-//            try {
-//                preparedStatement.close();
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
+
+
+
 //
 //
 //    @Override

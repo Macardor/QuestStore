@@ -94,10 +94,10 @@ public class CreepDAOImplementation implements CreepDAO {
 
     @Override
     public void deleteMentor(int id) {
-        String orderToSql = "DELETE FROM user_details WHERE id = ?";
-        String orderToSqlUser = "DELETE FROM users WHERE id = ?";
+        String orderSqlToDeleteUserDetails = "DELETE FROM user_details WHERE id = ?";
+        String orderSqlToDeleteUsers = "DELETE FROM users WHERE id = ?";
         try {
-            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSqlUser);
+            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderSqlToDeleteUsers);
             preparedStatement.setInt(1, id);
             int row = preparedStatement.executeUpdate();
         }catch (Exception e){
@@ -110,7 +110,7 @@ public class CreepDAOImplementation implements CreepDAO {
             }
         }
         try {
-            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderSqlToDeleteUserDetails);
             preparedStatement.setInt(1,id);
             int row = preparedStatement.executeUpdate();
         }catch (Exception e){
@@ -123,4 +123,5 @@ public class CreepDAOImplementation implements CreepDAO {
             }
         }
     }
+
 }
