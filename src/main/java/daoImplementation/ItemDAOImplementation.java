@@ -25,7 +25,7 @@ public class ItemDAOImplementation{
             ps.setString(3, item.getDescription());
             ps.setBoolean(4, item.isActive());
 
-            System.out.println(ps.toString()); //test method
+//            System.out.println(ps.toString()); //test method
 
             ps.executeUpdate();
             ps.close();
@@ -41,7 +41,7 @@ public class ItemDAOImplementation{
             ps.setBoolean(1, false);
             ps.setInt(2, id);
 
-            System.out.println(ps.toString()); //test method
+//            System.out.println(ps.toString()); //test method
 
             ps.executeUpdate();
             ps.close();
@@ -62,7 +62,7 @@ public class ItemDAOImplementation{
             ps.setBoolean(4, item.isActive());
             ps.setInt(5, item.getId());
 
-            System.out.println(ps.toString()); //test method
+//            System.out.println(ps.toString()); //test method
 
             ps.executeUpdate();
             ps.close();
@@ -86,7 +86,7 @@ public class ItemDAOImplementation{
                 String description = resultSet.getString("description");
                 boolean isActive = resultSet.getBoolean("is_active");
 
-                System.out.println(id + " | " + name + " | " + price + " | " + description + " | " + isActive);  //test method
+//                System.out.println(id + " | " + name + " | " + price + " | " + description + " | " + isActive);  //test method
 
                 Item item = new Item(id, name, price, description, isActive);
                 itemList.add(item);
@@ -120,7 +120,7 @@ public class ItemDAOImplementation{
                 Item item = new Item(id, name, price, description, isActive);
                 itemList.add(item);
                 //test method
-                System.out.println(id + " | " + name + " | " + price + " | " + description + " | " + isActive);
+//                System.out.println(id + " | " + name + " | " + price + " | " + description + " | " + isActive);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -128,4 +128,23 @@ public class ItemDAOImplementation{
         return itemList;
     }
 
+    public Item getItemById(int id) {
+        String orderToSql =  "SELECT * FROM items where id = ?";
+        Item item = null;
+        try {
+            ps = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            ps.setInt(1, id);
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                String name = resultSet.getString("name");
+                int price = resultSet.getInt("price");
+                String description = resultSet.getString("description");
+                boolean isActive = resultSet.getBoolean("is_active");
+                item = new Item(id, name, price, description, isActive);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return item;
+    }
 }

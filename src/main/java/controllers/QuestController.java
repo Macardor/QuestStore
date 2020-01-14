@@ -2,8 +2,6 @@ package controllers;
 
 import daoImplementation.QuestDAOImplementation;
 import models.Quest;
-
-import javax.xml.transform.Source;
 import java.util.List;
 import java.util.Scanner;
 
@@ -44,13 +42,14 @@ public class QuestController {
 
     public void editStudentSubmenu(){
         Scanner sc = new Scanner(System.in);
+
         System.out.println("Which quests do you want to edit?");
         int idToEdit = getIdInput();
+
         Quest quest = questDAOImplementation.getQuestById(idToEdit);
         System.out.println(quest.getName());
+
         boolean isRunning = true;
-
-
         while (isRunning) {
             System.out.println("Edit Quest. What do you want to edit?\n" +
                     "1. To edit name quest\n" +
