@@ -30,5 +30,13 @@ public class CoincubatorService {
     }
 
     public void deleteCoincubatorById() {
+        int coincubatorIdToEdit = StaticUi.idToEdit();
+        Coincubator coincubator = coincubatorDAOImplementation.isCoincubatorWithIdInDB(coincubatorIdToEdit);
+        if (coincubator != null){
+            coincubator.setActive(false);
+            coincubatorDAOImplementation.deleteCoincubator(coincubator);
+        }else{
+            StaticUi.errorMassageIdNotInDB();
+        }
     }
 }

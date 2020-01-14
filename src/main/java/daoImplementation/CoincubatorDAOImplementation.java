@@ -110,4 +110,21 @@ public class CoincubatorDAOImplementation {
             System.out.println(e);
         }
     }
+
+    public void deleteCoincubator(Coincubator coincubator) {
+        PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
+        String orderForSql = ("UPDATE coincubators SET is_active = ? WHERE id = ?");
+
+        try {
+            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderForSql);
+            preparedStatement.setBoolean(1, coincubator.isActive());
+            preparedStatement.setInt(2, coincubator.getId());
+
+
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
 }
