@@ -23,7 +23,7 @@ public class CreepDAOImplementation implements CreepDAO {
 
     @Override
     public List<User> showAllMentors() {
-        String orderToSql = "SELECT * FROM user_details JOIN users on user_details.id = users.id WHERE user_type_id = 2";
+        String orderToSql = "SELECT * FROM user_details JOIN users on user_details.id = users.user_details_id WHERE user_type_id = 2";
         List<User> mentorsList = new ArrayList<>();
         try {
             //int userTypeId = 2;
@@ -59,55 +59,32 @@ public class CreepDAOImplementation implements CreepDAO {
 
     @Override
     public void addMentor(Mentor mentor) {
-        String insertIntoTwoTables = ("WITH insertIntoUserDetails AS ( " +
-                "    INSERT INTO user_details (login, password, first_name, last_name) VALUES " +
-                "    (?, ?, ?, ?) " +
-                "    RETURNING id " +
-                "), " +
-                " inserIntoUsers AS ( " +
-                "    INSERT INTO users (user_type_id, is_active, user_details_id) VALUES " +
-                "    (2, 'true', (SELECT id FROM insertIntoUserDetails)) " +
-                "    RETURNING id " +
-                ") " +
-                " INSERT INTO mentors (user_id) VALUES ");
-                //" SELECT id FROM inserIntoUsers ;");
-
+        String insertIntoTwoTables = "WITH insertIntoUserDetails AS (INSERT INTO user_details (login, password, first_name, last_name) " +
+                "VALUES (?, ?, ?, ?) RETURNING id), inserIntoUsers AS (INSERT INTO users (user_type_id, is_active, user_details_id) " +
+                "VALUES (2, 'true', (SELECT id FROM insertIntoUserDetails)) RETURNING id) INSERT INTO mentors (user_id) VALUES ((SELECT id FROM inserIntoUsers))";
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(insertIntoTwoTables);
+
             preparedStatement.setString(1, mentor.getLogin());
             preparedStatement.setString(2, mentor.getPassword());
             preparedStatement.setString(3, mentor.getFirstname());
             preparedStatement.setString(4, mentor.getLastname());
-            preparedStatement.executeUpdate();
-            preparedStatement.close();
 
+            preparedStatement.executeQuery();
+            preparedStatement.close();
 
         } catch (Exception e) {
             System.out.println(e);
         }
+
     }
+
+
 
     @Override
-    public void editMentor(Mentor mentor) {
-
-    }
-
-    //@Override
-    public void editMentor2(int id) {
+    public void editMentor(int id) {
 
         String orderForSql = ("UPDATE user_details SET login = ?, password = ?, first_name = ?, last_name = ? WHERE id = ?");
-//        String orderToSql = ("WITH insertIntoUserDetails AS (\n" +
-//                "    UPDATE user_details (login, password, first_name, last_name) SET\n" +
-//                "    (?, ?, ?, ?)\n" +
-//                "    RETURNING id\n" +
-//                "),\n" +
-//                " inserIntoUsers AS (\n" +
-//                "    UPDATE users (user_type_id, is_active, user_details_id) SET\n" +
-//                "    (2, 'true', (SELECT id FROM insertIntoUserDetails))\n" +
-//                "    RETURNING id\n" +
-//                ")\n" +
-//                "INSERT INTO mentors (user_id) VALUES\n" +
-//                "(SELECT id FROM inserIntoUsers);");
 
         try {
             Scanner scanner = new Scanner(System.in);
