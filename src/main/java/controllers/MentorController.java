@@ -1,24 +1,23 @@
 package controllers;
 import daoImplementation.MentorDAOImplementation;
-import models.Coincubator;
 import models.Student;
+import services.StudentService;
 import view.StaticUi;
 import services.CoincubatorService;
 
-import java.util.List;
 import java.util.Scanner;
 
 public class MentorController implements BaseController {
     Scanner scanner = new Scanner(System.in);
-    MentorDAOImplementation mentorDAOImplementation;
+    MentorDAOImplementation mentorDAOImplementation = new MentorDAOImplementation();
     private CoincubatorService coincubatorService = new CoincubatorService();
-    Student student;
+    StudentService studentService = new StudentService();
 
     public void mentorMenu(){
-        StaticUi.displayMentorMenu();
-        String option = scanner.next();
         boolean isRunning = true;
         while (isRunning) {
+            StaticUi.displayMentorMenu();
+            String option = scanner.next();
             switch (option) {
                 case "1":
                     mentorDAOImplementation.addStudent(new Student(StaticUi.getFirstNameInput(), StaticUi.getLastNameInput(), Student.userType, true, StaticUi.getLoginInput(), StaticUi.getPasswordInput()));
@@ -36,20 +35,28 @@ public class MentorController implements BaseController {
                     mentorDAOImplementation.getStudentByUserId(StaticUi.getIdInput());
                     break;
                 case "6":
-                    isRunning = false;
-                case "7":
                     coincubatorService.addNewCoincubator();
+                    break;
+                case "7":
+                    coincubatorService.showAllCoincubators();
                     break;
                 case "8":
                     coincubatorService.showAllCoincubators();
+                    coincubatorService.editCoincubatorById();
                     break;
                 case "9":
                     coincubatorService.showAllCoincubators();
-                    coincubatorService.editCoincubatorById();
+                    coincubatorService.deleteCoincubatorById();
+                    break;
+                case "10":
+                    studentService.editChoseToStudent();
                     break;
                 case "0":
-                    coincubatorService.showAllCoincubators();
-                    coincubatorService.deleteCoincubatorById();
+                    isRunning = false;
+                    System.out.println("Bay bay");
+                    break;
+                default:
+                    StaticUi.errorMassageIfBadChoseInMenu();
             }
         }
     }

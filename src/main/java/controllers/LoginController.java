@@ -27,7 +27,7 @@ public class LoginController implements BaseController{
             case "2":
                 break;
             default:
-                staticUi.errorMassage();
+                staticUi.errorMassageIfBadChoseInMenu();
                 loginMenu();
         }
     }

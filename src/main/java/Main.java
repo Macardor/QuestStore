@@ -1,7 +1,6 @@
 import SQL.PostgreSQLJDBC;
 import controllers.CreepController;
 import controllers.LoginController;
-import controllers.MentorController;
 import controllers.StudentController;
 import daoImplementation.CreepDAOImplementation;
 import daoImplementation.QuestDAOImplementation;
