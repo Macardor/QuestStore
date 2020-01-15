@@ -1,13 +1,15 @@
-import SQL.PostgreSQLJDBC;
-import controllers.ItemController;
-import controllers.QuestController;
-import daoImplementation.ItemDAOImplementation;
-import models.Item;
-import models.Quest;
+import controllers.MentorController;
+import services.StudentService;
+import view.StaticUi;
 
 public class Main {
     public static void main(String[] args) {
-        ItemController itemController = new ItemController();
-        itemController.itemMenu();
+        MentorController mentorController = new MentorController();
+        StudentService studentService = new StudentService();
+        boolean isRunning = true;
+        while (isRunning) {
+            StaticUi.displayAllStudents(studentService.getStudentList());
+            break;
+        }
     }
 }

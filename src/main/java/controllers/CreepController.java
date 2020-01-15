@@ -1,7 +1,6 @@
 package controllers;
 
 import daoImplementation.CreepDAOImplementation;
-import daoImplementation.StudentDAOImplementation;
 import models.Mentor;
 
 import java.util.Scanner;
@@ -53,8 +52,9 @@ public class CreepController implements BaseController {
         String firstName = scanner.next();
         System.out.println("Insert mentor's last name: ");
         String lastName = scanner.next();
+        boolean isActive = scanner.nextBoolean();
         int studentTypeId = 2;
-        Mentor mentor = new Mentor(login, password, studentTypeId, firstName, lastName);
+        Mentor mentor = new Mentor(login, password, studentTypeId, isActive, firstName, lastName);
 
         creepDAOImplementation.addMentor(mentor);
         creepDAOImplementation.showAllMentors();
