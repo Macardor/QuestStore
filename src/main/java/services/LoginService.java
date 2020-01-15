@@ -1,14 +1,10 @@
 package services;
 
 import daoImplementation.LoginDAOImplementation;
-import models.Creep;
-import models.Mentor;
-import models.Student;
 import models.User;
 import view.StaticUi;
 
 import java.util.List;
-import java.util.Scanner;
 
 public class LoginService {
     LoginDAOImplementation loginDAOImplementation = new LoginDAOImplementation();

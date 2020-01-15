@@ -2,8 +2,6 @@ import SQL.PostgreSQLJDBC;
 import controllers.CreepController;
 import controllers.LoginController;
 import controllers.StudentController;
-import daoImplementation.CreepDAOImplementation;
-import daoImplementation.MentorDAOImplementation;
 import daoImplementation.QuestDAOImplementation;
 import daoImplementation.StudentDAOImplementation;
 
@@ -22,14 +20,9 @@ public class Main {
 //        QuestDAOImplementation qdi = new QuestDAOImplementation();
 //        qdi.getQuests();
 
-//        StudentDAOImplementation studentDAOImplementation = new StudentDAOImplementation();
-//        studentDAOImplementation.showItems();
-//        CreepController creepController = new CreepController();
-//        creepController.run();
-
-        MentorDAOImplementation mentorDAOImplementation = new MentorDAOImplementation();
-        mentorDAOImplementation.addStudent2("login","test","testname","testlastname");
-        mentorDAOImplementation.getStudentsList();
-
+        StudentDAOImplementation studentDAOImplementation = new StudentDAOImplementation();
+        studentDAOImplementation.showItems();
+        CreepController creepController = new CreepController();
+        creepController.run();
     }
 }
