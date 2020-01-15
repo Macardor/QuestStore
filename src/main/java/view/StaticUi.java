@@ -1,10 +1,7 @@
 package view;
 
-import models.Item;
-import models.Quest;
-import models.Student;
-
-import models.Coincubator;
+import daoImplementation.CreepDAOImplementation;
+import models.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -241,7 +238,28 @@ public class StaticUi {
         System.out.println("Insert mentor's last name: ");
         String lastName = scanner.next();
         int studentTypeId = 2;
-        Mentor mentor = new Mentor(login, password, studentTypeId, firstName, lastName);
+        boolean isActive = true;
+        Mentor mentor = new Mentor(login, password, studentTypeId, isActive, firstName, lastName);
+        CreepDAOImplementation creepDAOImplementation = new CreepDAOImplementation();
+        creepDAOImplementation.addMentor(mentor);
+        mentorsList.add(mentor);
+        return mentorsList;
+    }
+
+    public static List<Mentor> editMentor(int id){
+        List<Mentor> mentorsList = new ArrayList<>();
+        System.out.println("Insert new mentor's login: ");
+        String login = scanner.next();
+        System.out.println("Insert new mentor's password: ");
+        String password = scanner.next();
+        System.out.println("Insert new mentor's name: ");
+        String firstName = scanner.next();
+        System.out.println("Insert new mentor's last name: ");
+        String lastName = scanner.next();
+
+        int studentTypeId = 2;
+        boolean isActive = true;
+        Mentor mentor = new Mentor(login, password, studentTypeId, isActive, firstName, lastName);
         CreepDAOImplementation creepDAOImplementation = new CreepDAOImplementation();
         creepDAOImplementation.addMentor(mentor);
         mentorsList.add(mentor);

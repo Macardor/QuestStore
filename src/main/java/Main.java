@@ -2,8 +2,11 @@ import SQL.PostgreSQLJDBC;
 import controllers.CreepController;
 import controllers.LoginController;
 import controllers.StudentController;
+import daoImplementation.CreepDAOImplementation;
 import daoImplementation.QuestDAOImplementation;
 import daoImplementation.StudentDAOImplementation;
+
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
@@ -20,9 +23,14 @@ public class Main {
 //        QuestDAOImplementation qdi = new QuestDAOImplementation();
 //        qdi.getQuests();
 
-        StudentDAOImplementation studentDAOImplementation = new StudentDAOImplementation();
-        studentDAOImplementation.showItems();
-        CreepController creepController = new CreepController();
-        creepController.run();
+
+        Scanner scanner = new Scanner(System.in);
+        CreepDAOImplementation creepDAOImplementation = new CreepDAOImplementation();
+        creepDAOImplementation.showAllMentors();
+        System.out.println("insert id of mentor to edit: ");
+        int id = scanner.nextInt();
+        creepDAOImplementation.editMentor2(id);
+        creepDAOImplementation.showAllMentors();
+
     }
 }
