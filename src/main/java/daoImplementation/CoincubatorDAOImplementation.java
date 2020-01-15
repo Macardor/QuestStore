@@ -2,8 +2,6 @@ package daoImplementation;
 
 import SQL.PostgreSQLJDBC;
 import models.Coincubator;
-import models.Item;
-import models.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

@@ -146,10 +146,95 @@ public class StudentDAOImplementation implements StudentDAO {
         }
     }
 
+    public Student isStudentWithIdInDB(int id) {
+        Student student = null;
+
+        String orderToSql = "SELECT * FROM users " +
+                "join user_details " +
+                "on users.user_details_id = user_details.id WHERE users.user_type_id = ?";
+
+        try {
+
+            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()){
+
+                String login = resultSet.getString("login");
+                String password = resultSet.getString("password");
+                int userTypeId = resultSet.getInt("user_type_id");
+                boolean isActive = resultSet.getBoolean("is_active");
+                String firstName = resultSet.getString("first_name");
+                String lastName = resultSet.getString("last_name");
+
+                student = new Student(id, login, password, userTypeId, isActive, firstName, lastName);
+
+            }
+            preparedStatement.executeQuery();
+        }catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            try {
+                preparedStatement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+
+            }
+
+        }
+        return  student;
+    }
+
 
     @Override
     public void showUserQuests() {
 
+    }
+
+    public void editStudent(Student student, int userDetailsId) {
+        PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
+        String orderForSql = ("UPDATE user_details SET login = ?, password = ?, first_name = ?, last_name = ? WHERE id = ?");
+
+        try {
+            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderForSql);
+            preparedStatement.setString(1, student.getLogin());
+            preparedStatement.setString(2, student.getPassword());
+            preparedStatement.setString(3, student.getFirstname());
+            preparedStatement.setString(4, student.getLastname());
+            preparedStatement.setInt(5, userDetailsId);
+
+
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    public int getUserDetailsId(Student student) {
+        String orderToSql = "SELECT * FROM users WHERE id = ?";
+        try {
+            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            preparedStatement.setInt(1, student.getId());
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()){
+                int userDetailId = resultSet.getInt("user_details_id");
+                return  userDetailId;
+            }
+            preparedStatement.executeQuery();
+        }catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            try {
+                preparedStatement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+
+            }
+
+        }
+        return 0;
     }
 }
 //

@@ -28,7 +28,7 @@ public abstract class User {
         this.lastname = lastname;
     }
 
-    public User(int id) {
+        public User(int id) {
         this.id = id;
     }
 
