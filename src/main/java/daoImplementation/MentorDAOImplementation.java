@@ -1,7 +1,12 @@
 package daoImplementation;
 import SQL.PostgreSQLJDBC;
+import models.Student;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MentorDAOImplementation{
     PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
@@ -21,20 +26,20 @@ public class MentorDAOImplementation{
 //        }
 //        return user;
 //    }
-
-                Student student = new Student(id, login, password, userTypeId, isActive, firstName, lastName);
-                studentList.add(student);
-
-                System.out.println(id + "| " + login + "| " + password + "| " + userTypeId + "| " + isActive + "| " + firstName + "| " + lastName); //test method
-
-            }
-            preparedStatement.close();
-
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-        return studentList;
-    }
+//
+//                Student student = new Student(id, login, password, userTypeId, isActive, firstName, lastName);
+//                studentList.add(student);
+//
+//                System.out.println(id + "| " + login + "| " + password + "| " + userTypeId + "| " + isActive + "| " + firstName + "| " + lastName); //test method
+//
+//            }
+//            preparedStatement.close();
+//
+//        } catch (SQLException e) {
+//            System.out.println(e);
+//        }
+//        return studentList;
+//    }
 
     public List<Student> getActiveStudentsList() {
         String orderToSql = "SELECT * FROM users " +

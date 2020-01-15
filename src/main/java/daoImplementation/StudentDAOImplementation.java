@@ -199,6 +199,50 @@ public class StudentDAOImplementation{
 
         }return coincubatorsList;
     }
+    public void editStudent(Student student, int userDetailsId) {
+        PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
+        String orderForSql = ("UPDATE user_details SET login = ?, password = ?, first_name = ?, last_name = ? WHERE id = ?");
+
+        try {
+            ps = postgreSQLJDBC.connect().prepareStatement(orderForSql);
+            ps.setString(1, student.getLogin());
+            ps.setString(2, student.getPassword());
+            ps.setString(3, student.getFirstname());
+            ps.setString(4, student.getLastname());
+            ps.setInt(5, userDetailsId);
+
+
+            ps.executeUpdate();
+            ps.close();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    public int getUserDetailsId(Student student) {
+        String orderToSql = "SELECT * FROM users WHERE id = ?";
+        try {
+            ps = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            ps.setInt(1, student.getId());
+            resultSet = ps.executeQuery();
+            if (resultSet.next()){
+                int userDetailId = resultSet.getInt("user_details_id");
+                return  userDetailId;
+            }
+            ps.executeQuery();
+        }catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            try {
+                ps.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+
+            }
+
+        }
+        return 0;
+    }
 
     public int getStudentId(Student student) {
         String orderToSql = "SELECT * FROM students WHERE user_id = ?";
@@ -224,6 +268,11 @@ public class StudentDAOImplementation{
 
         }
         return 0;
+    }
+
+    public Student isStudentWithIdInDB(int id) {
+        Student student = null;
+        return student;
     }
 }
 //
