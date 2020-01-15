@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StudentDAOImplementation{
+public class StudentDAOImplementation {
 
     PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
     PreparedStatement ps = null;
@@ -63,7 +63,7 @@ public class StudentDAOImplementation{
 
             ps.executeUpdate();
             ps.close();
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
@@ -138,7 +138,7 @@ public class StudentDAOImplementation{
         String orderToSql = "SELECT * FROM users " +
                 "join user_details " +
                 "on users.user_details_id = user_details.id WHERE users.user_type_id = ? and users.id = ?";
-        try{
+        try {
             ps = postgreSQLJDBC.connect().prepareStatement(orderToSql);
             ps.setInt(1, Student.userType);
             ps.setInt(2, userId);
@@ -165,17 +165,13 @@ public class StudentDAOImplementation{
     }
 
 
-
-
-
-
     public List<Coincubator> showCoincubatos() {
         String orderToSql = "SELECT * FROM coincubators";
         List<Coincubator> coincubatorsList = new ArrayList<>();
         try {
             ps = postgreSQLJDBC.connect().prepareStatement(orderToSql);
             resultSet = ps.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
                 String description = resultSet.getString("description");
@@ -184,10 +180,10 @@ public class StudentDAOImplementation{
                 boolean isActive = resultSet.getBoolean("is_active");
                 Coincubator coincubator = new Coincubator(id, name, description, currentDonation, targetDonation, isActive);
                 coincubatorsList.add(coincubator);
-                System.out.println(id+ "| " + name+ "| " + description+ "| " + currentDonation + "| " + targetDonation+ "| " + isActive);
+                System.out.println(id + "| " + name + "| " + description + "| " + currentDonation + "| " + targetDonation + "| " + isActive);
             }
             ps.executeQuery();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println(e);
         } finally {
             try {
@@ -197,8 +193,10 @@ public class StudentDAOImplementation{
 
             }
 
-        }return coincubatorsList;
+        }
+        return coincubatorsList;
     }
+
     public void editStudent(Student student, int userDetailsId) {
         PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
         String orderForSql = ("UPDATE user_details SET login = ?, password = ?, first_name = ?, last_name = ? WHERE id = ?");
@@ -225,12 +223,12 @@ public class StudentDAOImplementation{
             ps = postgreSQLJDBC.connect().prepareStatement(orderToSql);
             ps.setInt(1, student.getId());
             resultSet = ps.executeQuery();
-            if (resultSet.next()){
+            if (resultSet.next()) {
                 int userDetailId = resultSet.getInt("user_details_id");
-                return  userDetailId;
+                return userDetailId;
             }
             ps.executeQuery();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println(e);
         } finally {
             try {
@@ -250,13 +248,13 @@ public class StudentDAOImplementation{
             ps = postgreSQLJDBC.connect().prepareStatement(orderToSql);
             ps.setInt(1, student.getId());
             resultSet = ps.executeQuery();
-            if (resultSet.next()){
+            if (resultSet.next()) {
                 int userDetailId = resultSet.getInt("id");
                 System.out.println(userDetailId);
-                return  userDetailId;
+                return userDetailId;
             }
             ps.executeQuery();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println(e);
         } finally {
             try {
@@ -270,10 +268,45 @@ public class StudentDAOImplementation{
         return 0;
     }
 
+
     public Student isStudentWithIdInDB(int id) {
         Student student = null;
+
+        String orderToSql = "SELECT * FROM users " +
+                "join user_details " +
+                "on users.user_details_id = user_details.id WHERE users.user_type_id = ?";
+
+        try {
+
+            ps = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            ps.setInt(1, id);
+            resultSet = ps.executeQuery();
+
+            if (resultSet.next()) {
+
+                String login = resultSet.getString("login");
+                String password = resultSet.getString("password");
+                int userTypeId = resultSet.getInt("user_type_id");
+                boolean isActive = resultSet.getBoolean("is_active");
+                String firstName = resultSet.getString("first_name");
+                String lastName = resultSet.getString("last_name");
+
+                student = new Student(id, login, password, userTypeId, isActive, firstName, lastName);
+
+            }
+            ps.executeQuery();
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            try {
+                ps.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+
+            }
+
+        }
         return student;
     }
 }
-//
-//
+
