@@ -2,6 +2,7 @@ package daoImplementation;
 
 import SQL.PostgreSQLJDBC;
 import models.Quest;
+import models.Student;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -117,7 +118,7 @@ public class QuestDAOImplementation{
         List<Quest> quests = new ArrayList<>();
         try{
             ps = postgreSQLJDBC.connect().prepareStatement(orderForSql);
-            //ps.setInt(1, id);
+//            ps.setInt(1, id);
             ResultSet resultSet = ps.executeQuery();
             while (resultSet.next()){
                 int id = resultSet.getInt("id");
@@ -153,5 +154,45 @@ public class QuestDAOImplementation{
             e.printStackTrace();
         }
         return quest;
+    }
+
+    public List<Quest> getAllQuestsNotDoneByStudent(Student student) {
+        PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
+        PreparedStatement ps = null;
+        String orderForSql = ("select q.id, name, description, reward, is_active from quests as q\n" +
+                "                join user_quests uq\n" +
+                "                    on q.id = uq.quest_id\n" +
+                "                join students s\n" +
+                "                    on uq.student_id = s.id\n" +
+                "where s.user_id != ?\n" +
+                "except\n" +
+                "select q.id, name, description, reward, is_active from quests as q\n" +
+                "                join user_quests uq\n" +
+                "                    on q.id = uq.quest_id\n" +
+                "                join students s\n" +
+                "                    on uq.student_id = s.id\n" +
+                "where s.user_id = ?;");
+
+        List<Quest> quests = new ArrayList<>();
+        try{
+            ps = postgreSQLJDBC.connect().prepareStatement(orderForSql);
+            ps.setInt(1,student.getId());
+            ps.setInt(2,student.getId());
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()){
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                String description = resultSet.getString("description");
+                int reward = resultSet.getInt("reward");
+                boolean isActive = resultSet.getBoolean("is_active");
+                Quest quest = new Quest(id, name, description, reward, isActive);
+                quests.add(quest);
+                System.out.println(id + " | " + name + " | " + description + " | " + reward + " | " + isActive);
+            }
+            ps.close();
+        }catch (SQLException e){
+            System.out.println(e);
+        }
+        return quests;
     }
 }
