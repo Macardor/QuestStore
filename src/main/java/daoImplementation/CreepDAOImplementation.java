@@ -37,7 +37,8 @@ public class CreepDAOImplementation implements CreepDAO {
                 int userTypeId2 = resultSet.getInt("user_type_id");
                 String firstName = resultSet.getString("first_name");
                 String lastName = resultSet.getString("last_name");
-                User user = new Mentor(id, login, password, userTypeId, firstName, lastName);
+                boolean isActive = resultSet.getBoolean( "is_active");
+                User user = new Mentor(id, login, password, userTypeId, isActive, firstName, lastName);
                 mentorsList.add(user);
                 System.out.println(id+ "| " + login+ "| " + password+ "| " + userTypeId2+ "| " + firstName+ "| " + lastName);
 

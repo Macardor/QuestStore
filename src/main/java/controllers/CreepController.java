@@ -54,7 +54,8 @@ public class CreepController implements BaseController {
         System.out.println("Insert mentor's last name: ");
         String lastName = scanner.next();
         int studentTypeId = 2;
-        Mentor mentor = new Mentor(login, password, studentTypeId, firstName, lastName);
+        boolean isActive = true;
+        Mentor mentor = new Mentor(login, password, studentTypeId, isActive, firstName, lastName);
 
         creepDAOImplementation.addMentor(mentor);
         creepDAOImplementation.showAllMentors();
