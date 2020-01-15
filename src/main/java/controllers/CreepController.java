@@ -44,7 +44,7 @@ public class CreepController implements BaseController {
     private void deleteMentorById(){
         creepDAOImplementation.showAllMentors();
         int mentorId = scanner.nextInt();
-        creepDAOImplementation.deleteMentor(mentorId);
+        creepDAOImplementation.setMentorToUnactive(mentorId);
         creepDAOImplementation.showAllMentors();
     }
 

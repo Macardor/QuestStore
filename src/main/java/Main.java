@@ -23,7 +23,8 @@ public class Main {
 //        QuestDAOImplementation qdi = new QuestDAOImplementation();
 //        qdi.getQuests();
 
-
+        CreepController creepController = new CreepController();
+        creepController.run();
         Scanner scanner = new Scanner(System.in);
         CreepDAOImplementation creepDAOImplementation = new CreepDAOImplementation();
         creepDAOImplementation.showAllMentors();

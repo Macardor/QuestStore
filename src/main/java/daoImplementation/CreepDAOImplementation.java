@@ -1,6 +1,7 @@
 package daoImplementation;
 
 import SQL.PostgreSQLJDBC;
+
 import interfaces.CreepDAO;
 import models.Mentor;
 import models.User;
@@ -22,14 +23,11 @@ public class CreepDAOImplementation implements CreepDAO {
 
     @Override
     public List<User> showAllMentors() {
-        String orderToSql = "SELECT * FROM users " +
-                "join user_details " +
-                "on users.user_details_id = user_details.id WHERE users.user_type_id = ?";
+        String orderToSql = "SELECT * FROM user_details JOIN users on user_details.id = users.id WHERE user_type_id = 2";
         List<User> mentorsList = new ArrayList<>();
         try {
-            int userTypeId = 2;
+            //int userTypeId = 2;
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
-            preparedStatement.setInt(1, userTypeId);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
                 int id = resultSet.getInt("id");
@@ -39,8 +37,8 @@ public class CreepDAOImplementation implements CreepDAO {
                 boolean isActive = resultSet.getBoolean("is_active");
                 String firstName = resultSet.getString("first_name");
                 String lastName = resultSet.getString("last_name");
-                User user = new Mentor(id, login, password, userTypeId, isActive, firstName, lastName);
-                mentorsList.add(user);
+//                User user = new Mentor(id, login, password, userTypeId, isActive, firstName, lastName);
+//                mentorsList.add(user);
                 System.out.println(id+ "| " + login+ "| " + password+ "| " + userTypeId2+ "| " + firstName+ "| " + lastName);
 
             }
@@ -54,7 +52,6 @@ public class CreepDAOImplementation implements CreepDAO {
                 e.printStackTrace();
 
             }
-
         }return mentorsList;
     }
 
@@ -62,18 +59,18 @@ public class CreepDAOImplementation implements CreepDAO {
 
     @Override
     public void addMentor(Mentor mentor) {
-        String insertIntoTwoTables = "WITH insertIntoUserDetails AS (\n" +
-                "    INSERT INTO user_details (login, password, first_name, last_name) VALUES\n" +
-                "    (?, ?, ?, ?)\n" +
-                "    RETURNING id\n" +
-                "),\n" +
-                " inserIntoUsers AS (\n" +
-                "    INSERT INTO users (user_type_id, is_active, user_details_id) VALUES\n" +
-                "    (2, 'true', (SELECT id FROM insertIntoUserDetails))\n" +
-                "    RETURNING id\n" +
-                ")\n" +
-                "INSERT INTO mentors (user_id) VALUES\n" +
-                "(SELECT id FROM inserIntoUsers);";
+        String insertIntoTwoTables = ("WITH insertIntoUserDetails AS ( " +
+                "    INSERT INTO user_details (login, password, first_name, last_name) VALUES " +
+                "    (?, ?, ?, ?) " +
+                "    RETURNING id " +
+                "), " +
+                " inserIntoUsers AS ( " +
+                "    INSERT INTO users (user_type_id, is_active, user_details_id) VALUES " +
+                "    (2, 'true', (SELECT id FROM insertIntoUserDetails)) " +
+                "    RETURNING id " +
+                ") " +
+                " INSERT INTO mentors (user_id) VALUES ");
+                //" SELECT id FROM inserIntoUsers ;");
 
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(insertIntoTwoTables);
@@ -97,74 +94,53 @@ public class CreepDAOImplementation implements CreepDAO {
 
     //@Override
     public void editMentor2(int id) {
-        showAllMentors();
-        String orderToSqlDetails = ("UPDATE user_details SET login = ?, password = ?, student_type_id = ?, first_name = ?, last_name = ? WHERE id = ?");
-        String orderToSqlUsers = ("UPDATE user SET is_active = ?");
+
+        String orderForSql = ("UPDATE user_details SET login = ?, password = ?, first_name = ?, last_name = ? WHERE id = ?");
+//        String orderToSql = ("WITH insertIntoUserDetails AS (\n" +
+//                "    UPDATE user_details (login, password, first_name, last_name) SET\n" +
+//                "    (?, ?, ?, ?)\n" +
+//                "    RETURNING id\n" +
+//                "),\n" +
+//                " inserIntoUsers AS (\n" +
+//                "    UPDATE users (user_type_id, is_active, user_details_id) SET\n" +
+//                "    (2, 'true', (SELECT id FROM insertIntoUserDetails))\n" +
+//                "    RETURNING id\n" +
+//                ")\n" +
+//                "INSERT INTO mentors (user_id) VALUES\n" +
+//                "(SELECT id FROM inserIntoUsers);");
 
         try {
-            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSqlDetails);
-//            System.out.println("Insert new student login: ");
-//            String login = scanner.next();
-//            System.out.println("Insert new student password: ");
-//            String password = scanner.next();
-//            System.out.println("Insert new student name: ");
-//            String firstName = scanner.next();
-//            System.out.println("Insert new student surrname: ");
-//            String lastName = scanner.next();
-//            // tu brakuje sout'a moze dlatego nie działało
-            System.out.println("Insert new mentor's login: ");
-            String login = scanner.next();
-            System.out.println("Insert new mentor's password: ");
-            String password = scanner.next();
-            System.out.println("Inesrt 1 to set as student, 2 to set as mentor: ");
-            int studentTypeId = scanner.nextInt();
-            boolean isActive2 = true;
-            System.out.println("Insert new mentor's name: ");
-            String firstName = scanner.next();
-            System.out.println("Insert new mentor's last name: ");
-            String lastName = scanner.next();
+            Scanner scanner = new Scanner(System.in);
+            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderForSql);
+            System.out.println("enter login: ");
+            String login = scanner.nextLine();
+            System.out.println("enter password: ");
+            String password = scanner.nextLine();
+            System.out.println("enter first name: ");
+            String firstName = scanner.nextLine();
+            System.out.println("enter last name: ");
+            String lastName = scanner.nextLine();
 
-
-           // Mentor mentor = new Mentor(login, password, studentTypeId, isActive, firstName, lastName);
-
-
-            preparedStatement.setString(1,login);
+            preparedStatement.setString(1, login);
             preparedStatement.setString(2, password);
-            preparedStatement.setInt(3,studentTypeId);
-            preparedStatement.setBoolean(4, isActive2);
-            preparedStatement.setString(5, firstName);
-            preparedStatement.setString(6, lastName);
+            preparedStatement.setString(3, firstName);
+            preparedStatement.setString(4, lastName);
+            preparedStatement.setInt(5, id);
 
             int row = preparedStatement.executeUpdate();
-            preparedStatement.executeUpdate();
 
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
-        }finally {
+        } finally {
             try {
                 preparedStatement.close();
-            }catch (SQLException e){
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
-        try {
-            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSqlUsers);
-            System.out.println("Is active: ");
-            boolean isActive = true;
-            preparedStatement.setBoolean(1, isActive);
-            int row = preparedStatement.executeUpdate();
-            preparedStatement.executeUpdate();
-        }catch (Exception e){
-            System.out.println(e);
-        }finally {
-            try {
-                preparedStatement.close();
-            }catch (SQLException e){
-                e.printStackTrace();
-            }
-        }
-
     }
+
+
 
     @Override
     public void setMentorToUnactive(int id) {
