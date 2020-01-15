@@ -1,7 +1,6 @@
 package daoImplementation;
 
 import SQL.PostgreSQLJDBC;
-
 import models.Creep;
 import models.Mentor;
 import models.Student;

@@ -1,66 +1,180 @@
 package daoImplementation;
 
 import SQL.PostgreSQLJDBC;
-import interfaces.StudentDAO;
 import models.Coincubator;
-import models.Item;
 import models.Student;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Scanner;
 
-public class StudentDAOImplementation implements StudentDAO {
+public class StudentDAOImplementation{
 
     PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
-    PreparedStatement preparedStatement = null;
+    PreparedStatement ps = null;
     ResultSet resultSet = null;
-    Scanner scanner = new Scanner(System.in);
 
-    @Override
-    public List<Item> showItems() {
-        String orderToSql = "SELECT * FROM items";
-        List<Item> itemList = new ArrayList<>();
+    public void addStudent(Student student) {
+        String insertIntoTwoTables = "WITH insertIntoUserDetails AS (\n" +
+                "    INSERT INTO user_details (login, password, first_name, last_name) VALUES\n" +
+                "    (?, ?, ?, ?)\n" +
+                "    RETURNING id\n" +
+                "),\n" +
+                " inserIntoUsers AS (\n" +
+                "    INSERT INTO users (user_type_id, is_active, user_details_id) VALUES\n" +
+                "    (1, 'true', (SELECT id FROM insertIntoUserDetails))\n" +
+                "    RETURNING id\n" +
+                ")\n" +
+                "INSERT INTO students (coins, user_id) VALUES\n" +
+                "(0 , (SELECT id FROM inserIntoUsers));";
+
         try {
-            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
-            resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
-                int id = resultSet.getInt("id");
-                String name = resultSet.getString("name");
-                int price = resultSet.getInt("price");
-                String description = resultSet.getString("description");
-                boolean isActive = resultSet.getBoolean("is_active");
-                Item item = new Item(id, name, price, description, isActive);
-                itemList.add(item);
-                System.out.println(id+ "| " + name+ "| " + price+ "| " + description+ "| " + isActive);
+            ps = postgreSQLJDBC.connect().prepareStatement(insertIntoTwoTables);
 
-            }
-            preparedStatement.executeQuery();
-        }catch (SQLException e) {
+            ps.setString(1, student.getLogin());
+            ps.setString(2, student.getPassword());
+            ps.setString(3, student.getFirstname());
+            ps.setString(4, student.getLastname());
+
+            ps.executeUpdate();
+            ps.close();
+
+        } catch (Exception e) {
             System.out.println(e);
-        } finally {
-            try {
-                preparedStatement.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
+        }
+
+    }
+
+    public void editStudent(Student student) {
+        //TODO Bartek to kupa
+    }
+
+    public void deleteStudent(int id) {
+        String orderToSql = "UPDATE users SET is_active = ? WHERE id = ? and user_type_id = 1 ";
+        try {
+            ps = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+
+            ps.setBoolean(1, false);
+            ps.setInt(2, id);
+
+            System.out.println(ps.toString()); //test method
+
+            ps.executeUpdate();
+            ps.close();
+        }catch (Exception e){
+            System.out.println(e);
+        }
+    }
+
+    public List<Student> getStudentsList() {
+        String orderToSql = "SELECT * FROM users " +
+                "join user_details " +
+                "on users.user_details_id = user_details.id WHERE users.user_type_id = ?";
+        List<Student> studentList = new ArrayList<>();
+        try {
+            ps = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            ps.setInt(1, 1);
+
+            resultSet = ps.executeQuery();
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String login = resultSet.getString("login");
+                String password = resultSet.getString("password");
+                int userTypeId = resultSet.getInt("user_type_id");
+                boolean isActive = resultSet.getBoolean("is_active");
+                String firstName = resultSet.getString("first_name");
+                String lastName = resultSet.getString("last_name");
+
+                Student student = new Student(id, login, password, userTypeId, isActive, firstName, lastName);
+                studentList.add(student);
 
             }
+            ps.close();
 
-        }return itemList;
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return studentList;
+    }
+
+    public List<Student> getActiveStudentsList() {
+        String orderToSql = "SELECT * FROM users " +
+                "join user_details " +
+                "on users.user_details_id = user_details.id WHERE users.user_type_id = ? and users.is_active = ?";
+        List<Student> studentList = new ArrayList<>();
+        try {
+            ps = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            ps.setInt(1, 1);
+            ps.setBoolean(2, true);
+
+            resultSet = ps.executeQuery();
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String login = resultSet.getString("login");
+                String password = resultSet.getString("password");
+                int userTypeId = resultSet.getInt("user_type_id");
+                boolean isActive = resultSet.getBoolean("is_active");
+                String firstName = resultSet.getString("first_name");
+                String lastName = resultSet.getString("last_name");
+
+                Student student = new Student(id, login, password, userTypeId, isActive, firstName, lastName);
+                studentList.add(student);
+
+            }
+            ps.close();
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return studentList;
+    }
+
+    public Student getStudentByUserId(int userId) {
+        Student student = null;
+        String orderToSql = "SELECT * FROM users " +
+                "join user_details " +
+                "on users.user_details_id = user_details.id WHERE users.user_type_id = ? and users.id = ?";
+        try{
+            ps = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            ps.setInt(1, Student.userType);
+            ps.setInt(2, userId);
+            resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String login = resultSet.getString("login");
+                String password = resultSet.getString("password");
+                int userTypeId = resultSet.getInt("user_type_id");
+                boolean isActive = resultSet.getBoolean("is_active");
+                String firstName = resultSet.getString("first_name");
+                String lastName = resultSet.getString("last_name");
+
+                student = new Student(id, login, password, userTypeId, isActive, firstName, lastName);
+
+            }
+            ps.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return student;
     }
 
 
-    @Override
+
+
+
+
     public List<Coincubator> showCoincubatos() {
         String orderToSql = "SELECT * FROM coincubators";
         List<Coincubator> coincubatorsList = new ArrayList<>();
         try {
-            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
-            resultSet = preparedStatement.executeQuery();
+            ps = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            resultSet = ps.executeQuery();
             while (resultSet.next()){
                 int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
@@ -72,12 +186,12 @@ public class StudentDAOImplementation implements StudentDAO {
                 coincubatorsList.add(coincubator);
                 System.out.println(id+ "| " + name+ "| " + description+ "| " + currentDonation + "| " + targetDonation+ "| " + isActive);
             }
-            preparedStatement.executeQuery();
+            ps.executeQuery();
         }catch (SQLException e) {
             System.out.println(e);
         } finally {
             try {
-                preparedStatement.close();
+                ps.close();
             } catch (SQLException e) {
                 e.printStackTrace();
 
@@ -86,156 +200,62 @@ public class StudentDAOImplementation implements StudentDAO {
         }return coincubatorsList;
     }
 
-    @Override
-    public void showUserItems() {
-        Student student = new Student(3);
-        String orderToSql = "SELECT * FROM user_items JOIN items ON user_items.item_id = items.id WHERE user_items.id = ?";
-        try {
-            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
-            preparedStatement.setInt(1, student.getId());
-            resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
-                boolean isAvailable = resultSet.getBoolean("is_available");
-                Date boughtDate = resultSet.getDate("bought_date");
-                Date usedDate = resultSet.getDate("used_date");
-                String itemName = resultSet.getString("name");
-                String description = resultSet.getString("description");
-                System.out.println("Your items:\n" +
-                        "Item name  |   Description     |   Bought date     |   Used date   |   Is Available    \n" +
-                        itemName + " | " + description + " | " + boughtDate + " | " + usedDate + " | " + isAvailable);
-            }
-            preparedStatement.executeQuery();
-
-        }catch (SQLException e) {
-            System.out.println(e);
-        } finally {
-            try {
-                preparedStatement.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-
-            }
-
-        }
-    }
-
-
-
-    @Override
-    public void showUserCoins() {
-        String orderToSql = "SELECT coins FROM students WHERE id = ?";
-        try {
-            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
-            preparedStatement.setInt(1, 1);
-            resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
-                int coins = resultSet.getInt("coins");
-                System.out.println("Your coins amount is: " + coins);
-            }
-            preparedStatement.executeQuery();
-        }catch (SQLException e) {
-            System.out.println(e);
-        } finally {
-            try {
-                preparedStatement.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-
-            }
-
-        }
-    }
-
-    public Student isStudentWithIdInDB(int id) {
-        Student student = null;
-
-        String orderToSql = "SELECT * FROM users " +
-                "join user_details " +
-                "on users.user_details_id = user_details.id WHERE users.user_type_id = ?";
-
-        try {
-
-            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
-            preparedStatement.setInt(1, id);
-            resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()){
-
-                String login = resultSet.getString("login");
-                String password = resultSet.getString("password");
-                int userTypeId = resultSet.getInt("user_type_id");
-                boolean isActive = resultSet.getBoolean("is_active");
-                String firstName = resultSet.getString("first_name");
-                String lastName = resultSet.getString("last_name");
-
-                student = new Student(id, login, password, userTypeId, isActive, firstName, lastName);
-
-            }
-            preparedStatement.executeQuery();
-        }catch (SQLException e) {
-            System.out.println(e);
-        } finally {
-            try {
-                preparedStatement.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-
-            }
-
-        }
-        return  student;
-    }
-
-
-    @Override
-    public void showUserQuests() {
-
-    }
-
-    public void editStudent(Student student, int userDetailsId) {
-        PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
-        String orderForSql = ("UPDATE user_details SET login = ?, password = ?, first_name = ?, last_name = ? WHERE id = ?");
-
-        try {
-            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderForSql);
-            preparedStatement.setString(1, student.getLogin());
-            preparedStatement.setString(2, student.getPassword());
-            preparedStatement.setString(3, student.getFirstname());
-            preparedStatement.setString(4, student.getLastname());
-            preparedStatement.setInt(5, userDetailsId);
-
-
-            preparedStatement.executeUpdate();
-            preparedStatement.close();
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-    }
-
-    public int getUserDetailsId(Student student) {
-        String orderToSql = "SELECT * FROM users WHERE id = ?";
-        try {
-            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
-            preparedStatement.setInt(1, student.getId());
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()){
-                int userDetailId = resultSet.getInt("user_details_id");
-                return  userDetailId;
-            }
-            preparedStatement.executeQuery();
-        }catch (SQLException e) {
-            System.out.println(e);
-        } finally {
-            try {
-                preparedStatement.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-
-            }
-
-        }
-        return 0;
-    }
 }
+//    public void showUserItems() {
+//        Student student = new Student(3);
+//        String orderToSql = "SELECT * FROM user_items JOIN items ON user_items.item_id = items.id WHERE user_items.id = ?";
+//        try {
+//            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+//            preparedStatement.setInt(1, student.getId());
+//            resultSet = preparedStatement.executeQuery();
+//            while (resultSet.next()){
+//                boolean isAvailable = resultSet.getBoolean("is_available");
+//                Date boughtDate = resultSet.getDate("bought_date");
+//                Date usedDate = resultSet.getDate("used_date");
+//                String itemName = resultSet.getString("name");
+//                String description = resultSet.getString("description");
+//                System.out.println("Your items:\n" +
+//                        "Item name  |   Description     |   Bought date     |   Used date   |   Is Available    \n" +
+//                        itemName + " | " + description + " | " + boughtDate + " | " + usedDate + " | " + isAvailable);
+//            }
+//            preparedStatement.executeQuery();
+//
+//        }catch (SQLException e) {
+//            System.out.println(e);
+//        } finally {
+//            try {
+//                preparedStatement.close();
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//
+//            }
+//
+//        }
+//    }
 //
 //
+//
+//    @Override
+//    public void showUserCoins() {
+//        String orderToSql = "SELECT coins FROM students WHERE id = ?";
+//        try {
+//            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+//            preparedStatement.setInt(1, 1);
+//            resultSet = preparedStatement.executeQuery();
+//            while (resultSet.next()){
+//                int coins = resultSet.getInt("coins");
+//                System.out.println("Your coins amount is: " + coins);
+//            }
+//            preparedStatement.executeQuery();
+//        }catch (SQLException e) {
+//            System.out.println(e);
+//        } finally {
+//            try {
+//                preparedStatement.close();
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//
+//            }
+//
+//        }
+//    }

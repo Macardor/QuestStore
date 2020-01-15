@@ -1,14 +1,29 @@
 package services;
-
 import daoImplementation.MentorDAOImplementation;
 import daoImplementation.StudentDAOImplementation;
-import models.Coincubator;
 import models.Student;
 import view.StaticUi;
+import java.util.List;
 
 public class StudentService {
     StudentDAOImplementation studentDAOImplementation = new StudentDAOImplementation();
     MentorDAOImplementation mentorDAOImplementation = new MentorDAOImplementation();
+
+    public void addNewStudent(){
+        studentDAOImplementation.addStudent(new Student(StaticUi.getFirstNameInput(), StaticUi.getLastNameInput(), Student.userType, true, StaticUi.getLoginInput(), StaticUi.getPasswordInput()));
+    }
+    public void deleteStudent(){
+        studentDAOImplementation.deleteStudent(StaticUi.getIdInput());
+    }
+    public List<Student> getStudentList(){
+        return studentDAOImplementation.getStudentsList();
+    }
+    public List<Student> getActiveStudentList(){
+        return studentDAOImplementation.getActiveStudentsList();
+    }
+    public Student getStudentByUserId(int id){
+        return studentDAOImplementation.getStudentByUserId(id);
+    }
 
     public void editChoseToStudent() {
         mentorDAOImplementation.getActiveStudentsList();
