@@ -236,5 +236,31 @@ public class StudentDAOImplementation implements StudentDAO {
         }
         return 0;
     }
+
+    public int getStudentId(Student student) {
+        String orderToSql = "SELECT * FROM students WHERE user_id = ?";
+        try {
+            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            preparedStatement.setInt(1, student.getId());
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()){
+                int userDetailId = resultSet.getInt("id");
+                System.out.println(userDetailId);
+                return  userDetailId;
+            }
+            preparedStatement.executeQuery();
+        }catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            try {
+                preparedStatement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+
+            }
+
+        }
+        return 0;
+    }
 }
 

@@ -49,7 +49,7 @@ public class MentorController implements BaseController {
                     coincubatorService.deleteCoincubatorById();
                     break;
                 case "10":
-                    studentService.editChoseToStudent();
+                    studentService.editChooseToStudent();
                     break;
                 case "0":
                     isRunning = false;

@@ -107,7 +107,7 @@ public class MentorDAOImplementation{
     public List<Student> getActiveStudentsList() {
         String orderToSql = "SELECT * FROM users " +
                 "join user_details " +
-                "on users.user_details_id = user_details.id WHERE users.user_type_id = ? and users.is_active = ?";
+                "on users.user_details_id = user_details.id WHERE users.user_type_id = ? and users.is_active = ? ORDER BY users.id";
         List<Student> studentList = new ArrayList<>();
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);

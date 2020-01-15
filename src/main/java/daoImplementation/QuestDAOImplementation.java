@@ -4,6 +4,7 @@ import SQL.PostgreSQLJDBC;
 import models.Quest;
 import models.Student;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -194,5 +195,23 @@ public class QuestDAOImplementation{
             System.out.println(e);
         }
         return quests;
+    }
+
+    public void setQuestActiveForStudent(int studentId, Quest quest, Date date) {
+        String sqlQuery = "INSERT INTO user_quests (student_id, quest_id, is_available, completion_date) VALUES(?, ?, ?, ?)";
+
+        try {
+            ps = postgreSQLJDBC.connect().prepareStatement(sqlQuery);
+
+            ps.setInt(1, studentId);
+            ps.setInt(2, quest.getId());
+            ps.setBoolean(3, true);
+            ps.setDate(4, date);
+
+            ps.executeUpdate();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
