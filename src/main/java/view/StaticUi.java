@@ -19,7 +19,7 @@ public class StaticUi {
 
     }
 
-    public static void errorMassage(){
+    public static void errorMassageIfBadChoseInMenu(){
         System.out.println("You can chose only from menu options !!!");
     }
 
@@ -95,12 +95,18 @@ public class StaticUi {
     }
 
     public static void displayMentorMenu(){
-        System.out.println("Select number to: \n" +
+        System.out.println("\nSelect number to: \n" +
                 "1. Add new student\n" +
                 "2. Delete student\n" +
                 "3. Get All Students\n" +
                 "4. Get all active students\n" +
-                "5. Get student by user id");
+                "5. Get student by user id\n" +
+                "6. Add new Coincubator\n" +
+                "7. Show all Coincubators\n" +
+                "8. Edit Coincubator\n" +
+                "9. Delete Coincubator\n" +
+                "10. Edit Student data/quest" +
+                "0. Exit");
     }
 
     public static int getIdInput(){
@@ -264,5 +270,47 @@ public class StaticUi {
         creepDAOImplementation.addMentor(mentor);
         mentorsList.add(mentor);
         return mentorsList;
+    }
+
+    public static int menuToChoseEditStudentOption() {
+        Scanner editChose = new Scanner(System.in);
+        boolean isRuning = true;
+        while (isRuning) {
+            String menu = "\nPleas Chose what do you want to edit:\n" +
+                    "1. Student data\n" +
+                    "2. Student Quest\n" +
+                    "3. Back";
+
+            System.out.println(menu);
+            int result = editChose.nextInt();
+            if (result == 1 || result == 2 || result == 3 ){
+                isRuning = false;
+                return result;
+            }else {
+                errorMassageIfBadChoseInMenu();
+            }
+        }
+
+        return 0;
+    }
+
+    public static Student editStudent(Student student) {
+        Scanner scannerForEdit = new Scanner(System.in);
+        Scanner scannerFor= new Scanner(System.in);
+
+        System.out.println("Pleas enter a new Login: ");
+        String login = scanner.next();
+        student.setLogin(login);
+        System.out.println("Pleas enter a new Password: ");
+        String password = scanner.next();
+        student.setPassword(password);
+        System.out.println("Pleas enter a new First Name: ");
+        String firstName = scannerForEdit.nextLine();
+        student.setFirstname(firstName);
+        System.out.println("Pleas enter a new Last Name: ");
+        String lasttName = scannerFor.nextLine();
+        student.setLastname(lasttName);
+
+        return student;
     }
 }

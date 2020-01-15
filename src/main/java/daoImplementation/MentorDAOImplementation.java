@@ -51,9 +51,7 @@ public class MentorDAOImplementation{
 
     }
 
-    public void editStudent(Student student) {
-        //TODO Bartek to kupa
-    }
+
 
     public void deleteStudent(int id) {
         String orderToSql = "UPDATE users SET is_active = ? WHERE id = ? and user_type_id = 1 ";
