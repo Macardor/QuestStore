@@ -1,8 +1,10 @@
 package controllers;
+
 import daoImplementation.MentorDAOImplementation;
 import services.CoincubatorService;
 import services.StudentService;
 import view.StaticUi;
+
 import java.util.Scanner;
 
 public class MentorController implements BaseController {
@@ -45,10 +47,10 @@ public class MentorController implements BaseController {
                     coincubatorService.deleteCoincubatorById();
                     break;
                 case "10":
-                    studentService.editChoseToStudent();
+//                    studentService.editChoseToStudent();
                     break;
                 case "0":
-                    isRunning = false;
+//                    isRunning = false;
                     System.out.println("Bay bay");
                     break;
                 default:
