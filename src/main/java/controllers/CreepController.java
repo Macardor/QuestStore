@@ -3,6 +3,7 @@ package controllers;
 import daoImplementation.CreepDAOImplementation;
 import daoImplementation.StudentDAOImplementation;
 import models.Mentor;
+import view.StaticUi;
 
 import java.util.Scanner;
 
@@ -19,47 +20,26 @@ public class CreepController implements BaseController {
 
 
     private void creepMenu(){
-        printCreepMenu();
+        StaticUi.printCreepMenu();
         String option = scanner.next();
         switch (option){
             case "1":
                 creepDAOImplementation.showAllMentors();
                 break;
             case "2":
-                addMentor();
+                StaticUi.addMentor();
                 break;
             case "3":
-
+                //creepDAOImplementation.editMentor();
                 break;
             case "4":
                 deleteMentorById();
         }
     }
 
-    private void printCreepMenu(){
-        System.out.println("Select number to: \n" +
-                "1. Show all mentors\n" +
-                "2. Add a new mentor\n" +
-                "3. Edit mentor by id\n" +
-                "4. Remove mentor by id");
-    }
 
-    private void addMentor(){
-        System.out.println("Insert mentor's login: ");
-        String login = scanner.next();
-        System.out.println("Insert mentor's password: ");
-        String password = scanner.next();
-        System.out.println("Insert mentor's name: ");
-        String firstName = scanner.next();
-        System.out.println("Insert mentor's last name: ");
-        String lastName = scanner.next();
-        int studentTypeId = 2;
-        boolean isActive = true;
-        Mentor mentor = new Mentor(login, password, studentTypeId, isActive, firstName, lastName);
 
-        creepDAOImplementation.addMentor(mentor);
-        creepDAOImplementation.showAllMentors();
-    }
+
 
     private void deleteMentorById(){
         creepDAOImplementation.showAllMentors();

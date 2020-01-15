@@ -105,6 +105,7 @@ public class StudentDAOImplementation implements StudentDAO {
                         itemName + " | " + description + " | " + boughtDate + " | " + usedDate + " | " + isAvailable);
             }
             preparedStatement.executeQuery();
+
         }catch (SQLException e) {
             System.out.println(e);
         } finally {
