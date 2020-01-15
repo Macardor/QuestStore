@@ -200,62 +200,31 @@ public class StudentDAOImplementation{
         }return coincubatorsList;
     }
 
+    public int getStudentId(Student student) {
+        String orderToSql = "SELECT * FROM students WHERE user_id = ?";
+        try {
+            ps = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            ps.setInt(1, student.getId());
+            resultSet = ps.executeQuery();
+            if (resultSet.next()){
+                int userDetailId = resultSet.getInt("id");
+                System.out.println(userDetailId);
+                return  userDetailId;
+            }
+            ps.executeQuery();
+        }catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            try {
+                ps.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+
+            }
+
+        }
+        return 0;
+    }
 }
-//    public void showUserItems() {
-//        Student student = new Student(3);
-//        String orderToSql = "SELECT * FROM user_items JOIN items ON user_items.item_id = items.id WHERE user_items.id = ?";
-//        try {
-//            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
-//            preparedStatement.setInt(1, student.getId());
-//            resultSet = preparedStatement.executeQuery();
-//            while (resultSet.next()){
-//                boolean isAvailable = resultSet.getBoolean("is_available");
-//                Date boughtDate = resultSet.getDate("bought_date");
-//                Date usedDate = resultSet.getDate("used_date");
-//                String itemName = resultSet.getString("name");
-//                String description = resultSet.getString("description");
-//                System.out.println("Your items:\n" +
-//                        "Item name  |   Description     |   Bought date     |   Used date   |   Is Available    \n" +
-//                        itemName + " | " + description + " | " + boughtDate + " | " + usedDate + " | " + isAvailable);
-//            }
-//            preparedStatement.executeQuery();
-//
-//        }catch (SQLException e) {
-//            System.out.println(e);
-//        } finally {
-//            try {
-//                preparedStatement.close();
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//
-//            }
-//
-//        }
-//    }
 //
 //
-//
-//    @Override
-//    public void showUserCoins() {
-//        String orderToSql = "SELECT coins FROM students WHERE id = ?";
-//        try {
-//            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
-//            preparedStatement.setInt(1, 1);
-//            resultSet = preparedStatement.executeQuery();
-//            while (resultSet.next()){
-//                int coins = resultSet.getInt("coins");
-//                System.out.println("Your coins amount is: " + coins);
-//            }
-//            preparedStatement.executeQuery();
-//        }catch (SQLException e) {
-//            System.out.println(e);
-//        } finally {
-//            try {
-//                preparedStatement.close();
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//
-//            }
-//
-//        }
-//    }
