@@ -308,5 +308,30 @@ public class StudentDAOImplementation {
         }
         return student;
     }
+
+    public void showUserCoins(Student student){
+        String orderToSql = "SELECT coins FROM students WHERE id = ?";
+        try{
+            ps = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            int id = student.getId();
+            ps.setInt(1, id);
+            resultSet = ps.executeQuery();
+
+            if (resultSet.next()){
+                int coins = resultSet.getInt("coins");
+
+                System.out.println("Here is your coins: " + coins);
+            }
+            ps.executeQuery();
+        }catch (SQLException e){
+            System.out.println(e);
+        }finally {
+            try {
+                ps.close();
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+    }
 }
 

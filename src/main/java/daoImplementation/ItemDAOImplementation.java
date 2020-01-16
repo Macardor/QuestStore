@@ -86,7 +86,7 @@ public class ItemDAOImplementation{
                 String description = resultSet.getString("description");
                 boolean isActive = resultSet.getBoolean("is_active");
 
-//                System.out.println(id + " | " + name + " | " + price + " | " + description + " | " + isActive);  //test method
+                System.out.println(id + " | " + name + " | " + price + " | " + description + " | " + isActive);  //test method
 
                 Item item = new Item(id, name, price, description, isActive);
                 itemList.add(item);

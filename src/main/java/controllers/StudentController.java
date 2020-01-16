@@ -1,6 +1,8 @@
 package controllers;
 
+import daoImplementation.ItemDAOImplementation;
 import daoImplementation.StudentDAOImplementation;
+import models.Student;
 
 import java.util.Scanner;
 
@@ -8,29 +10,31 @@ public class StudentController implements BaseController {
 
 
     StudentDAOImplementation studentDAOImplementation = new StudentDAOImplementation();
+    ItemDAOImplementation itemDAOImplementation = new ItemDAOImplementation();
     Scanner scanner = new Scanner(System.in);
 
     @Override
     public void run() {
-//        studentMenu();
+        studentMenu();
     }
 
     private void studentMenu(){
-//        printStudentMenu();
-//        String option = scanner.next();
-//        switch (option){
-//            case "1":
-//                studentDAOImplementation.showItems();
-//                break;
-//            case "2":
-//                studentDAOImplementation.showCoincubatos();
-//                break;
-//            case "3":
-//                showUserCoins();
-//                break;
-//            case "4":
-//                studentDAOImplementation.showUserItems();
-//        }
+        printStudentMenu();
+        String option = scanner.next();
+        switch (option){
+            case "1":
+                itemDAOImplementation.getItemsList();
+                break;
+            case "2":
+                studentDAOImplementation.showCoincubatos();
+                break;
+            case "3":
+                //studentDAOImplementation.showUserCoins();
+                break;
+            case "4":
+                showUserItems();
+                break;
+        }
     }
 
     private void printStudentMenu(){
@@ -41,8 +45,9 @@ public class StudentController implements BaseController {
                 "4. Show user's items");
     }
 
-    private void showUserCoins(){
-//        studentDAOImplementation.showUserCoins();
+    private void showUserItems(){
+        int id = scanner.nextInt();
+        itemDAOImplementation.getUserItemsList(id);
     }
 //
 //    private void enterNewUser(){

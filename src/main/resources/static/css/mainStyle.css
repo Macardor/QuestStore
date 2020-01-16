@@ -42,6 +42,20 @@ body
 
 }
 
+/*dropdown menu bar*/
+.dropdown-menu{
+
+}
+
+.dropdown-menu.show{
+    color: rgba(245, 245, 245, 0.29);
+}
+
+.navbarDropdownMenuLink {
+}
+.navbarDropdownMenuLink{
+    
+}
 #container
 {
     list-style-type: none;

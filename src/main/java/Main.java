@@ -1,6 +1,7 @@
 import controllers.CreepController;
 import controllers.LoginController;
 import controllers.MentorController;
+import controllers.StudentController;
 import services.StudentService;
 import view.StaticUi;
 
@@ -19,5 +20,7 @@ public class Main {
 
         CreepController creepController = new CreepController();
         creepController.run();
+//        StudentController studentController = new StudentController();
+//        studentController.run();
     }
 }
