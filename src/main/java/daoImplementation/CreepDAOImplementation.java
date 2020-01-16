@@ -1,11 +1,9 @@
 package daoImplementation;
 
 import SQL.PostgreSQLJDBC;
-
 import interfaces.CreepDAO;
 import models.Mentor;
 import models.User;
-
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,7 +17,6 @@ public class CreepDAOImplementation implements CreepDAO {
     PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
-    Scanner scanner = new Scanner(System.in);
 
     @Override
     public List<User> showAllMentors() {
@@ -43,19 +40,11 @@ public class CreepDAOImplementation implements CreepDAO {
 
             }
             preparedStatement.executeQuery();
+            preparedStatement.close();
         }catch (SQLException e) {
             System.out.println(e);
-        } finally {
-            try {
-                preparedStatement.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-
-            }
         }return mentorsList;
     }
-
-
 
     @Override
     public void addMentor(Mentor mentor) {
@@ -69,23 +58,16 @@ public class CreepDAOImplementation implements CreepDAO {
             preparedStatement.setString(2, mentor.getPassword());
             preparedStatement.setString(3, mentor.getFirstname());
             preparedStatement.setString(4, mentor.getLastname());
-
             preparedStatement.executeQuery();
             preparedStatement.close();
-
         } catch (Exception e) {
             System.out.println(e);
         }
-
     }
-
-
 
     @Override
     public void editMentor(int id) {
-
         String orderForSql = ("UPDATE user_details SET login = ?, password = ?, first_name = ?, last_name = ? WHERE id = ?");
-
         try {
             Scanner scanner = new Scanner(System.in);
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderForSql);
@@ -105,19 +87,11 @@ public class CreepDAOImplementation implements CreepDAO {
             preparedStatement.setInt(5, id);
 
             int row = preparedStatement.executeUpdate();
-
+            preparedStatement.close();
         } catch (Exception e) {
             System.out.println(e);
-        } finally {
-            try {
-                preparedStatement.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
     }
-
-
 
     @Override
     public void setMentorToUnactive(int id) {
@@ -136,5 +110,4 @@ public class CreepDAOImplementation implements CreepDAO {
             System.out.println(e);
         }
     }
-
 }

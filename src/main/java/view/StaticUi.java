@@ -105,7 +105,7 @@ public class StaticUi {
                 "7. Show all Coincubators\n" +
                 "8. Edit Coincubator\n" +
                 "9. Delete Coincubator\n" +
-                "10. Edit Student data/quest" +
+                "10. Edit Student data/quest\n" +
                 "0. Exit");
     }
 

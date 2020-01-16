@@ -1,7 +1,6 @@
 package controllers;
 
 import daoImplementation.StudentDAOImplementation;
-import models.Student;
 
 import java.util.Scanner;
 
@@ -13,25 +12,25 @@ public class StudentController implements BaseController {
 
     @Override
     public void run() {
-        studentMenu();
+//        studentMenu();
     }
 
     private void studentMenu(){
-        printStudentMenu();
-        String option = scanner.next();
-        switch (option){
-            case "1":
-                studentDAOImplementation.showItems();
-                break;
-            case "2":
-                studentDAOImplementation.showCoincubatos();
-                break;
-            case "3":
-                showUserCoins();
-                break;
-            case "4":
-                studentDAOImplementation.showUserItems();
-        }
+//        printStudentMenu();
+//        String option = scanner.next();
+//        switch (option){
+//            case "1":
+//                studentDAOImplementation.showItems();
+//                break;
+//            case "2":
+//                studentDAOImplementation.showCoincubatos();
+//                break;
+//            case "3":
+//                showUserCoins();
+//                break;
+//            case "4":
+//                studentDAOImplementation.showUserItems();
+//        }
     }
 
     private void printStudentMenu(){
@@ -43,7 +42,7 @@ public class StudentController implements BaseController {
     }
 
     private void showUserCoins(){
-        studentDAOImplementation.showUserCoins();
+//        studentDAOImplementation.showUserCoins();
     }
 //
 //    private void enterNewUser(){
