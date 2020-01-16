@@ -30,10 +30,13 @@ public class CreepController implements BaseController {
                 StaticUi.addMentor();
                 break;
             case "3":
-                //creepDAOImplementation.editMentor();
+                int id = scanner.nextInt();
+                creepDAOImplementation.editMentor(id);
                 break;
             case "4":
-                deleteMentorById();
+                int idMentor = scanner.nextInt();
+                System.out.println("insert id of metor to make unactive: ");
+                creepDAOImplementation.setMentorToUnactive(idMentor);
         }
     }
 
