@@ -1,38 +1,36 @@
 package controllers;
+
 import daoImplementation.MentorDAOImplementation;
-import models.Student;
+import services.CoincubatorService;
 import services.StudentService;
 import view.StaticUi;
-import services.CoincubatorService;
 
 import java.util.Scanner;
 
 public class MentorController implements BaseController {
-    Scanner scanner = new Scanner(System.in);
-    MentorDAOImplementation mentorDAOImplementation = new MentorDAOImplementation();
-    private CoincubatorService coincubatorService = new CoincubatorService();
-    StudentService studentService = new StudentService();
-
     public void mentorMenu(){
-        boolean isRunning = true;
-        while (isRunning) {
-            StaticUi.displayMentorMenu();
-            String option = scanner.next();
+        MentorDAOImplementation mentorDAOImplementation = new MentorDAOImplementation();
+        Scanner scanner = new Scanner(System.in);
+        StudentService ss = new StudentService();
+        CoincubatorService coincubatorService = new CoincubatorService();
+
+        StaticUi.displayMentorMenu();
+        String option = scanner.next();
             switch (option) {
                 case "1":
-                    mentorDAOImplementation.addStudent(new Student(StaticUi.getFirstNameInput(), StaticUi.getLastNameInput(), Student.userType, true, StaticUi.getLoginInput(), StaticUi.getPasswordInput()));
+                    ss.addNewStudent();
                     break;
                 case "2":
-                    mentorDAOImplementation.deleteStudent(StaticUi.getIdInput());
+                    ss.deleteStudent();
                     break;
                 case "3":
-                    StaticUi.displayAllStudents(mentorDAOImplementation.getStudentsList());
+                    StaticUi.displayAllStudents(ss.getStudentList());
                     break;
                 case "4":
-                    StaticUi.displayAllStudents(mentorDAOImplementation.getActiveStudentsList());
+                    StaticUi.displayAllStudents(ss.getActiveStudentList());
                     break;
                 case "5":
-                    mentorDAOImplementation.getStudentByUserId(StaticUi.getIdInput());
+                    ss.getStudentByUserId(StaticUi.getIdInput());
                     break;
                 case "6":
                     coincubatorService.addNewCoincubator();
@@ -49,24 +47,21 @@ public class MentorController implements BaseController {
                     coincubatorService.deleteCoincubatorById();
                     break;
                 case "10":
-                    studentService.editChoseToStudent();
+                    ss.editChooseToStudent();
                     break;
                 case "0":
-                    isRunning = false;
+//                    isRunning = false;
                     System.out.println("Bay bay");
                     break;
                 default:
                     StaticUi.errorMassageIfBadChoseInMenu();
             }
         }
-    }
 
     @Override
     public void run() {
         mentorMenu();
     }
-
-
 }
 
 
