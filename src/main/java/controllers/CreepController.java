@@ -61,9 +61,6 @@ public class CreepController implements BaseController {
         int studentTypeId = 2;
         Mentor mentor = new Mentor(login, password, studentTypeId, isActive, firstName, lastName);
 
-        creepDAOImplementation.addMentor(mentor);
-        creepDAOImplementation.showAllMentors();
-    }
 
 
 //    private void deleteMentorById(){
