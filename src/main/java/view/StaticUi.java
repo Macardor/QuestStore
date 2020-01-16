@@ -225,6 +225,30 @@ public class StaticUi {
 
 
 //    Creep controller
+    public static String getMentorLoginInput(){
+        System.out.println("Enter new mentor login: ");
+        String login = scanner.next();
+        return login;
+    }
+
+    public static String getMentorPasswordInput(){
+        System.out.println("Enter new password: ");
+        String password = scanner.next();
+        return password;
+    }
+
+    public static String getMentorNameInput(){
+        System.out.println("Enter new mentor name: ");
+        String name = scanner.next();
+        return name;
+    }
+
+    public static String getMentorLastnameInput(){
+        System.out.println("Enter new mentor lastname: ");
+        String lastname = scanner.next();
+        return lastname;
+    }
+
     public static void printCreepMenu(){
         System.out.println("Select number to: \n" +
                 "1. Show all mentors\n" +
@@ -252,8 +276,15 @@ public class StaticUi {
         return mentorsList;
     }
 
-    public static List<Mentor> editMentor(int id){
-        List<Mentor> mentorsList = new ArrayList<>();
+    public static void displayCreepSubmenu() {
+        System.out.println("Edit mentor. What do you want to edit? \n" +
+                "1. To edit mentor login\n" +
+                "2. To edit mentor password\n" +
+                "3. To edit mentor name\n" +
+                "4. To edit mentor last name");
+    }
+
+    public static Mentor editMentor(int id){
         System.out.println("Insert new mentor's login: ");
         String login = scanner.next();
         System.out.println("Insert new mentor's password: ");
@@ -266,10 +297,11 @@ public class StaticUi {
         int studentTypeId = 2;
         boolean isActive = true;
         Mentor mentor = new Mentor(login, password, studentTypeId, isActive, firstName, lastName);
-        CreepDAOImplementation creepDAOImplementation = new CreepDAOImplementation();
-        creepDAOImplementation.addMentor(mentor);
-        mentorsList.add(mentor);
-        return mentorsList;
+        return mentor;
+    }
+
+    public static void setMentorUnactive(){
+        System.out.println("Choose id of mentor you want to remove: ");
     }
 
     public static int menuToChoseEditStudentOption() {
@@ -313,4 +345,6 @@ public class StaticUi {
 
         return student;
     }
+
+
 }

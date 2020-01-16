@@ -9,7 +9,7 @@ public interface CreepDAO {
 
     List<User> showAllMentors();
     void addMentor(Mentor mentor);
-    void editMentor(int id);
+    void editMentor(Mentor mentor);
     void setMentorToUnactive(int id);
 
 }
