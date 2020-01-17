@@ -42,10 +42,10 @@
         <div>
             {% for student in studentList %}
                 <ol>
-                    <li>Login: {{ login }}</li>
-                    <li>Password: {{ password }}</li>
-                    <li>First Name: {{ firstname }}</li>
-                    <li>Last Name: {{ lastname }}</li>
+                    <li>Login: {{ student.getLogin }}</li>
+                    <li>Password: {{ student.getPassword }}</li>
+                    <li>First Name: {{ student.getFirstname }}</li>
+                    <li>Last Name: {{ student.getLastname }}</li>
                 </ol>
             {% endfor %}
         </div>
