@@ -1,6 +1,7 @@
 package controllers;
 
 import daoImplementation.MentorDAOImplementation;
+import models.Student;
 import services.CoincubatorService;
 import services.StudentService;
 import view.StaticUi;
@@ -18,10 +19,10 @@ public class MentorController implements BaseController {
         String option = scanner.next();
             switch (option) {
                 case "1":
-                    ss.addNewStudent();
+                    ss.addNewStudent(new Student(StaticUi.getFirstNameInput(), StaticUi.getLastNameInput(), Student.userType, true, StaticUi.getLoginInput(), StaticUi.getPasswordInput()));
                     break;
                 case "2":
-                    ss.deleteStudent();
+                    ss.deleteStudent(StaticUi.getIdInput());
                     break;
                 case "3":
                     StaticUi.displayAllStudents(ss.getStudentList());

@@ -151,6 +151,7 @@ public class QuestDAOImplementation{
                 boolean isActive = resultSet.getBoolean("is_active");
                 quest = new Quest(id, name, description, reward, isActive);
             }
+            ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

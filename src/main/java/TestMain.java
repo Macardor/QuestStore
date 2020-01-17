@@ -1,17 +1,16 @@
 import com.sun.net.httpserver.HttpServer;
-import httpHandlers.StudentHandler;
+import httpHandlers.TestHandler;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
 
-public class Main {
-
+public class TestMain {
 
     static void runServer(){
         try{
             HttpServer httpServer = HttpServer.create(new InetSocketAddress(8000), 0);
             //set routes
-            httpServer.createContext("/students", new StudentHandler());
+            httpServer.createContext("/test", new TestHandler());
             httpServer.setExecutor(null);
             httpServer.start();
         }catch (IOException e){

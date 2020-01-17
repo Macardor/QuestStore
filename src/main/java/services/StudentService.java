@@ -12,9 +12,9 @@ import java.util.Calendar;
 import java.util.List;
 
 public class StudentService {
-    StudentDAOImplementation studentDAOImplementation = new StudentDAOImplementation();
-    MentorDAOImplementation mentorDAOImplementation = new MentorDAOImplementation();
-    QuestDAOImplementation questDAOImplementation = new QuestDAOImplementation();
+    private StudentDAOImplementation studentDAOImplementation = new StudentDAOImplementation();
+    private MentorDAOImplementation mentorDAOImplementation = new MentorDAOImplementation();
+    private QuestDAOImplementation questDAOImplementation = new QuestDAOImplementation();
 
 
     public void editChooseToStudent() {
@@ -47,11 +47,11 @@ public class StudentService {
         }
     }
 
-    public void addNewStudent(){
-        studentDAOImplementation.addStudent(new Student(StaticUi.getFirstNameInput(), StaticUi.getLastNameInput(), Student.userType, true, StaticUi.getLoginInput(), StaticUi.getPasswordInput()));
+    public void addNewStudent(Student student){
+        studentDAOImplementation.addStudent(student);
     }
-    public void deleteStudent(){
-        studentDAOImplementation.deleteStudent(StaticUi.getIdInput());
+    public void deleteStudent(int idToDelete){
+        studentDAOImplementation.deleteStudent(idToDelete);
     }
     public List<Student> getStudentList(){
         return studentDAOImplementation.getStudentsList();

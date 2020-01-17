@@ -7,9 +7,9 @@ import java.util.Scanner;
 
 public class QuestController {
 
-    void questMenu(){
+    public void questMenu(){
         QuestService qs = new QuestService();
-        Scanner scanner = null;
+        Scanner scanner = new Scanner(System.in);
         StaticUi.displayQuestMenu();
         String option = scanner.next();
         switch (option){

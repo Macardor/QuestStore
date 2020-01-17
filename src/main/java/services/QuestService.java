@@ -22,7 +22,7 @@ public class QuestService {
 
     }
     public void getQuestList(){
-        questDAOImplementation.getAllQuests();
+        StaticUi.displayAllQuests(questDAOImplementation.getAllQuests());
 
     }
     public void getQuestById(){
