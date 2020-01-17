@@ -30,16 +30,15 @@ public class TestHandler implements HttpHandler {
 //            String formData = br.readLine();
 //            Map inputs = parseFormData(formData);
 
-            JtwigTemplate template = JtwigTemplate.classpathTemplate("/home/adam/Desktop/QuestStore/src/main/resources/templates/test.twig");
+            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/test.twig");
 
             JtwigModel model = JtwigModel.newModel();
-//            model.with("login", inputs.get("login"));
-//            model.with("password", inputs.get("password"));
-//            model.with("firstName", inputs.get("firstname"));
-//
-//            model.with("lastName", inputs.get("lastname"));
-//            model.with("studentList", testService.getFkinListOfIdiots());
-//            model.with("studentLogin",1 );
+            model.with("login", "login");
+            model.with("password", "password");
+            model.with("firstName", "firstname");
+
+            model.with("lastName", "lastname");
+
             // TODO jak zrobić getter z listy w twiggu
 
             response = template.render(model);
