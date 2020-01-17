@@ -6,7 +6,9 @@ import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 import services.TestService;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,10 +19,10 @@ public class TestHandler implements HttpHandler {
         TestService testService = new TestService();
         String method = httpExchange.getRequestMethod();
         System.out.println(method);
-        InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
-        BufferedReader br = new BufferedReader(isr);
-        InputStreamReader isr2 = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
-        BufferedReader br2 = new BufferedReader(isr2);
+//        InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
+//        BufferedReader br = new BufferedReader(isr);
+//        InputStreamReader isr2 = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
+//        BufferedReader br2 = new BufferedReader(isr2);
         String response = "";
 
 
@@ -51,19 +53,18 @@ public class TestHandler implements HttpHandler {
         // If the form was submitted, retrieve it's content.
         if (method.equals("POST")) {
 
-            String formData = br2.readLine();
+//            String formData = br2.readLine();
 
             System.out.println(response);
-            System.out.println(formData);
 
-            Map inputs = parseFormData(formData);
+//            Map inputs = parseFormData(formData);
 
             JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/submit.twig");
             JtwigModel model = JtwigModel.newModel();
-            model.with("fName", inputs.get("firstname"));
-            model.with("lName", inputs.get("lastname"));
-            model.with("country", inputs.get("country"));
-            model.with("message", inputs.get("subject"));
+//            model.with("fName", inputs.get("firstname"));
+//            model.with("lName", inputs.get("lastname"));
+//            model.with("country", inputs.get("country"));
+//            model.with("message", inputs.get("subject"));
             response = template.render(model);
         }
         httpExchange.sendResponseHeaders(200, response.length());
