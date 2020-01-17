@@ -42,15 +42,15 @@
         <div>
             {% for student in studentList %}
                 <ol>
-                    <li>Login: {{ studentLogin.getLogin }}</li>
-                    <li>Password: {{ studentPassword.getPassword }}</li>
-                    <li>First Name: {{ studentFirstName.getFirstame }}</li>
-                    <li>Last Name: {{ studentLastname.getLastname }}</li>
+                    <li>Login: {{ login }}</li>
+                    <li>Password: {{ password }}</li>
+                    <li>First Name: {{ firstname }}</li>
+                    <li>Last Name: {{ lastname }}</li>
                 </ol>
             {% endfor %}
         </div>
 
-        <form method="GET">
+        <form method="POST">
 
             <label for="fname">Login</label>
             <input type="text" id="fname" name="firstname" placeholder="Your name..">
