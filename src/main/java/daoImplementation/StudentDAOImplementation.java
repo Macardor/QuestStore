@@ -398,30 +398,25 @@ public class StudentDAOImplementation {
 
         return price;
     }
-//
-//    public void useCard(){
-//        PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
-//        PreparedStatement ps = null;
-//        String orderToSql = "INSERT INTO user_items (item_id, is_available, bought_date, used_date, student_id) VALUES (?,?,?,?,?)";
-//        int itemPrice = getItemPrice(itemId);
-//        int studentCoins = showUserCoins(studentId);
-//        if (itemPrice > studentCoins) {
-//            try {
-//                ps = postgreSQLJDBC.connect().prepareStatement(orderToSql);
-//                ps.setInt(1, itemId);
-//                ps.setBoolean(2, true);
-//                ps.setDate(3, DateNow());
-//                ps.setDate(4, null);
-//                ps.setInt(5, studentId);
-//                resultSet = ps.executeQuery();
-//                ps.close();
-//            } catch (SQLException e) {
-//                System.out.println(e);
-//            }
-//        }else {
-//            System.out.println("you have not enough coins!");
-//        }
-//    }
+
+    public void useCard(int itemId, int studentId){
+        PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
+        PreparedStatement ps = null;
+        String orderToSql = "UPDATE user_items SET is_available = ?, used_date = ? WHERE item_id = ? AND student_id = ?;";
+
+        try {
+            ps = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            ps.setInt(1, itemId);
+            ps.setBoolean(2, false);
+            ps.setDate(3, DateNow());
+            ps.setInt(4, studentId);
+            resultSet = ps.executeQuery();
+            ps.close();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+    }
 
 }
 
