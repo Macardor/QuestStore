@@ -347,7 +347,7 @@ public class StudentDAOImplementation {
         String orderToSql = "INSERT INTO user_items (item_id, is_available, bought_date, used_date, student_id) VALUES (?,?,?,?,?)";
         int itemPrice = getItemPrice(itemId);
         int studentCoins = showUserCoins(studentId);
-        if (itemPrice > studentCoins) {
+        if (studentCoins >= itemPrice) {
             try {
                 ps = postgreSQLJDBC.connect().prepareStatement(orderToSql);
                 ps.setInt(1, itemId);
@@ -357,6 +357,18 @@ public class StudentDAOImplementation {
                 ps.setInt(5, studentId);
                 resultSet = ps.executeQuery();
                 ps.close();
+
+                String updateCoins = "UPDATE students SET coins = ? WHERE user_id = ?";
+                try{
+                    int reduceCoins = (studentCoins - itemPrice);
+                    ps = postgreSQLJDBC.connect().prepareStatement(updateCoins);
+                    ps.setInt(1, reduceCoins);
+                    ps.setInt(2, studentId);
+                    ps.executeUpdate();
+                    ps.close();
+                }catch (SQLException e) {
+                    System.out.println(e);
+                }
             } catch (SQLException e) {
                 System.out.println(e);
             }
@@ -365,7 +377,7 @@ public class StudentDAOImplementation {
         }
     }
 
-    public Date DateNow(){
+    private Date DateNow(){
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         System.out.println(dtf.format(now));
@@ -373,7 +385,7 @@ public class StudentDAOImplementation {
         return null;
     }
 
-    public int getItemPrice(int itemId) {
+    private int getItemPrice(int itemId) {
         PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
         PreparedStatement ps = null;
         String getItemPrice = "SELECT price FROM items WHERE id = ?";
@@ -384,7 +396,7 @@ public class StudentDAOImplementation {
             resultSet = ps.executeQuery();
             while(resultSet.next()){
                 int itemPrice = resultSet.getInt("price");
-                System.out.println(itemPrice);
+//                System.out.println(itemPrice);
             }
         } catch (SQLException e) {
             System.out.println(e);
@@ -410,7 +422,7 @@ public class StudentDAOImplementation {
             ps.setBoolean(2, false);
             ps.setDate(3, DateNow());
             ps.setInt(4, studentId);
-            resultSet = ps.executeQuery();
+            ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
             System.out.println(e);

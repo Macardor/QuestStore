@@ -78,7 +78,7 @@ public class StudentController implements BaseController {
 
     private void useCardMenu(){
         System.out.println("\n1.Use card" +
-                "2.Back to menu");
+                "\n2.Back to menu");
         String option = scanner.next();
         switch (option) {
             case "1":
