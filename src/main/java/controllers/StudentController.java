@@ -37,6 +37,7 @@ public class StudentController implements BaseController {
                 break;
             case "4":
                 itemDAOImplementation.getUserItemsList(thisUser.getId());
+                useCardMenu();
                 break;
         }
     }
@@ -71,6 +72,20 @@ public class StudentController implements BaseController {
         System.out.println("Choose id of card you want to use: ");
         int itemId = scanner.nextInt();
         studentDAOImplementation.useCard(itemId, thisUser.getId());
+    }
+
+    private void useCardMenu(){
+        System.out.println("\n1.Use card" +
+                "2.Back to menu");
+        String option = scanner.next();
+        switch (option) {
+            case "1":
+                useCard();
+                break;
+            case "2":
+                studentMenu();
+                break;
+        }
     }
 }
 //
