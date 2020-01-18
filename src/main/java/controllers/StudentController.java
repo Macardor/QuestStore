@@ -18,12 +18,13 @@ public class StudentController implements BaseController {
         studentMenu();
     }
 
-    private void studentMenu(){
+    private void studentMenu() {
         printStudentMenu();
         String option = scanner.next();
-        switch (option){
+        switch (option) {
             case "1":
                 itemDAOImplementation.getItemsList();
+                buyItemMenu();
                 break;
             case "2":
                 studentDAOImplementation.showCoincubatos();
@@ -37,7 +38,7 @@ public class StudentController implements BaseController {
         }
     }
 
-    private void printStudentMenu(){
+    private void printStudentMenu() {
         System.out.println("Select number to: \n" +
                 "1. Show all items in the store\n" +
                 "2. Show all coincubators in the store\n" +
@@ -45,10 +46,29 @@ public class StudentController implements BaseController {
                 "4. Show user's items");
     }
 
-    private void showUserItems(){
+    private void showUserItems() {
         int id = scanner.nextInt();
         itemDAOImplementation.getUserItemsList(id);
     }
+
+    private void buyItemMenu() {
+        System.out.println("\n1. Buy item by id\n" +
+                "2. Back to menu");
+        String option = scanner.next();
+        switch (option) {
+            case "1":
+                System.out.println("choose item id to buy: ");
+                //itemDAOImplementation.getUserItemsList(1);
+                int itemId = scanner.nextInt();
+                studentDAOImplementation.buyItem(itemId, 1);
+
+                break;
+            case "2":
+                studentMenu();
+                break;
+        }
+    }
+}
 //
 //    private void enterNewUser(){
 //
@@ -79,4 +99,4 @@ public class StudentController implements BaseController {
 //        int studentId = scanner.nextInt();
 //        studentDAOImplementation.removeStudent(studentId);
 //    }
-}
+

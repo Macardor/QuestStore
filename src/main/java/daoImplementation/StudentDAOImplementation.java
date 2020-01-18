@@ -4,11 +4,15 @@ import SQL.PostgreSQLJDBC;
 import models.Coincubator;
 import models.Student;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class StudentDAOImplementation {
 
@@ -309,29 +313,95 @@ public class StudentDAOImplementation {
         return student;
     }
 
-    public void showUserCoins(Student student){
+    public int showUserCoins(int id) {
         String orderToSql = "SELECT coins FROM students WHERE id = ?";
-        try{
+        int coins = 0;
+        try {
             ps = postgreSQLJDBC.connect().prepareStatement(orderToSql);
-            int id = student.getId();
             ps.setInt(1, id);
             resultSet = ps.executeQuery();
 
-            if (resultSet.next()){
-                int coins = resultSet.getInt("coins");
+            if (resultSet.next()) {
+                coins = resultSet.getInt("coins");
 
                 System.out.println("Here is your coins: " + coins);
             }
             ps.executeQuery();
-        }catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(e);
-        }finally {
+        } finally {
             try {
                 ps.close();
-            }catch (SQLException e){
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }return coins;
+    }
+
+    public void buyItem(int itemId, int studentId){
+        PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
+        PreparedStatement ps = null;
+        String orderToSql = "INSERT INTO user_items (item_id, is_available, bought_date, used_date, student_id) VALUES (?,?,?,?,?)";
+        System.out.println("dupa");
+        int itemPrice = getItemPrice(itemId);
+        System.out.println(itemPrice);
+        int studentCoins = showUserCoins(studentId);
+        System.out.println(studentCoins);
+        if (itemPrice <= studentCoins) {
+            try {
+                System.out.println("dupa2");
+                ps = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+
+
+                System.out.println("dupa3");
+                ps.setInt(1, itemId);
+                ps.setBoolean(2, true);
+                ps.setDate(3, DateNow());
+                ps.setDate(4, DateNow());
+                ps.setInt(5, studentId);
+                resultSet = ps.executeQuery();
+                ps.close();
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
+        }else {
+            System.out.println("you have not enough coins!");
+        }
+    }
+
+    public Date DateNow(){
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        System.out.println(dtf.format(now));
+
+        return null;
+    }
+
+    public int getItemPrice(int itemId) {
+        PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
+        PreparedStatement ps = null;
+        String getItemPrice = "SELECT price FROM items WHERE id = ?";
+        int price = 0;
+        try {
+            ps = postgreSQLJDBC.connect().prepareStatement(getItemPrice);
+            ps.setInt(1, itemId);
+            resultSet = ps.executeQuery();
+            while(resultSet.next()){
+                int itemPrice = resultSet.getInt("price");
+                System.out.println(itemPrice);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            try {
+                ps.close();
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
+
+        return price;
     }
+
 }
 
