@@ -1,39 +1,47 @@
 package controllers;
 
+import daoImplementation.ItemDAOImplementation;
 import daoImplementation.StudentDAOImplementation;
+import models.Student;
+import models.User;
 
 import java.util.Scanner;
 
 public class StudentController implements BaseController {
+    private User thisUser;
 
 
     StudentDAOImplementation studentDAOImplementation = new StudentDAOImplementation();
+    ItemDAOImplementation itemDAOImplementation = new ItemDAOImplementation();
     Scanner scanner = new Scanner(System.in);
 
     @Override
-    public void run() {
-//        studentMenu();
+    public void run(User user) {
+        this.thisUser = user;
+        studentMenu();
     }
 
-    private void studentMenu(){
-//        printStudentMenu();
-//        String option = scanner.next();
-//        switch (option){
-//            case "1":
-//                studentDAOImplementation.showItems();
-//                break;
-//            case "2":
-//                studentDAOImplementation.showCoincubatos();
-//                break;
-//            case "3":
-//                showUserCoins();
-//                break;
-//            case "4":
-//                studentDAOImplementation.showUserItems();
-//        }
+    private void studentMenu() {
+        printStudentMenu();
+        String option = scanner.next();
+        switch (option) {
+            case "1":
+                itemDAOImplementation.getItemsList();
+                buyItemMenu();
+                break;
+            case "2":
+                studentDAOImplementation.showCoincubatos();
+                break;
+            case "3":
+                studentDAOImplementation.showUserCoins(thisUser.getId());
+                break;
+            case "4":
+                showUserItems();
+                break;
+        }
     }
 
-    private void printStudentMenu(){
+    private void printStudentMenu() {
         System.out.println("Select number to: \n" +
                 "1. Show all items in the store\n" +
                 "2. Show all coincubators in the store\n" +
@@ -41,9 +49,28 @@ public class StudentController implements BaseController {
                 "4. Show user's items");
     }
 
-    private void showUserCoins(){
-//        studentDAOImplementation.showUserCoins();
+    private void showUserItems() {
+        int id = scanner.nextInt();
+        itemDAOImplementation.getUserItemsList(id);
     }
+
+    private void buyItemMenu() {
+        System.out.println("\n1. Buy item by id\n" +
+                "2. Back to menu");
+        String option = scanner.next();
+        switch (option) {
+            case "1":
+                System.out.println("choose item id to buy: ");
+                //itemDAOImplementation.getUserItemsList(1);
+                int itemId = scanner.nextInt();
+                studentDAOImplementation.buyItem(itemId, 1);
+
+                break;
+            case "2":
+                break;
+        }
+    }
+}
 //
 //    private void enterNewUser(){
 //
@@ -74,4 +101,4 @@ public class StudentController implements BaseController {
 //        int studentId = scanner.nextInt();
 //        studentDAOImplementation.removeStudent(studentId);
 //    }
-}
+

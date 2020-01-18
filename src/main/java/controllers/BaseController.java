@@ -1,5 +1,7 @@
 package controllers;
 
+import models.User;
+
 public interface BaseController {
-    void run();
+    void run(User user);
 }

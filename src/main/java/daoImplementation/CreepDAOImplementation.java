@@ -20,10 +20,9 @@ public class CreepDAOImplementation implements CreepDAO {
 
     @Override
     public List<User> showAllMentors() {
-        String orderToSql = "SELECT * FROM user_details JOIN users on user_details.id = users.user_details_id WHERE user_type_id = 2";
+        String orderToSql = "SELECT * FROM user_details FULL OUTER JOIN users on user_details.id = users.user_details_id WHERE user_type_id = 2";
         List<User> mentorsList = new ArrayList<>();
         try {
-            //int userTypeId = 2;
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
@@ -34,8 +33,6 @@ public class CreepDAOImplementation implements CreepDAO {
                 boolean isActive = resultSet.getBoolean("is_active");
                 String firstName = resultSet.getString("first_name");
                 String lastName = resultSet.getString("last_name");
-//                User user = new Mentor(id, login, password, userTypeId, isActive, firstName, lastName);
-//                mentorsList.add(user);
                 System.out.println(id+ "| " + login+ "| " + password+ "| " + userTypeId2+ "| " + firstName+ "| " + lastName);
 
             }
@@ -66,25 +63,15 @@ public class CreepDAOImplementation implements CreepDAO {
     }
 
     @Override
-    public void editMentor(int id) {
+    public void editMentor(Mentor mentor) {
         String orderForSql = ("UPDATE user_details SET login = ?, password = ?, first_name = ?, last_name = ? WHERE id = ?");
         try {
-            Scanner scanner = new Scanner(System.in);
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderForSql);
-            System.out.println("enter login: ");
-            String login = scanner.nextLine();
-            System.out.println("enter password: ");
-            String password = scanner.nextLine();
-            System.out.println("enter first name: ");
-            String firstName = scanner.nextLine();
-            System.out.println("enter last name: ");
-            String lastName = scanner.nextLine();
 
-            preparedStatement.setString(1, login);
-            preparedStatement.setString(2, password);
-            preparedStatement.setString(3, firstName);
-            preparedStatement.setString(4, lastName);
-            preparedStatement.setInt(5, id);
+            preparedStatement.setString(1, mentor.getLogin());
+            preparedStatement.setString(2, mentor.getPassword());
+            preparedStatement.setString(3, mentor.getFirstname());
+            preparedStatement.setString(4, mentor.getLastname());
 
             int row = preparedStatement.executeUpdate();
             preparedStatement.close();
@@ -97,6 +84,7 @@ public class CreepDAOImplementation implements CreepDAO {
     public void setMentorToUnactive(int id) {
         String orderToSql = "UPDATE users SET is_active = ? WHERE id = ? and user_type_id = 2 ";
         try {
+
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
 
             preparedStatement.setBoolean(1, false);
@@ -110,4 +98,32 @@ public class CreepDAOImplementation implements CreepDAO {
             System.out.println(e);
         }
     }
+
+    public Mentor getMentorById(int idToEdit) {
+        String orderToSql = "SELECT * FROM user_details JOIN users on user_details.id = users.user_details_id WHERE user_type_id = 2 and users.id =?";
+        Mentor mentor = null;
+        try {
+            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            preparedStatement.setInt(1, idToEdit);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                int id = resultSet.getInt("id");
+                String login = resultSet.getString("login");
+                String password = resultSet.getString("password");
+                int userTypeId2 = resultSet.getInt("user_type_id");
+                boolean isActive = resultSet.getBoolean("is_active");
+                String firstName = resultSet.getString("first_name");
+                String lastName = resultSet.getString("last_name");
+                System.out.println(id + "| " + login+ "| " + password+ "| " + userTypeId2+ "| " + firstName+ "| " + lastName);
+                mentor = new Mentor(id, login, password, userTypeId2, isActive, firstName, lastName);
+                System.out.println(mentor.toString());
+            }
+            preparedStatement.close();
+        }catch (SQLException e) {
+            System.out.println(e);
+        }return mentor;
+    }
+
+
+
 }
