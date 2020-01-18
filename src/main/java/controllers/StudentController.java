@@ -35,7 +35,8 @@ public class StudentController implements BaseController {
                 studentDAOImplementation.showUserCoins(thisUser.getId());
                 break;
             case "4":
-                showUserItems();
+                itemDAOImplementation.getUserItemsList(thisUser.getId());
+                useCardMenu();
                 break;
         }
     }
@@ -60,12 +61,32 @@ public class StudentController implements BaseController {
         switch (option) {
             case "1":
                 System.out.println("choose item id to buy: ");
-                //itemDAOImplementation.getUserItemsList(1);
                 int itemId = scanner.nextInt();
-                studentDAOImplementation.buyItem(itemId, 1);
-
+                studentDAOImplementation.buyItem(itemId, thisUser.getId());
                 break;
             case "2":
+                studentMenu();
+                break;
+        }
+    }
+
+    private void useCard(){
+        itemDAOImplementation.getUserItemsList(thisUser.getId());
+        System.out.println("Choose id of card you want to use: ");
+        int itemId = scanner.nextInt();
+        studentDAOImplementation.useCard(itemId, thisUser.getId());
+    }
+
+    private void useCardMenu(){
+        System.out.println("\n1.Use card" +
+                "2.Back to menu");
+        String option = scanner.next();
+        switch (option) {
+            case "1":
+                useCard();
+                break;
+            case "2":
+                studentMenu();
                 break;
         }
     }
