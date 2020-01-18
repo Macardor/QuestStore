@@ -99,7 +99,7 @@ public class ItemDAOImplementation{
     }
 
     public List<Item> getUserItemsList(int userId) {
-        String orderForSql = ("SELECT * FROM items join user_items ui on items.id = ui.item_id where student_id = ?;");//TODO
+        String orderForSql = ("SELECT * FROM items join user_items ui on items.id = ui.item_id;");//TODO
         List<Item> itemList = new ArrayList<>();
         try{
             ps = postgreSQLJDBC.connect().prepareStatement(orderForSql);

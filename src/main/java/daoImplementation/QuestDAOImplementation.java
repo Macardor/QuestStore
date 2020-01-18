@@ -71,16 +71,6 @@ public class QuestDAOImplementation{
     }
 
     public List<Quest> getAllQuests(){
-
-//        String orderForSql = ("select u.id, ud.first_name, ud.last_name, q.name, q.description, q.reward from students as s\n" +
-//                "join users u\n" +
-//                "on s.user_id = u.id\n" +
-//                "join user_details ud\n" +
-//                "on u.user_details_id = ud.id\n" +
-//                "join user_quests uq\n" +
-//                "on s.id = uq.student_id\n" +
-//                "join quests q\n" +
-//                "on uq.quest_id = q.id\n where u.id = ?");
         String orderForSql = "SELECT * FROM quests";
         List<Quest> quests = new ArrayList<>();
         try{
