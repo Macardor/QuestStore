@@ -342,18 +342,11 @@ public class StudentDAOImplementation {
         PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
         PreparedStatement ps = null;
         String orderToSql = "INSERT INTO user_items (item_id, is_available, bought_date, used_date, student_id) VALUES (?,?,?,?,?)";
-        System.out.println("dupa");
         int itemPrice = getItemPrice(itemId);
-        System.out.println(itemPrice);
         int studentCoins = showUserCoins(studentId);
-        System.out.println(studentCoins);
-        if (itemPrice <= studentCoins) {
+        if (itemPrice > studentCoins) {
             try {
-                System.out.println("dupa2");
                 ps = postgreSQLJDBC.connect().prepareStatement(orderToSql);
-
-
-                System.out.println("dupa3");
                 ps.setInt(1, itemId);
                 ps.setBoolean(2, true);
                 ps.setDate(3, DateNow());
