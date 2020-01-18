@@ -50,8 +50,7 @@ public class StudentController implements BaseController {
     }
 
     private void showUserItems() {
-        int id = scanner.nextInt();
-        itemDAOImplementation.getUserItemsList(thisUser);
+        itemDAOImplementation.getUserItemsList(thisUser.getId());
     }
 
     private void buyItemMenu() {

@@ -98,12 +98,12 @@ public class ItemDAOImplementation{
         return itemList;
     }
 
-    public List<Item> getUserItemsList(User user) {
+    public List<Item> getUserItemsList(int userId) {
         String orderForSql = ("SELECT i.id, i.name, i.price, i.description, i.is_active FROM items as i join user_items ui on i.id = ui.item_id join students s on ui.student_id = s.id join users u on s.user_id = u.id where u.id = ?;");//TODO
         List<Item> itemList = new ArrayList<>();
         try{
             ps = postgreSQLJDBC.connect().prepareStatement(orderForSql);
-            ps.setInt(1,user.getId());
+            ps.setInt(1,userId);
             resultSet = ps.executeQuery();
             while (resultSet.next()){
                 int id = resultSet.getInt("id");
