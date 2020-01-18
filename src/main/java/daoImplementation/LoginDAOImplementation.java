@@ -50,11 +50,8 @@ public class LoginDAOImplementation  {
                 preparedStatement.close();
             } catch (SQLException e) {
                 e.printStackTrace();
-
             }
-
         }
-
         return result;
     }
 
@@ -71,6 +68,4 @@ public class LoginDAOImplementation  {
         }
         return user;
     }
-
-
 }

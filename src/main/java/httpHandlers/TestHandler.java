@@ -26,20 +26,11 @@ public class TestHandler implements HttpHandler {
 
         if (method.equals("GET")) {
             JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/test.twig");
-
             JtwigModel model = JtwigModel.newModel();
-//            model.with("login", "login");
-//            model.with("password", "password");
-//            model.with("firstName", "firstname");
-//            model.with("lastName", "lastname");
+
             model.with("studentList", studentList);
 
-            // TODO jak zrobić getter z listy w twiggu
-
             response = template.render(model);
-            System.out.println(response);
-
-
         }
 
         if (method.equals("POST")) {
@@ -47,15 +38,16 @@ public class TestHandler implements HttpHandler {
             BufferedReader br = new BufferedReader(isr);
             String formData = br.readLine();
 
-           Map inputs = parseFormData(formData);
+            Map inputs = parseFormData(formData);
 
             JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/submit.twig");
             JtwigModel model = JtwigModel.newModel();
-            model.with("fName", inputs.get("firstname"));
-            model.with("lName", inputs.get("lastname"));
-            model.with("country", inputs.get("country"));
-            model.with("message", inputs.get("subject"));
+            model.with("login", inputs.get("login"));
+            model.with("password", inputs.get("password"));
+            model.with("firstName", inputs.get("firstname"));
+            model.with("lastName", inputs.get("lastname"));
             response = template.render(model);
+            testService.addIdiot(new Student(inputs.get("login").toString(), inputs.get("password").toString(), 1, true, inputs.get("firstname").toString(), inputs.get("lastname").toString()));
         }
         httpExchange.sendResponseHeaders(200, response.length());
         OutputStream os = httpExchange.getResponseBody();
