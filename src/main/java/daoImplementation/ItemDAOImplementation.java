@@ -2,12 +2,12 @@ package daoImplementation;
 
 import SQL.PostgreSQLJDBC;
 import models.Item;
+import models.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class ItemDAOImplementation{
@@ -98,30 +98,27 @@ public class ItemDAOImplementation{
         return itemList;
     }
 
-    public List<Item> getUserItemsList(int userId) {
-        String orderForSql = ("SELECT * FROM items join user_items ui on items.id = ui.item_id;");//TODO
+    public List<Item> getUserItemsList(User user) {
+        String orderForSql = ("SELECT i.id, i.name, i.price, i.description, i.is_active FROM items as i join user_items ui on i.id = ui.item_id join students s on ui.student_id = s.id join users u on s.user_id = u.id where u.id = ?;");//TODO
         List<Item> itemList = new ArrayList<>();
         try{
             ps = postgreSQLJDBC.connect().prepareStatement(orderForSql);
+            ps.setInt(1,user.getId());
+            resultSet = ps.executeQuery();
             while (resultSet.next()){
                 int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
                 int price = resultSet.getInt("price");
                 String description = resultSet.getString("description");
                 boolean isActive = resultSet.getBoolean("is_active");
-                //TODO what whit joined id, not ready for tests
-                int idInUI = resultSet.getInt("id");
-                boolean isAvailable = resultSet.getBoolean("is_available");
-                Date boughtDate = resultSet.getDate("bought_date");
-                Date usedDate = resultSet.getDate("used_date");
-                int studentId = resultSet.getInt("student_id");
 
 
                 Item item = new Item(id, name, price, description, isActive);
                 itemList.add(item);
                 //test method
-//                System.out.println(id + " | " + name + " | " + price + " | " + description + " | " + isActive);
+                System.out.println(id + " | " + name + " | " + price + " | " + description + " | " + isActive);
             }
+            ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

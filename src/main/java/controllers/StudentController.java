@@ -2,7 +2,6 @@ package controllers;
 
 import daoImplementation.ItemDAOImplementation;
 import daoImplementation.StudentDAOImplementation;
-import models.Student;
 import models.User;
 
 import java.util.Scanner;
@@ -51,7 +50,7 @@ public class StudentController implements BaseController {
 
     private void showUserItems() {
         int id = scanner.nextInt();
-        itemDAOImplementation.getUserItemsList(id);
+        itemDAOImplementation.getUserItemsList(thisUser);
     }
 
     private void buyItemMenu() {
