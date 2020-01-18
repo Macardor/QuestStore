@@ -3,6 +3,7 @@ package controllers;
 import daoImplementation.ItemDAOImplementation;
 import daoImplementation.StudentDAOImplementation;
 import models.Student;
+import models.User;
 
 import java.util.Scanner;
 
@@ -14,11 +15,11 @@ public class StudentController implements BaseController {
     Scanner scanner = new Scanner(System.in);
 
     @Override
-    public void run() {
-        studentMenu();
+    public void run(User thisStudent) {
+        studentMenu(thisStudent);
     }
 
-    private void studentMenu() {
+    private void studentMenu(User thisStudent) {
         printStudentMenu();
         String option = scanner.next();
         switch (option) {
@@ -30,7 +31,7 @@ public class StudentController implements BaseController {
                 studentDAOImplementation.showCoincubatos();
                 break;
             case "3":
-                //studentDAOImplementation.showUserCoins();
+                studentDAOImplementation.showUserCoins(thisStudent.getId());
                 break;
             case "4":
                 showUserItems();
@@ -64,7 +65,6 @@ public class StudentController implements BaseController {
 
                 break;
             case "2":
-                studentMenu();
                 break;
         }
     }
