@@ -3,6 +3,7 @@ package controllers;
 import daoImplementation.CreepDAOImplementation;
 import daoImplementation.StudentDAOImplementation;
 import models.Mentor;
+import models.User;
 import services.CreepService;
 import view.StaticUi;
 
@@ -10,12 +11,14 @@ import java.util.Scanner;
 
 public class CreepController implements BaseController {
 
+    private User thisUser;
 
     CreepDAOImplementation creepDAOImplementation = new CreepDAOImplementation();
     Scanner scanner = new Scanner(System.in);
 
     @Override
-    public void run() {
+    public void run(User user) {
+        this.thisUser = user;
         creepMenu();
     }
 

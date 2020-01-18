@@ -9,8 +9,8 @@ import view.StaticUi;
 public class Main {
     public static void main(String[] args) {
 
-//        LoginController loginController = new LoginController();
-//        loginController.run();
+        LoginController loginController = new LoginController();
+        loginController.run();
 //        MentorController mentorController = new MentorController();
 //        StudentService studentService = new StudentService();
 //        boolean isRunning = true;
@@ -19,7 +19,13 @@ public class Main {
 //            break;
 //        }
 
-
+//        CreepController creepController = new CreepController();
+//        creepController.run();
+       /* StudentController studentController = new StudentController();
+        studentController.run();*/
+//
+//        StudentDAOImplementation studentDAOImplementation = new StudentDAOImplementation();
+//        studentDAOImplementation.getItemPrice(5);
 
     }
 }

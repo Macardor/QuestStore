@@ -8,6 +8,7 @@ import models.User;
 import java.util.Scanner;
 
 public class StudentController implements BaseController {
+    private User thisUser;
 
 
     StudentDAOImplementation studentDAOImplementation = new StudentDAOImplementation();
@@ -15,11 +16,12 @@ public class StudentController implements BaseController {
     Scanner scanner = new Scanner(System.in);
 
     @Override
-    public void run(User thisStudent) {
-        studentMenu(thisStudent);
+    public void run(User user) {
+        this.thisUser = user;
+        studentMenu();
     }
 
-    private void studentMenu(User thisStudent) {
+    private void studentMenu() {
         printStudentMenu();
         String option = scanner.next();
         switch (option) {
@@ -31,7 +33,7 @@ public class StudentController implements BaseController {
                 studentDAOImplementation.showCoincubatos();
                 break;
             case "3":
-                studentDAOImplementation.showUserCoins(thisStudent.getId());
+                studentDAOImplementation.showUserCoins(thisUser.getId());
                 break;
             case "4":
                 itemDAOImplementation.getUserItemsList(thisStudent.getId());

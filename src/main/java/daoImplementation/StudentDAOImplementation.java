@@ -313,12 +313,15 @@ public class StudentDAOImplementation {
         return student;
     }
 
-    public int showUserCoins(int studentId) {
-        String orderToSql = "SELECT coins FROM students WHERE id = ?";
+    public int showUserCoins(int id) {
+        String orderToSql = "SELECT * FROM students AS s \n" +
+        "join users as u \n" +
+        "on s.user_id = u.id \n" +
+        "WHERE u.id = ?;";
         int coins = 0;
         try {
             ps = postgreSQLJDBC.connect().prepareStatement(orderToSql);
-            ps.setInt(1, studentId);
+            ps.setInt(1, id);
             resultSet = ps.executeQuery();
 
             if (resultSet.next()) {
