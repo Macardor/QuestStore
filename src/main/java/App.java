@@ -1,4 +1,5 @@
 import com.sun.net.httpserver.HttpServer;
+import handlers.loginHandler;
 import handlers.testHandler;
 
 import java.net.InetSocketAddress;
@@ -11,7 +12,7 @@ public class App {
 
         // set routes
 
-        server.createContext("/guestBookTemplate", new testHandler());
+        server.createContext("/cyberStore", new loginHandler());
 
         server.setExecutor(null); // creates a default executor
 
