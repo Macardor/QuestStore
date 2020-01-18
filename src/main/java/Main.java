@@ -19,13 +19,7 @@ public class Main {
 //            break;
 //        }
 
-//        CreepController creepController = new CreepController();
-//        creepController.run();
-        StudentController studentController = new StudentController();
-        studentController.run();
-//
-//        StudentDAOImplementation studentDAOImplementation = new StudentDAOImplementation();
-//        studentDAOImplementation.getItemPrice(5);
+
 
     }
 }

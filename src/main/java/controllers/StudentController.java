@@ -34,7 +34,7 @@ public class StudentController implements BaseController {
                 studentDAOImplementation.showUserCoins(thisStudent.getId());
                 break;
             case "4":
-                showUserItems();
+                itemDAOImplementation.getUserItemsList(thisStudent.getId());
                 break;
         }
     }
@@ -47,10 +47,6 @@ public class StudentController implements BaseController {
                 "4. Show user's items");
     }
 
-    private void showUserItems() {
-        int id = scanner.nextInt();
-        itemDAOImplementation.getUserItemsList(id);
-    }
 
     private void buyItemMenu() {
         System.out.println("\n1. Buy item by id\n" +
