@@ -116,7 +116,7 @@ public class ItemDAOImplementation{
                 Item item = new Item(id, name, price, description, isActive);
                 itemList.add(item);
                 //test method
-                System.out.println(id + " | " + name + " | " + price + " | " + description + " | " + isActive);
+                System.out.println(id + " | " + name + " | " + price + " | " + description + " | " + isActive +"");
             }
             ps.close();
         } catch (SQLException e) {
