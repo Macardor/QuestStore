@@ -3,6 +3,7 @@ package controllers;
 import daoImplementation.ItemDAOImplementation;
 import daoImplementation.StudentDAOImplementation;
 import models.User;
+import view.StaticUi;
 
 import java.util.Scanner;
 
@@ -21,7 +22,7 @@ public class StudentController implements BaseController {
     }
 
     private void studentMenu() {
-        printStudentMenu();
+        StaticUi.printStudentMenu();
         String option = scanner.next();
         switch (option) {
             case "1":
@@ -32,34 +33,24 @@ public class StudentController implements BaseController {
                 studentDAOImplementation.showCoincubatos();
                 break;
             case "3":
-                studentDAOImplementation.showUserCoins(thisUser.getId());
+                studentDAOImplementation.showUserCoins(studentDAOImplementation.getStudentId(thisUser));
                 break;
             case "4":
-                itemDAOImplementation.getUserItemsList(thisUser.getId());
+                itemDAOImplementation.getUserItemsList(studentDAOImplementation.getStudentId(thisUser));
                 useCardMenu();
+                break;
+            case "0":
+                studentMenu();
                 break;
         }
     }
 
-    private void printStudentMenu() {
-        System.out.println("Select number to: \n" +
-                "1. Show all items in the store\n" +
-                "2. Show all coincubators in the store\n" +
-                "3. Show all your coins\n" +
-                "4. Show user's items");
-    }
-
-    private void showUserItems() {
-        itemDAOImplementation.getUserItemsList(thisUser.getId());
-    }
-
     private void buyItemMenu() {
-        System.out.println("\n1. Buy item by id\n" +
-                "2. Back to menu");
+        StaticUi.printItemMenu();
         String option = scanner.next();
         switch (option) {
             case "1":
-                System.out.println("choose item id to buy: ");
+                StaticUi.chooseItemById();
                 int itemId = scanner.nextInt();
                 studentDAOImplementation.buyItem(itemId, thisUser.getId());
                 break;
@@ -71,14 +62,13 @@ public class StudentController implements BaseController {
 
     private void useCard(){
         itemDAOImplementation.getUserItemsList(thisUser.getId());
-        System.out.println("Choose id of card you want to use: ");
+        StaticUi.printUseCardId();
         int itemId = scanner.nextInt();
         studentDAOImplementation.useCard(itemId, thisUser.getId());
     }
 
     private void useCardMenu(){
-        System.out.println("\n1.Use card" +
-                "\n2.Back to menu");
+        StaticUi.useCardMenu();
         String option = scanner.next();
         switch (option) {
             case "1":
@@ -90,34 +80,4 @@ public class StudentController implements BaseController {
         }
     }
 }
-//
-//    private void enterNewUser(){
-//
-//        System.out.println("Insert login: ");
-//        String login =  scanner.next();
-//        System.out.println("Insert password: ");
-//        String password = scanner.next();
-//        System.out.println("Insert first name: ");
-//        String firstName = scanner.next();
-//        System.out.println("Insert last name: ");
-//        String lastName = scanner.next();
-//
-//        //studentDAOImplementation.addStudent(login, password, firstName, lastName);
-//    }
-
-//    private void extractStudents(){
-//        studentDAOImplementation.extractStudent();
-//    }
-//
-//    private void editStudentByStudentId(){
-//        //extractStudents();
-//        int studentId = scanner.nextInt();
-//        studentDAOImplementation.editStudent(studentId);
-//    }
-//
-//    private void deteleStudentByStudentId(){
-//        System.out.println("Insert id of student you want to be removed: ");
-//        int studentId = scanner.nextInt();
-//        studentDAOImplementation.removeStudent(studentId);
-//    }
 

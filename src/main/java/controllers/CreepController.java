@@ -1,10 +1,7 @@
 package controllers;
 
 import daoImplementation.CreepDAOImplementation;
-import daoImplementation.StudentDAOImplementation;
-import models.Mentor;
 import models.User;
-import services.CreepService;
 import view.StaticUi;
 
 import java.util.Scanner;
@@ -44,21 +41,9 @@ public class CreepController implements BaseController {
                 int idMentor = scanner.nextInt();
                 creepDAOImplementation.setMentorToUnactive(idMentor);
                 break;
-            case "5":
-
+            case "0":
+                creepMenu();
                 break;
         }
     }
-
-
-
-//    private void deleteMentorById(){
-//        creepDAOImplementation.showAllMentors();
-//        int mentorId = scanner.nextInt();
-//        creepDAOImplementation.deleteMentor(mentorId);
-//        creepDAOImplementation.showAllMentors();
-//    }
-//TODO
-
-
 }

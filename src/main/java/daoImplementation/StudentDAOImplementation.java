@@ -4,6 +4,7 @@ import SQL.PostgreSQLJDBC;
 import models.Coincubator;
 import models.Quest;
 import models.Student;
+import models.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -247,7 +248,7 @@ public class StudentDAOImplementation {
         return 0;
     }
 
-    public int getStudentId(Student student) {
+    public int getStudentId(User student) {
         String orderToSql = "SELECT * FROM students WHERE user_id = ?";
         try {
             ps = postgreSQLJDBC.connect().prepareStatement(orderToSql);
@@ -352,11 +353,11 @@ public class StudentDAOImplementation {
         if (studentCoins >= itemPrice) {
             try {
                 editStudentCoins(studentCoins,itemPrice,studentId);
-
+                Date date = getCurrentDate();
                 ps = postgreSQLJDBC.connect().prepareStatement(orderToSql);
                 ps.setInt(1, itemId);
                 ps.setBoolean(2, true);
-                ps.setDate(3, dateNow());
+                ps.setDate(3, date);
                 ps.setDate(4, null);
                 ps.setInt(5, studentId);
                 resultSet = ps.executeQuery();
@@ -371,9 +372,6 @@ public class StudentDAOImplementation {
         }
     }
 
-    private Date dateNow(){
-        return new Date(Calendar.getInstance().getTime().getTime());
-    }
 
     private int getItemPrice(int itemId) {
         PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
