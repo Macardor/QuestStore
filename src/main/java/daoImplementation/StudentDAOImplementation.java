@@ -5,16 +5,15 @@ import models.Coincubator;
 import models.Quest;
 import models.Student;
 
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Scanner;
+
+import java.sql.Date;
+import java.util.Calendar;
 
 public class StudentDAOImplementation {
 
@@ -357,7 +356,7 @@ public class StudentDAOImplementation {
                 ps = postgreSQLJDBC.connect().prepareStatement(orderToSql);
                 ps.setInt(1, itemId);
                 ps.setBoolean(2, true);
-                ps.setDate(3, DateNow());
+                ps.setDate(3, dateNow());
                 ps.setDate(4, null);
                 ps.setInt(5, studentId);
                 resultSet = ps.executeQuery();
@@ -372,12 +371,8 @@ public class StudentDAOImplementation {
         }
     }
 
-    private Date DateNow(){
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-        LocalDateTime now = LocalDateTime.now();
-        System.out.println(dtf.format(now));
-
-        return null;
+    private Date dateNow(){
+        return new Date(Calendar.getInstance().getTime().getTime());
     }
 
     private int getItemPrice(int itemId) {
