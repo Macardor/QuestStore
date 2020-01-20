@@ -14,25 +14,29 @@ import java.util.*;
 public class loginHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
+        String method = httpExchange.getRequestMethod();
 
-        // get a template file
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/loginPage.twig");
+        if(method.equals("GET")) {
 
-        // create a model that will be passed to a template
-        JtwigModel model = JtwigModel.newModel();
+            // get a template file
+            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/loginPage.twig");
 
-        // fill the model with values
+            // create a model that will be passed to a template
+            JtwigModel model = JtwigModel.newModel();
+
+            // fill the model with values
 //        model.with("test", testText);
 
 
-        // render a template to a string
-        String response = template.render(model);
+            // render a template to a string
+            String response = template.render(model);
 
-        // send the results to a the client
-        httpExchange.sendResponseHeaders(200, response.length());
-        OutputStream os = httpExchange.getResponseBody();
-        os.write(response.getBytes());
-        os.close();
+            // send the results to a the client
+            httpExchange.sendResponseHeaders(200, response.length());
+            OutputStream os = httpExchange.getResponseBody();
+            os.write(response.getBytes());
+            os.close();
+        }
 
     }
 
