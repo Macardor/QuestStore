@@ -1,7 +1,6 @@
 package daoImplementation;
 
 import SQL.PostgreSQLJDBC;
-import interfaces.CreepDAO;
 import models.Mentor;
 import models.User;
 
@@ -10,15 +9,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
-public class CreepDAOImplementation implements CreepDAO {
+public class CreepDAOImplementation {
 
     PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
 
-    @Override
     public List<User> showAllMentors() {
         String orderToSql = "SELECT * FROM user_details FULL OUTER JOIN users on user_details.id = users.user_details_id WHERE user_type_id = 2";
         List<User> mentorsList = new ArrayList<>();
@@ -43,7 +40,6 @@ public class CreepDAOImplementation implements CreepDAO {
         }return mentorsList;
     }
 
-    @Override
     public void addMentor(Mentor mentor) {
         String insertIntoTwoTables = "WITH insertIntoUserDetails AS (INSERT INTO user_details (login, password, first_name, last_name) " +
                 "VALUES (?, ?, ?, ?) RETURNING id), inserIntoUsers AS (INSERT INTO users (user_type_id, is_active, user_details_id) " +
@@ -62,7 +58,6 @@ public class CreepDAOImplementation implements CreepDAO {
         }
     }
 
-    @Override
     public void editMentor(Mentor mentor) {
         String orderForSql = ("UPDATE user_details SET login = ?, password = ?, first_name = ?, last_name = ? WHERE id = ?");
         try {
@@ -80,7 +75,6 @@ public class CreepDAOImplementation implements CreepDAO {
         }
     }
 
-    @Override
     public void setMentorToUnactive(int id) {
         String orderToSql = "UPDATE users SET is_active = ? WHERE id = ? and user_type_id = 2 ";
         try {
@@ -123,7 +117,4 @@ public class CreepDAOImplementation implements CreepDAO {
             System.out.println(e);
         }return mentor;
     }
-
-
-
 }

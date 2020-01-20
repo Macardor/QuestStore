@@ -2,7 +2,6 @@ package daoImplementation;
 
 import SQL.PostgreSQLJDBC;
 import models.Coincubator;
-import models.Quest;
 import models.Student;
 import models.User;
 
@@ -14,12 +13,11 @@ import java.util.Calendar;
 import java.util.List;
 
 import java.sql.Date;
-import java.util.Calendar;
 
 public class StudentDAOImplementation {
 
     PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
-    PreparedStatement ps = null;
+    PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
 
     public void addStudent(Student student) {
@@ -37,15 +35,15 @@ public class StudentDAOImplementation {
                 "(0 , (SELECT id FROM inserIntoUsers));";
 
         try {
-            ps = postgreSQLJDBC.connect().prepareStatement(insertIntoTwoTables);
+            preparedStatement = postgreSQLJDBC.connect().prepareStatement(insertIntoTwoTables);
 
-            ps.setString(1, student.getLogin());
-            ps.setString(2, student.getPassword());
-            ps.setString(3, student.getFirstname());
-            ps.setString(4, student.getLastname());
+            preparedStatement.setString(1, student.getLogin());
+            preparedStatement.setString(2, student.getPassword());
+            preparedStatement.setString(3, student.getFirstname());
+            preparedStatement.setString(4, student.getLastname());
 
-            ps.executeUpdate();
-            ps.close();
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
 
         } catch (Exception e) {
             System.out.println(e);
@@ -53,22 +51,18 @@ public class StudentDAOImplementation {
 
     }
 
-    public void editStudent(Student student) {
-        //TODO Bartek to kupa
-    }
-
     public void deleteStudent(int id) {
         String orderToSql = "UPDATE users SET is_active = ? WHERE id = ? and user_type_id = 1 ";
         try {
-            ps = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
 
-            ps.setBoolean(1, false);
-            ps.setInt(2, id);
+            preparedStatement.setBoolean(1, false);
+            preparedStatement.setInt(2, id);
 
-            System.out.println(ps.toString()); //test method
+            System.out.println(preparedStatement.toString()); //test method
 
-            ps.executeUpdate();
-            ps.close();
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -80,10 +74,10 @@ public class StudentDAOImplementation {
                 "on users.user_details_id = user_details.id WHERE users.user_type_id = ?";
         List<Student> studentList = new ArrayList<>();
         try {
-            ps = postgreSQLJDBC.connect().prepareStatement(orderToSql);
-            ps.setInt(1, 1);
+            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            preparedStatement.setInt(1, 1);
 
-            resultSet = ps.executeQuery();
+            resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
@@ -98,7 +92,7 @@ public class StudentDAOImplementation {
                 studentList.add(student);
 
             }
-            ps.close();
+            preparedStatement.close();
 
         } catch (SQLException e) {
             System.out.println(e);
@@ -112,11 +106,11 @@ public class StudentDAOImplementation {
                 "on users.user_details_id = user_details.id WHERE users.user_type_id = ? and users.is_active = ?";
         List<Student> studentList = new ArrayList<>();
         try {
-            ps = postgreSQLJDBC.connect().prepareStatement(orderToSql);
-            ps.setInt(1, 1);
-            ps.setBoolean(2, true);
+            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            preparedStatement.setInt(1, 1);
+            preparedStatement.setBoolean(2, true);
 
-            resultSet = ps.executeQuery();
+            resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
@@ -131,7 +125,7 @@ public class StudentDAOImplementation {
                 studentList.add(student);
 
             }
-            ps.close();
+            preparedStatement.close();
 
         } catch (SQLException e) {
             System.out.println(e);
@@ -145,10 +139,10 @@ public class StudentDAOImplementation {
                 "join user_details " +
                 "on users.user_details_id = user_details.id WHERE users.user_type_id = ? and users.id = ?";
         try {
-            ps = postgreSQLJDBC.connect().prepareStatement(orderToSql);
-            ps.setInt(1, Student.userType);
-            ps.setInt(2, userId);
-            resultSet = ps.executeQuery();
+            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            preparedStatement.setInt(1, Student.userType);
+            preparedStatement.setInt(2, userId);
+            resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String login = resultSet.getString("login");
@@ -161,7 +155,7 @@ public class StudentDAOImplementation {
                 student = new Student(id, login, password, userTypeId, isActive, firstName, lastName);
 
             }
-            ps.close();
+            preparedStatement.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -175,8 +169,8 @@ public class StudentDAOImplementation {
         String orderToSql = "SELECT * FROM coincubators";
         List<Coincubator> coincubatorsList = new ArrayList<>();
         try {
-            ps = postgreSQLJDBC.connect().prepareStatement(orderToSql);
-            resultSet = ps.executeQuery();
+            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
@@ -188,12 +182,12 @@ public class StudentDAOImplementation {
                 coincubatorsList.add(coincubator);
                 System.out.println(id + "| " + name + "| " + description + "| " + currentDonation + "| " + targetDonation + "| " + isActive);
             }
-            ps.executeQuery();
+            preparedStatement.executeQuery();
         } catch (SQLException e) {
             System.out.println(e);
         } finally {
             try {
-                ps.close();
+                preparedStatement.close();
             } catch (SQLException e) {
                 e.printStackTrace();
 
@@ -208,16 +202,16 @@ public class StudentDAOImplementation {
         String orderForSql = ("UPDATE user_details SET login = ?, password = ?, first_name = ?, last_name = ? WHERE id = ?");
 
         try {
-            ps = postgreSQLJDBC.connect().prepareStatement(orderForSql);
-            ps.setString(1, student.getLogin());
-            ps.setString(2, student.getPassword());
-            ps.setString(3, student.getFirstname());
-            ps.setString(4, student.getLastname());
-            ps.setInt(5, userDetailsId);
+            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderForSql);
+            preparedStatement.setString(1, student.getLogin());
+            preparedStatement.setString(2, student.getPassword());
+            preparedStatement.setString(3, student.getFirstname());
+            preparedStatement.setString(4, student.getLastname());
+            preparedStatement.setInt(5, userDetailsId);
 
 
-            ps.executeUpdate();
-            ps.close();
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
         } catch (SQLException e) {
             System.out.println(e);
         }
@@ -226,19 +220,19 @@ public class StudentDAOImplementation {
     public int getUserDetailsId(Student student) {
         String orderToSql = "SELECT * FROM users WHERE id = ?";
         try {
-            ps = postgreSQLJDBC.connect().prepareStatement(orderToSql);
-            ps.setInt(1, student.getId());
-            resultSet = ps.executeQuery();
+            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            preparedStatement.setInt(1, student.getId());
+            resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 int userDetailId = resultSet.getInt("user_details_id");
                 return userDetailId;
             }
-            ps.executeQuery();
+            preparedStatement.executeQuery();
         } catch (SQLException e) {
             System.out.println(e);
         } finally {
             try {
-                ps.close();
+                preparedStatement.close();
             } catch (SQLException e) {
                 e.printStackTrace();
 
@@ -251,20 +245,20 @@ public class StudentDAOImplementation {
     public int getStudentId(User student) {
         String orderToSql = "SELECT * FROM students WHERE user_id = ?";
         try {
-            ps = postgreSQLJDBC.connect().prepareStatement(orderToSql);
-            ps.setInt(1, student.getId());
-            resultSet = ps.executeQuery();
+            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            preparedStatement.setInt(1, student.getId());
+            resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 int userDetailId = resultSet.getInt("id");
                 System.out.println(userDetailId);
                 return userDetailId;
             }
-            ps.executeQuery();
+            preparedStatement.executeQuery();
         } catch (SQLException e) {
             System.out.println(e);
         } finally {
             try {
-                ps.close();
+                preparedStatement.close();
             } catch (SQLException e) {
                 e.printStackTrace();
 
@@ -284,9 +278,9 @@ public class StudentDAOImplementation {
 
         try {
 
-            ps = postgreSQLJDBC.connect().prepareStatement(orderToSql);
-            ps.setInt(1, id);
-            resultSet = ps.executeQuery();
+            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
 
@@ -300,12 +294,12 @@ public class StudentDAOImplementation {
                 student = new Student(id, login, password, userTypeId, isActive, firstName, lastName);
 
             }
-            ps.executeQuery();
+            preparedStatement.executeQuery();
         } catch (SQLException e) {
             System.out.println(e);
         } finally {
             try {
-                ps.close();
+                preparedStatement.close();
             } catch (SQLException e) {
                 e.printStackTrace();
 
@@ -322,21 +316,21 @@ public class StudentDAOImplementation {
         "WHERE u.id = ?;";
         int coins = 0;
         try {
-            ps = postgreSQLJDBC.connect().prepareStatement(orderToSql);
-            ps.setInt(1, id);
-            resultSet = ps.executeQuery();
+            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
                 coins = resultSet.getInt("coins");
 
-                System.out.println("Here is your coins: " + coins);
+                System.out.println("Your current coins: " + coins);
             }
-            ps.executeQuery();
+            preparedStatement.executeQuery();
         } catch (SQLException e) {
             System.out.println(e);
         } finally {
             try {
-                ps.close();
+                preparedStatement.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -426,11 +420,28 @@ public class StudentDAOImplementation {
         try{
             int reduceCoins = (studentCoins - itemPrice);
             System.out.println( "now student price -> " + reduceCoins);
-            ps = postgreSQLJDBC.connect().prepareStatement(updateCoins);
-            ps.setInt(1, reduceCoins);
-            ps.setInt(2, studentId);
-            ps.executeUpdate();
-            ps.close();
+            preparedStatement = postgreSQLJDBC.connect().prepareStatement(updateCoins);
+            preparedStatement.setInt(1, reduceCoins);
+            preparedStatement.setInt(2, studentId);
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    public void takeCoinsFromStudent(int id, int coinAmount){
+        PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
+        String orderToSql ="UPDATE students SET coins = ? WHERE id = ?";
+        try {
+            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            StudentDAOImplementation studentDAOImplementation = new StudentDAOImplementation();
+            int newCoins = studentDAOImplementation.showUserCoins(id) - coinAmount;
+            System.out.println("Your coins after transaction: " + newCoins);
+            preparedStatement.setInt(1, newCoins);
+            preparedStatement.setInt(2, id);
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
         } catch (SQLException e) {
             System.out.println(e);
         }

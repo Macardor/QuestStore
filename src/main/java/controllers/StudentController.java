@@ -10,9 +10,9 @@ import java.util.Scanner;
 public class StudentController implements BaseController {
     private User thisUser;
 
-
     StudentDAOImplementation studentDAOImplementation = new StudentDAOImplementation();
     ItemDAOImplementation itemDAOImplementation = new ItemDAOImplementation();
+    StaticUi staticUi = new StaticUi();
     Scanner scanner = new Scanner(System.in);
 
     @Override
@@ -31,6 +31,16 @@ public class StudentController implements BaseController {
                 break;
             case "2":
                 studentDAOImplementation.showCoincubatos();
+                staticUi.printStudentCoincubatorMenu();
+                option = scanner.next();
+                switch (option){
+                    case "1":
+                        staticUi.coincubatorPayMenu(thisUser.getId());
+                        break;
+                    case "0":
+                        studentMenu();
+                        break;
+                }
                 break;
             case "3":
                 studentDAOImplementation.showUserCoins(studentDAOImplementation.getStudentId(thisUser));
