@@ -254,7 +254,8 @@ public class StaticUi {
                 "1. Show all mentors\n" +
                 "2. Add a new mentor\n" +
                 "3. Edit mentor by id\n" +
-                "4. Remove mentor by id");
+                "4. Remove mentor by id\n" +
+                "0. Back to menu");
     }
 
     public static List<Mentor> addMentor(){
@@ -346,5 +347,31 @@ public class StaticUi {
         return student;
     }
 
+    public static void printStudentMenu() {
+        System.out.println("Select number to: \n" +
+                "1. Show all items in the store\n" +
+                "2. Show all coincubators in the store\n" +
+                "3. Show all your coins\n" +
+                "4. Show user's items\n" +
+                "0. Back to menu");
+    }
+
+    public static void printItemMenu() {
+        System.out.println("\n1. Buy item by id\n" +
+                "2. Back to menu");
+    }
+
+    public static void chooseItemById(){
+        System.out.println("choose item id to buy: ");
+    }
+
+    public static void printUseCardId(){
+        System.out.println("Choose id of card you want to use: ");
+    }
+
+    public static void useCardMenu(){
+        System.out.println("\n1.Use card" +
+                "\n2.Back to menu");
+    }
 
 }

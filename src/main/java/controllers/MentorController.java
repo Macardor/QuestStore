@@ -1,6 +1,7 @@
 package controllers;
 
 import daoImplementation.MentorDAOImplementation;
+import models.User;
 import services.CoincubatorService;
 import services.StudentService;
 import view.StaticUi;
@@ -8,6 +9,8 @@ import view.StaticUi;
 import java.util.Scanner;
 
 public class MentorController implements BaseController {
+    private User thisUser;
+
     public void mentorMenu(){
         MentorDAOImplementation mentorDAOImplementation = new MentorDAOImplementation();
         Scanner scanner = new Scanner(System.in);
@@ -59,7 +62,8 @@ public class MentorController implements BaseController {
         }
 
     @Override
-    public void run() {
+    public void run(User user) {
+        this.thisUser = user;
         mentorMenu();
     }
 }

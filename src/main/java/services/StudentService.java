@@ -3,7 +3,6 @@ package services;
 import daoImplementation.MentorDAOImplementation;
 import daoImplementation.QuestDAOImplementation;
 import daoImplementation.StudentDAOImplementation;
-import models.Coincubator;
 import models.Quest;
 import models.Student;
 import view.StaticUi;
@@ -11,12 +10,12 @@ import view.StaticUi;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Queue;
 
 public class StudentService {
     StudentDAOImplementation studentDAOImplementation = new StudentDAOImplementation();
     MentorDAOImplementation mentorDAOImplementation = new MentorDAOImplementation();
     QuestDAOImplementation questDAOImplementation = new QuestDAOImplementation();
+
 
     public void editChooseToStudent() {
         mentorDAOImplementation.getActiveStudentsList();
@@ -77,6 +76,8 @@ public class StudentService {
         }
         return result;
     }
+
+
 
 
 

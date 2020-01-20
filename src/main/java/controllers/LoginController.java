@@ -6,13 +6,13 @@ import view.StaticUi;
 
 import java.util.Scanner;
 
-public class LoginController implements BaseController{
+public class LoginController {
 
     Scanner scanner = new Scanner(System.in);
     StaticUi staticUi = new StaticUi();
     LoginService loginService = new LoginService();
 
-    @Override
+
     public void run() {
         loginMenu();
     }
@@ -41,15 +41,15 @@ public class LoginController implements BaseController{
             if (user.getClass().getSimpleName().equals("Student")){
                 System.out.println("you log in as Student");
                 StudentController studentController = new StudentController();
-                studentController.run();
+                studentController.run(user);
             } else if (user.getClass().getSimpleName().equals("Mentor")){
                 System.out.println("you log in as Mentor");
                 MentorController mentorController = new MentorController();
-                mentorController.run();
+                mentorController.run(user);
             }else {
                 System.out.println("you log in as Creep");
                 CreepController creepController = new CreepController();
-                creepController.run();
+                creepController.run(user);
             }
         }
     }
