@@ -2,6 +2,7 @@ package daoImplementation;
 
 import SQL.PostgreSQLJDBC;
 import models.Coincubator;
+import models.Quest;
 import models.Student;
 
 import java.sql.Date;
@@ -11,6 +12,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Scanner;
 
@@ -347,8 +349,11 @@ public class StudentDAOImplementation {
         String orderToSql = "INSERT INTO user_items (item_id, is_available, bought_date, used_date, student_id) VALUES (?,?,?,?,?)";
         int itemPrice = getItemPrice(itemId);
         int studentCoins = showUserCoins(studentId);
+
         if (studentCoins >= itemPrice) {
             try {
+                editStudentCoins(studentCoins,itemPrice,studentId);
+
                 ps = postgreSQLJDBC.connect().prepareStatement(orderToSql);
                 ps.setInt(1, itemId);
                 ps.setBoolean(2, true);
@@ -358,17 +363,7 @@ public class StudentDAOImplementation {
                 resultSet = ps.executeQuery();
                 ps.close();
 
-                String updateCoins = "UPDATE students SET coins = ? WHERE user_id = ?";
-                try{
-                    int reduceCoins = (studentCoins - itemPrice);
-                    ps = postgreSQLJDBC.connect().prepareStatement(updateCoins);
-                    ps.setInt(1, reduceCoins);
-                    ps.setInt(2, studentId);
-                    ps.executeUpdate();
-                    ps.close();
-                }catch (SQLException e) {
-                    System.out.println(e);
-                }
+
             } catch (SQLException e) {
                 System.out.println(e);
             }
@@ -394,9 +389,9 @@ public class StudentDAOImplementation {
             ps = postgreSQLJDBC.connect().prepareStatement(getItemPrice);
             ps.setInt(1, itemId);
             resultSet = ps.executeQuery();
-            while(resultSet.next()){
-                int itemPrice = resultSet.getInt("price");
-//                System.out.println(itemPrice);
+            if(resultSet.next()){
+                price= resultSet.getInt("price");
+                return price;
             }
         } catch (SQLException e) {
             System.out.println(e);
@@ -415,12 +410,13 @@ public class StudentDAOImplementation {
         PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
         PreparedStatement ps = null;
         String orderToSql = "UPDATE user_items SET is_available = ?, used_date = ? WHERE item_id = ? AND student_id = ?;";
+        Date date = getCurrentDate();
 
         try {
             ps = postgreSQLJDBC.connect().prepareStatement(orderToSql);
-            ps.setInt(1, itemId);
-            ps.setBoolean(2, false);
-            ps.setDate(3, DateNow());
+            ps.setBoolean(1, false);
+            ps.setDate(2, date);
+            ps.setInt(3, itemId);
             ps.setInt(4, studentId);
             ps.executeUpdate();
             ps.close();
@@ -429,6 +425,28 @@ public class StudentDAOImplementation {
         }
 
     }
+
+    public void editStudentCoins(int studentCoins, int itemPrice, int studentId) {
+        PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
+
+        String updateCoins = "UPDATE students SET coins = ? WHERE user_id = ?";
+        try{
+            int reduceCoins = (studentCoins - itemPrice);
+            System.out.println( "now student price -> " + reduceCoins);
+            ps = postgreSQLJDBC.connect().prepareStatement(updateCoins);
+            ps.setInt(1, reduceCoins);
+            ps.setInt(2, studentId);
+            ps.executeUpdate();
+            ps.close();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    private Date getCurrentDate() {
+        return new Date(Calendar.getInstance().getTime().getTime());
+    }
+
 
 }
 
