@@ -1,6 +1,8 @@
 package view;
 
+import daoImplementation.CoincubatorDAOImplementation;
 import daoImplementation.CreepDAOImplementation;
+import daoImplementation.StudentDAOImplementation;
 import models.*;
 
 import java.util.ArrayList;
@@ -27,6 +29,23 @@ public class StaticUi {
         System.out.println("You can chose only Id available in DataBase !!!");
     }
 
+    public static void printStudentCoincubatorMenu(){
+        System.out.println("\nSelect number to: \n" +
+                "1. Pay to Coincubator\n" +
+                "0. Go back to menu");
+    }
+
+    public static void coincubatorPayMenu(int studentId){
+        System.out.println("Enter coincubator ID: ");
+        int coincubatorId = scanner.nextInt();
+        System.out.println("Enter amount of coins you wish to pay: ");
+        int coinAmount = scanner.nextInt();
+        StudentDAOImplementation studentDAOImplementation = new StudentDAOImplementation();
+        if (coinAmount >= studentDAOImplementation.showUserCoins(studentId)){
+            CoincubatorDAOImplementation coincubatorDAOImplementation = new CoincubatorDAOImplementation();
+            coincubatorDAOImplementation.donateToCoincubator(studentId, coincubatorId, coinAmount);
+        }
+    }
 
     public static List<String> enterLogin(){
         List<String> list = new ArrayList<>();
