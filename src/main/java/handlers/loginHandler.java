@@ -37,6 +37,29 @@ public class loginHandler implements HttpHandler {
             os.write(response.getBytes());
             os.close();
         }
+        if(method.equals("POST")) {
+            // get a template file
+            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/loginPage.twig");
+
+            // create a model that will be passed to a template
+            JtwigModel model = JtwigModel.newModel();
+
+            // fill the model with values
+            String wrongInput = "style=\"background-color: pink\"";
+            String wrongInputText = "<p style=\"color: hotpink\">Wrong Login or Password</p>";
+            model.with("wrongInput",wrongInput );
+            model.with("wrongInputText",wrongInputText );
+
+
+            // render a template to a string
+            String response = template.render(model);
+
+            // send the results to a the client
+            httpExchange.sendResponseHeaders(200, response.length());
+            OutputStream os = httpExchange.getResponseBody();
+            os.write(response.getBytes());
+            os.close();
+        }
 
     }
 
