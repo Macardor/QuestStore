@@ -22,7 +22,7 @@ public class LoginController {
         String option = scanner.next();
         switch (option){
             case "1":
-                loginManager();
+//                loginManager();
                 break;
             case "2":
                 break;
@@ -32,27 +32,28 @@ public class LoginController {
         }
     }
 
-    private void loginManager(){
-        User user = loginService.loginChecker();
-        if (user == null){
-            StaticUi.errorMessageBadLoginOrPassword();
-            loginMenu();
-        } else {
-            if (user.getClass().getSimpleName().equals("Student")){
-                System.out.println("you log in as Student");
-                StudentController studentController = new StudentController();
-                studentController.run(user);
-            } else if (user.getClass().getSimpleName().equals("Mentor")){
-                System.out.println("you log in as Mentor");
-                MentorController mentorController = new MentorController();
-                mentorController.run(user);
-            }else {
-                System.out.println("you log in as Creep");
-                CreepController creepController = new CreepController();
-                creepController.run(user);
-            }
-        }
-    }
+//    private void loginManager(){
+//        User user = loginService.loginChecker();
+//        if (user == null){
+//            StaticUi.errorMessageBadLoginOrPassword();
+//            loginMenu();
+//        }
+//        else {
+//            if (user.getClass().getSimpleName().equals("Student")){
+//                System.out.println("you log in as Student");
+//                StudentController studentController = new StudentController();
+//                studentController.run(user);
+//            } else if (user.getClass().getSimpleName().equals("Mentor")){
+//                System.out.println("you log in as Mentor");
+//                MentorController mentorController = new MentorController();
+//                mentorController.run(user);
+//            }else {
+//                System.out.println("you log in as Creep");
+//                CreepController creepController = new CreepController();
+//                creepController.run(user);
+//            }
+//        }
+//    }
 
 }
 

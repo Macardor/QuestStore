@@ -2,8 +2,13 @@ package handlers;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import controllers.CreepController;
+import controllers.MentorController;
+import controllers.StudentController;
+import models.User;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
+import services.LoginService;
 
 import java.io.*;
 import java.net.URLDecoder;
@@ -12,9 +17,43 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class loginHandler implements HttpHandler {
+    private LoginService loginService = new LoginService();
+    private String login;
+    private String password;
+
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         String method = httpExchange.getRequestMethod();
+
+        if(method.equals("POST")){
+            InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
+            BufferedReader br = new BufferedReader(isr);
+            String formData = br.readLine();
+
+            Map inputs = parseFormData(formData);
+            login = inputs.get("login").toString();
+            password = inputs.get("password").toString();
+
+            if(login != null && password != null){
+                User user = loginService.loginChecker(login,password);
+                if(user != null){
+                    if (user.getClass().getSimpleName().equals("Student")){
+                        System.out.println("you log in as Student");
+                        StudentController studentController = new StudentController();
+                        studentController.run(user);
+                    } else if (user.getClass().getSimpleName().equals("Mentor")){
+                        System.out.println("you log in as Mentor");
+                        MentorController mentorController = new MentorController();
+                        mentorController.run(user);
+                    }else {
+                        System.out.println("you log in as Creep");
+                        CreepController creepController = new CreepController();
+                        creepController.run(user);
+                    }
+                }
+            }
+
+        }
 
         if(method.equals("GET")) {
 
@@ -23,10 +62,6 @@ public class loginHandler implements HttpHandler {
 
             // create a model that will be passed to a template
             JtwigModel model = JtwigModel.newModel();
-
-            // fill the model with values
-//        model.with("test", testText);
-
 
             // render a template to a string
             String response = template.render(model);
@@ -55,12 +90,26 @@ public class loginHandler implements HttpHandler {
             String response = template.render(model);
 
             // send the results to a the client
+
             httpExchange.sendResponseHeaders(200, response.length());
             OutputStream os = httpExchange.getResponseBody();
             os.write(response.getBytes());
             os.close();
         }
 
+
+    }
+
+    private static Map<String, String> parseFormData(String formData) throws UnsupportedEncodingException {
+        Map<String, String> map = new HashMap<>();
+        String[] pairs = formData.split("&");
+        for(String pair : pairs){
+            String[] keyValue = pair.split("=");
+            // We have to decode the value because it's urlencoded. see: https://en.wikipedia.org/wiki/POST_(HTTP)#Use_for_submitting_web_forms
+            String value = new URLDecoder().decode(keyValue[1], "UTF-8");
+            map.put(keyValue[0], value);
+        }
+        return map;
     }
 
 
