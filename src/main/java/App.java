@@ -13,6 +13,7 @@ public class App {
         // set routes
 
         server.createContext("/cyberStore", new loginHandler());
+        server.createContext("/cyberStore/student", new loginHandler());
 
         server.setExecutor(null); // creates a default executor
 

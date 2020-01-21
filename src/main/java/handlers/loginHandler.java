@@ -18,13 +18,13 @@ import java.util.*;
 
 public class loginHandler implements HttpHandler {
     private LoginService loginService = new LoginService();
-    private String login;
-    private String password;
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
-        String method = httpExchange.getRequestMethod();
 
+        String method = httpExchange.getRequestMethod();
+        String login;
+        String password;
         if(method.equals("POST")){
             InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
             BufferedReader br = new BufferedReader(isr);
@@ -33,14 +33,17 @@ public class loginHandler implements HttpHandler {
             Map inputs = parseFormData(formData);
             login = inputs.get("login").toString();
             password = inputs.get("password").toString();
-
+            System.out.println(login);
+            System.out.println(password);
             if(login != null && password != null){
                 User user = loginService.loginChecker(login,password);
                 if(user != null){
                     if (user.getClass().getSimpleName().equals("Student")){
                         System.out.println("you log in as Student");
-                        StudentController studentController = new StudentController();
-                        studentController.run(user);
+//                        StudentController studentController = new StudentController();
+//                        studentController.run(user);
+                        httpExchange.getResponseHeaders().set("Location", "cyberStore/student");
+                        httpExchange.sendResponseHeaders(303, 0);
                     } else if (user.getClass().getSimpleName().equals("Mentor")){
                         System.out.println("you log in as Mentor");
                         MentorController mentorController = new MentorController();
