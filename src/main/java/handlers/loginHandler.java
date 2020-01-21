@@ -4,7 +4,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import controllers.CreepController;
 import controllers.MentorController;
-import controllers.StudentController;
+import helpers.CookieHandler;
 import models.User;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
@@ -12,16 +12,16 @@ import services.LoginService;
 
 import java.io.*;
 import java.net.URLDecoder;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class loginHandler implements HttpHandler {
     private LoginService loginService = new LoginService();
+    private CookieHandler cookieHandler = new CookieHandler();
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
 
+        cookieHandler.cookieChecker(httpExchange);
         String method = httpExchange.getRequestMethod();
         String login;
         String password;
@@ -59,6 +59,7 @@ public class loginHandler implements HttpHandler {
         }
 
         if(method.equals("GET")) {
+
 
             // get a template file
             JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/loginPage.twig");
