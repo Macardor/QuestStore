@@ -1,5 +1,6 @@
 import com.sun.net.httpserver.HttpServer;
 import handlers.CreepHandler;
+import handlers.ShowMentorsHandler;
 import handlers.loginHandler;
 import handlers.testHandler;
 
@@ -16,6 +17,7 @@ public class App {
         server.createContext("/cyberStore", new loginHandler());
         server.createContext("/cyberStore/student", new loginHandler());
         server.createContext("/cyberStore/creep", new CreepHandler());
+        server.createContext("/cyberStore/creep/showMentors", new ShowMentorsHandler());
 
         server.setExecutor(null); // creates a default executor
 

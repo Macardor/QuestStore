@@ -74,6 +74,27 @@ body
 
 }
 
+th, td {
+    padding: 15px;
 
+}
+
+th, td{
+    text-align: center;
+}
+
+th{
+    color: deeppink;
+    font-size: 20px;
+    background-color: rgba(0, 0, 0, 0.26);
+    text-align: center;
+}
+
+td{
+    color: whitesmoke;
+    font-size: 15px;
+    background-color: rgba(0, 0, 0, 0.14);
+    text-align: center;
+}
 
 
