@@ -339,7 +339,6 @@ public class StudentDAOImplementation {
 
     public void buyItem(int itemId, int studentId){
         PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
-        PreparedStatement ps = null;
         String orderToSql = "INSERT INTO user_items (item_id, is_available, bought_date, used_date, student_id) VALUES (?,?,?,?,?)";
         int itemPrice = getItemPrice(itemId);
         int studentCoins = showUserCoins(studentId);
@@ -348,14 +347,14 @@ public class StudentDAOImplementation {
             try {
                 editStudentCoins(studentCoins,itemPrice,studentId);
                 Date date = getCurrentDate();
-                ps = postgreSQLJDBC.connect().prepareStatement(orderToSql);
-                ps.setInt(1, itemId);
-                ps.setBoolean(2, true);
-                ps.setDate(3, date);
-                ps.setDate(4, null);
-                ps.setInt(5, studentId);
-                resultSet = ps.executeQuery();
-                ps.close();
+                preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+                preparedStatement.setInt(1, itemId);
+                preparedStatement.setBoolean(2, true);
+                preparedStatement.setDate(3, date);
+                preparedStatement.setDate(4, null);
+                preparedStatement.setInt(5, studentId);
+                resultSet = preparedStatement.executeQuery();
+                preparedStatement.close();
 
 
             } catch (SQLException e) {
