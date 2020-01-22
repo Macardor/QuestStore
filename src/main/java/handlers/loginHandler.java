@@ -21,6 +21,7 @@ public class loginHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
+
         user = cookieHandler.cookieChecker(httpExchange);
         if(user != null){
             if(user.getUserType() == 1){
@@ -36,6 +37,7 @@ public class loginHandler implements HttpHandler {
             }
         }
 
+
         String method = httpExchange.getRequestMethod();
         String login;
         String password;
@@ -48,8 +50,7 @@ public class loginHandler implements HttpHandler {
             Map inputs = parseFormData(formData);
             login = inputs.get("login").toString();
             password = inputs.get("password").toString();
-            System.out.println(login);
-            System.out.println(password);
+
             if(login != null && password != null){
                 User user = loginService.loginChecker(login,password);
                 if(user != null){

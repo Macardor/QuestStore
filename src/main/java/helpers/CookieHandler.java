@@ -24,6 +24,7 @@ public class CookieHandler {
         User user = null;
         if (cookieList.isPresent()) {  // Cookie already exists
             String cookieSessionId = cookieList.get().getValue();
+
             User userToCheck = cookieDAOImplementation.getUserByCookieSessionId(cookieSessionId);
             if (cookieService.checkIfCookieIsActive(cookieSessionId)){
                 return userToCheck;
@@ -34,6 +35,10 @@ public class CookieHandler {
             UUID uuid = UUID.randomUUID();
             HttpCookie cookie = new HttpCookie(SESSION_COOKIE_NAME, uuid.toString());
             httpExchange.getResponseHeaders().add("Set-Cookie", cookie.toString());
+            String cookieSessionIdToAdd = uuid.toString();
+            cookieSessionIdToAdd = '"'+cookieSessionIdToAdd+'"';
+
+            cookieDAOImplementation.putNewCookieToDB(cookieSessionIdToAdd);
         }
         return user;
 

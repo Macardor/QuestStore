@@ -27,7 +27,9 @@ public class CookieDAOImplementation {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
             preparedStatement.setString(1, cookieSessionId);
             resultSet = preparedStatement.executeQuery();
+
             if (resultSet.next()){
+                System.out.println("test");
                 int id = resultSet.getInt("id");
                 String login = resultSet.getString("login");
                 String password = resultSet.getString("password");
@@ -89,4 +91,22 @@ public class CookieDAOImplementation {
         }
     }
 
+    public void putNewCookieToDB(String cookieSessionIdToAdd) {
+
+        String sqlQuery = "INSERT INTO cookies (sesion_id, expire_date, user_id) VALUES(?, ?, null )";
+
+        try {
+            preparedStatement = postgreSQLJDBC.connect().prepareStatement(sqlQuery);
+
+            preparedStatement.setString(1, cookieSessionIdToAdd);
+            preparedStatement.setDate(2, null);
+
+
+
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

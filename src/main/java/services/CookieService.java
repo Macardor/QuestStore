@@ -13,12 +13,17 @@ private CookieDAOImplementation cookieDAOImplementation = new CookieDAOImplement
     public boolean checkIfCookieIsActive(String cookieSessionId) {
         Date currentDate = getCurrentDate();
         Date cookieExpireDate =  cookieDAOImplementation.getCookieExpireDate(cookieSessionId);
-        if ((cookieExpireDate.getTime() - currentDate.getTime()) >= 0){
+
+        if(cookieExpireDate == null){
+            return false;
+        }
+        else if ((cookieExpireDate.getTime() - currentDate.getTime()) >= 0){
             return true;
         }else {
             return false;
         }
     }
+
 
     private Date getCurrentDate() {
         return new Date(Calendar.getInstance().getTime().getTime());
