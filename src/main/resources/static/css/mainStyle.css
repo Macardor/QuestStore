@@ -74,6 +74,74 @@ body
 
 }
 
+h2
+{
+    color: white;
+}
+
+p
+{
+    color: #c2c2c2;
+}
+
+
+.card {
+    background: rgba(44, 44, 44, 0.82);
+    margin-bottom: 2em;
+}
+
+.card a {
+    color: black;
+    text-decoration: none;
+}
+
+/*.card a:hover {*/
+/*    box-shadow: 3px 3px 8px hsl(320, 100%, 45%);*/
+/*}*/
+
+.card-content {
+    padding: 1.4em;
+}
+
+.card-content h2 {
+    margin-top: 0;
+    margin-bottom: .5em;
+    font-weight: normal;
+}
+
+.card-content p {
+    font-size: 95%;
+}
+
+img {
+    width: 100%;
+    height: auto;
+}
+
+.cards {
+    margin-top: -1em;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.card {
+    margin-bottom: 1em;
+    display: flex;
+    flex: 0 1 calc(50% - 0.5em);
+}
+
+.cards {
+    margin-top: inherit;
+}
+
+.card {
+    margin-bottom: 2em;
+    display: flex;
+    flex: 0 1 calc(33% - 0.5em);
+}
+
+
 
 
 
