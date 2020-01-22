@@ -19,23 +19,17 @@ public class ShowMentorsHandler implements HttpHandler {
         CreepDAOImplementation creepDAOImplementation = new CreepDAOImplementation();
         List<User> showMentorsList = creepDAOImplementation.showAllMentors();
         System.out.println(showMentorsList.size());
-        System.out.println("dupa1");
 
         if (method.equals("GET")){
-            System.out.println("dupa2");
             JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/showMentors.twig");
             JtwigModel model = JtwigModel.newModel();
-            System.out.println("dupa3");
             model.with("mentorsList", showMentorsList);
             String response = template.render(model);
 
-            System.out.println("dupa3");
             httpExchange.sendResponseHeaders(200, response.length());
             OutputStream os = httpExchange.getResponseBody();
-            System.out.println("dupe4");
             os.write(response.getBytes());
             os.close();
-            System.out.println("dupa5");
         }
     }
 
