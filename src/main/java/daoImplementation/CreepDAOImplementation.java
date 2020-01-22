@@ -30,7 +30,9 @@ public class CreepDAOImplementation {
                 boolean isActive = resultSet.getBoolean("is_active");
                 String firstName = resultSet.getString("first_name");
                 String lastName = resultSet.getString("last_name");
-                System.out.println(id+ "| " + login+ "| " + password+ "| " + userTypeId2+ "| " + firstName+ "| " + lastName);
+                Mentor mentor = new Mentor(id, login, password, userTypeId2, isActive, firstName, lastName);
+                mentorsList.add(mentor);
+                //System.out.println(id+ "| " + login+ "| " + password+ "| " + userTypeId2+ "| " + firstName+ "| " + lastName);
 
             }
             preparedStatement.executeQuery();

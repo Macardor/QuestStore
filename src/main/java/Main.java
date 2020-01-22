@@ -12,9 +12,9 @@ public class Main {
 
 //        LoginController loginController = new LoginController();
 //        loginController.run();
-
-        CreepDAOImplementation creepDAOImplementation = new CreepDAOImplementation();
-        creepDAOImplementation.showAllMentors();
+//
+//        CreepDAOImplementation creepDAOImplementation = new CreepDAOImplementation();
+//        creepDAOImplementation.showAllMentors();
 
 //        MentorController mentorController = new MentorController();
 //        StudentService studentService = new StudentService();
