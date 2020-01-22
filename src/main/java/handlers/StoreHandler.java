@@ -25,8 +25,6 @@ public class StoreHandler implements HttpHandler {
             System.out.println("dupa2");
         }
 
-
-        System.out.println("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww");
         httpExchange.sendResponseHeaders(200, response.length());
         OutputStream os = httpExchange.getResponseBody();
         os.write(response.getBytes());
