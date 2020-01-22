@@ -17,11 +17,11 @@ import java.util.*;
 public class loginHandler implements HttpHandler {
     private LoginService loginService = new LoginService();
     private CookieHandler cookieHandler = new CookieHandler();
-    private User user = null;
+    User user = null;
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
-
+        user = null;
         user = cookieHandler.cookieChecker(httpExchange);
         if(user != null){
             if(user.getUserType() == 1){
@@ -57,7 +57,7 @@ public class loginHandler implements HttpHandler {
                     if (user.getClass().getSimpleName().equals("Student")){
                         System.out.println("you log in as Student");
                         cookieHandler.setCookieNewExpireDateToActiveSession(httpExchange);
-
+                        cookieHandler.setUserIdToCookieInDB(user, httpExchange);
                         httpExchange.getResponseHeaders().set("Location", "cyberStore/student");
                         httpExchange.sendResponseHeaders(303, 0);
                     } else if (user.getClass().getSimpleName().equals("Mentor")){
