@@ -25,6 +25,7 @@ public class loginHandler implements HttpHandler {
         String method = httpExchange.getRequestMethod();
         String login;
         String password;
+
         if(method.equals("POST")){
             InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
             BufferedReader br = new BufferedReader(isr);
@@ -76,6 +77,7 @@ public class loginHandler implements HttpHandler {
             os.write(response.getBytes());
             os.close();
         }
+
         if(method.equals("POST")) {
             // get a template file
             JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/loginPage.twig");
