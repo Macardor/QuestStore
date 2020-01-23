@@ -1,6 +1,8 @@
 package daoImplementation;
 import SQL.PostgreSQLJDBC;
+import models.Mentor;
 import models.Student;
+import models.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -76,17 +78,16 @@ public class MentorDAOImplementation{
         return studentList;
     }
 
-    public Student getStudentByUserId(int userId) {
-        Student student = null;
+    public User getMentorByUserId(int userId) {
+        User mentor = null;
         String orderToSql = "SELECT * FROM users " +
                 "join user_details " +
-                "on users.user_details_id = user_details.id WHERE users.user_type_id = ? and users.id = ?";
+                "on users.user_details_id = user_details.id WHERE users.user_type_id = 2 and users.id = ?";
         try{
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
-            preparedStatement.setInt(1, Student.userType);
-            preparedStatement.setInt(2, userId);
+            preparedStatement.setInt(1, userId);
             resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
+            if (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String login = resultSet.getString("login");
                 String password = resultSet.getString("password");
@@ -95,7 +96,8 @@ public class MentorDAOImplementation{
                 String firstName = resultSet.getString("first_name");
                 String lastName = resultSet.getString("last_name");
 
-                student = new Student(id, login, password, userTypeId, isActive, firstName, lastName);
+                mentor = new Mentor(id, login, password, userTypeId, isActive, firstName, lastName) {
+                };
 
                 System.out.println(id + "| " + login + "| " + password + "| " + userTypeId + "| " + isActive + "| " + firstName + "| " + lastName); //test method
 
@@ -106,7 +108,7 @@ public class MentorDAOImplementation{
             e.printStackTrace();
         }
 
-        return student;
+        return mentor;
     }
 }
 
