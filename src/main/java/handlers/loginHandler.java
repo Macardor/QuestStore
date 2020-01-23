@@ -17,11 +17,27 @@ import java.util.*;
 public class loginHandler implements HttpHandler {
     private LoginService loginService = new LoginService();
     private CookieHandler cookieHandler = new CookieHandler();
+    User user = null;
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
+        user = null;
+        user = cookieHandler.cookieChecker(httpExchange);
+        if(user != null){
+            if(user.getUserType() == 1){
+                httpExchange.getResponseHeaders().set("Location", "cyberStore/student");
+                httpExchange.sendResponseHeaders(303, 0);
+            }
+            else if(user.getUserType() == 2){
+                httpExchange.getResponseHeaders().set("Location", "cyberStore/mentor");
+                httpExchange.sendResponseHeaders(303, 0);
+            }else{
+                httpExchange.getResponseHeaders().set("Location", "cyberStore/creep");
+                httpExchange.sendResponseHeaders(303, 0);
+            }
+        }
 
-        cookieHandler.cookieChecker(httpExchange);
+
         String method = httpExchange.getRequestMethod();
         String login;
         String password;
@@ -34,25 +50,28 @@ public class loginHandler implements HttpHandler {
             Map inputs = parseFormData(formData);
             login = inputs.get("login").toString();
             password = inputs.get("password").toString();
-            System.out.println(login);
-            System.out.println(password);
+
             if(login != null && password != null){
                 User user = loginService.loginChecker(login,password);
                 if(user != null){
                     if (user.getClass().getSimpleName().equals("Student")){
                         System.out.println("you log in as Student");
-//                        StudentController studentController = new StudentController();
-//                        studentController.run(user);
-                        httpExchange.getResponseHeaders().add("Location", "cyberStore/student");
+                        cookieHandler.setCookieNewExpireDateToActiveSession(httpExchange);
+                        cookieHandler.setUserIdToCookieInDB(user, httpExchange);
+                        httpExchange.getResponseHeaders().set("Location", "cyberStore/student");
                         httpExchange.sendResponseHeaders(303, 0);
                     } else if (user.getClass().getSimpleName().equals("Mentor")){
                         System.out.println("you log in as Mentor");
-                        MentorController mentorController = new MentorController();
-                        mentorController.run(user);
+                        cookieHandler.setCookieNewExpireDateToActiveSession(httpExchange);
+
+                        httpExchange.getResponseHeaders().set("Location", "cyberStore/mentor");
+                        httpExchange.sendResponseHeaders(303, 0);
                     }else {
                         System.out.println("you log in as Creep");
-                        CreepController creepController = new CreepController();
-                        creepController.run(user);
+                        cookieHandler.setCookieNewExpireDateToActiveSession(httpExchange);
+
+                        httpExchange.getResponseHeaders().set("Location", "cyberStore/mentor");
+                        httpExchange.sendResponseHeaders(303, 0);
                     }
                 }
             }

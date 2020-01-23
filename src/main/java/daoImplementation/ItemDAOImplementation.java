@@ -2,7 +2,6 @@ package daoImplementation;
 
 import SQL.PostgreSQLJDBC;
 import models.Item;
-import models.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -86,7 +85,7 @@ public class ItemDAOImplementation{
                 String description = resultSet.getString("description");
                 boolean isActive = resultSet.getBoolean("is_active");
 
-                System.out.println(id + " | " + name + " | " + price + " | " + description + " | " + isActive);  //test method
+//                System.out.println(id + " | " + name + " | " + price + " | " + description + " | " + isActive);  //test method
 
                 Item item = new Item(id, name, price, description, isActive);
                 itemList.add(item);

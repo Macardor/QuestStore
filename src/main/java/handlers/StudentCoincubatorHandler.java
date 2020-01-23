@@ -2,26 +2,20 @@ package handlers;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import controllers.CreepController;
-import helpers.CookieHandler;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.OutputStream;
 
-public class CreepHandler implements HttpHandler {
-
-    private CreepController creepController = new CreepController();
-    private CookieHandler cookieHandler = new CookieHandler();
-
+public class StudentCoincubatorHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
 
-        cookieHandler.cookieChecker(httpExchange);
         String method = httpExchange.getRequestMethod();
 
         if (method.equals("GET")){
-            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/CreepMainPage.twig");
+            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/student/coincubator.twig");
             JtwigModel model = JtwigModel.newModel();
             String response = template.render(model);
 
@@ -31,9 +25,4 @@ public class CreepHandler implements HttpHandler {
             os.close();
         }
     }
-
-
-
 }
-
-

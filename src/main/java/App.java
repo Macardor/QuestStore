@@ -12,7 +12,12 @@ public class App {
         // set routes
 
         server.createContext("/cyberStore", new loginHandler());
+        server.createContext("/mentor/homepage", new MentorHandler());
+        server.createContext("/mentor/store", new StoreHandler());
+        server.createContext("/mentor/students", new ManagePupilsHandler());
+        server.createContext("/mentor/add-student", new AddStudentHandler());
         server.createContext("/cyberStore/student", new StudentLoginPageHandler());
+        server.createContext("/cyberStore/student/coincubator", new StudentCoincubatorHandler());
         server.createContext("/cyberStore/creep", new CreepHandler());
         server.createContext("/cyberStore/creep/showMentors", new ShowMentorsHandler());
         server.createContext("/cyberStore/creep/addMentor", new AddMentorHandler());
