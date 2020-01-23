@@ -40,6 +40,7 @@ public class App {
         server.createContext("/mentor/remove-quest", new RemoveQuestHandler());
         server.createContext("/mentor/add-item", new AddItemHandler());
         server.createContext("/mentor/remove-item", new RemoveItemHandler());
+        server.createContext("/mentor/students", new PupilsListHandler());
 
 
         server.createContext("/student", new StudentLoginPageHandler());
