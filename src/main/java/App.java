@@ -13,6 +13,7 @@ public class App {
 
         server.createContext("/cyberStore", new loginHandler());
         server.createContext("/cyberStore/student", new StudentLoginPageHandler());
+        server.createContext("/cyberStore/student/coincubator", new StudentCoincubatorHandler());
         server.createContext("/cyberStore/creep", new CreepHandler());
         server.createContext("/cyberStore/creep/showMentors", new ShowMentorsHandler());
         server.createContext("/cyberStore/creep/addMentor", new AddMentorHandler());
