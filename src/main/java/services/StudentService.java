@@ -50,8 +50,8 @@ public class StudentService {
     public void addNewStudent(Student student){
         studentDAOImplementation.addStudent(student);
     }
-    public void deleteStudent(){
-        studentDAOImplementation.deleteStudent(StaticUi.getIdInput());
+    public void deleteStudent(int id){
+        studentDAOImplementation.deleteStudent(id);
     }
     public List<Student> getStudentList(){
         return studentDAOImplementation.getStudentsList();
@@ -78,7 +78,7 @@ public class StudentService {
     }
 
 
-
-
-
+    public List<Student> getActiveStudentsList() {
+        return studentDAOImplementation.getActiveStudentsList();
+    }
 }
