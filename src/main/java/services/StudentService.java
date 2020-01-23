@@ -47,8 +47,8 @@ public class StudentService {
         }
     }
 
-    public void addNewStudent(){
-        studentDAOImplementation.addStudent(new Student(StaticUi.getFirstNameInput(), StaticUi.getLastNameInput(), Student.userType, true, StaticUi.getLoginInput(), StaticUi.getPasswordInput()));
+    public void addNewStudent(Student student){
+        studentDAOImplementation.addStudent(student);
     }
     public void deleteStudent(){
         studentDAOImplementation.deleteStudent(StaticUi.getIdInput());

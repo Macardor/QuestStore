@@ -21,7 +21,7 @@ public class MentorController implements BaseController {
         String option = scanner.next();
             switch (option) {
                 case "1":
-                    ss.addNewStudent();
+//                    ss.addNewStudent();
                     break;
                 case "2":
                     ss.deleteStudent();
