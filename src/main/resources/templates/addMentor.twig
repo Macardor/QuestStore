@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quest Store Creep</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <link rel="stylesheet" type="text/css" href="http://localhost:63342/QuestStore/static/css/mainStyle.css">
+    <link href="https://fonts.googleapis.com/css?family=Quantico:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/c5e394a33c.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-sm navbar-light bg-dark">
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">SHOW MENTORS <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">ADD MENTOR</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="coincubator.html">EDIT MENTOR</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="quests.html">REMOVE MENTOR</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">HOME PAGE</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-user"></i>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="#">Profile</a>
+                    <a class="dropdown-item" href="#">Example</a>
+                    <a class="dropdown-item" href="#">Inventory</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+<div id="front">
+{#    <form  class="login-box" method="POST" name = "loginBox" onsubmit="return validateForm()">#}
+{#    <form>#}
+{#        <div class="input-box">#}
+{#            <label>Login</label>#}
+{#            <input type="text" name="login">#}
+{#        </div>#}
+{#        <div class="input-box">#}
+{#            <label>Password</label>#}
+{#            <input type="text" name="password">#}
+
+{#        </div>#}
+{#        <div class="input-box">#}
+{#            <label>First Name</label>#}
+{#            <input type="text" name="firstName">#}
+{#        </div>#}
+{#        <div class="input-box">#}
+{#            <label>Last Name</label>#}
+{#            <input type="text" name="lastName">#}
+{#        </div>#}
+{#        <div class="login-button">#}
+{#            <button type="submit" name="loginButton" value="Submit">Add Mentor</button>#}
+{#        </div>#}
+{#    </form>#}
+
+    <form>
+        {% for mentor in addMentor %}
+        <div class="form-group">
+            <label for="inputLogin">Login</label>
+            <input type="text" class="form-control" id="login" {{ mentor.login }}
+        </div>
+        <div class="form-group">
+            <label for="inputPassword">Password</label>
+            <input type="password" class="form-control" id="password" {{ mentor.password }}>
+        </div>
+        <div class="form-group">
+            <label for="inputFirstName">First Name</label>
+            <input type="text" class="form-control" id="firstName" {{ mentor.firstName }}>
+        </div>
+        <div class="form-group">
+            <label for="inputLastName">Last Name</label>
+            <input type="text" class="form-control" id="lastName" {{ mentor.lastName }}>
+        </div>
+            {% endfor %}
+        <div class="form-action"><button type="submit" class="btn btn-primary text-center">Add Mentor</button>
+        </div>
+
+    </form>
+
+</div>
+</body>
+<footer>
+
+</footer>

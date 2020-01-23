@@ -74,6 +74,57 @@ body
 
 }
 
+th, td {
+    padding: 15px;
 
+}
 
+th, td{
+    text-align: center;
+}
 
+th{
+    color: deeppink;
+    font-size: 20px;
+    background-color: rgba(0, 0, 0, 0.26);
+    text-align: center;
+}
+
+td{
+    color: whitesmoke;
+    font-size: 15px;
+    background-color: rgba(0, 0, 0, 0.14);
+    text-align: center;
+}
+
+.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+    background-color: rgba(255, 20, 147, 0.66) !important;
+    border: none;
+    text-align: center;
+}
+
+.form-control{
+    background-color: rgba(24, 24, 24, 0.6) !important;
+    color: #c0c0c0 !important;
+    border: 1px solid #f910a7 !important;
+}
+
+.form-action{
+    text-align: center;
+}
+
+#front{
+    text-align: center;
+    padding: 10% 250px 250px 300px;
+}
+
+button, input {
+    overflow: visible;
+    text-align: center !important;
+}
+
+label{
+    color: whitesmoke;
+    font-size: 19px;
+    font-weight: 700;
+}
