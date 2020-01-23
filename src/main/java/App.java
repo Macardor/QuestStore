@@ -1,6 +1,6 @@
 import com.sun.net.httpserver.HttpServer;
 import handlers.*;
-import handlers.mentor.coincubator.StudentCoincubatorHandler;
+import handlers.StudentCoincubatorHandler;
 import handlers.mentor.store.StoreHandler;
 import handlers.mentor.students.AddStudentHandler;
 import handlers.mentor.students.PupilsListHandler;
