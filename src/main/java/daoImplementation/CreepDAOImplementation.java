@@ -18,7 +18,7 @@ public class CreepDAOImplementation {
     ResultSet resultSet = null;
 
     public List<User> showAllMentors() {
-        String orderToSql = "SELECT * FROM user_details FULL OUTER JOIN users on user_details.id = users.user_details_id WHERE user_type_id = 2";
+        String orderToSql = "SELECT * FROM user_details JOIN users on user_details.id = users.user_details_id WHERE user_type_id = 2 ORDER BY user_details.id ";
         List<User> mentorsList = new ArrayList<>();
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
@@ -67,7 +67,7 @@ public class CreepDAOImplementation {
         }
     }
 
-    public void editMentor(Mentor mentor) {
+    public void editMentor(Mentor mentor, int id) {
         String orderForSql = ("UPDATE user_details SET login = ?, password = ?, first_name = ?, last_name = ? WHERE id = ?");
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderForSql);
@@ -76,12 +76,39 @@ public class CreepDAOImplementation {
             preparedStatement.setString(2, mentor.getPassword());
             preparedStatement.setString(3, mentor.getFirstname());
             preparedStatement.setString(4, mentor.getLastname());
+            preparedStatement.setInt(5, id);
+
 
             int row = preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
+
+    public int getUserDetailsId(Mentor mentor) {
+        String orderToSql = "SELECT * FROM users WHERE id = ?";
+        try {
+            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            preparedStatement.setInt(1, mentor.getId());
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                int userDetailId = resultSet.getInt("user_details_id");
+                return userDetailId;
+            }
+            preparedStatement.executeQuery();
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            try {
+                preparedStatement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+
+            }
+
+        }
+        return 0;
     }
 
     public void setMentorToUnactive(int id) {
@@ -103,7 +130,9 @@ public class CreepDAOImplementation {
     }
 
     public Mentor getMentorById(int idToEdit) {
-        String orderToSql = "SELECT * FROM user_details JOIN users on user_details.id = users.user_details_id WHERE user_type_id = 2 and users.id =?";
+        String orderToSql = "SELECT * FROM users " +
+                "join user_details " +
+                "on users.user_details_id = user_details.id WHERE users.user_type_id = 2 and user_details_id = ?";
         Mentor mentor = null;
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
@@ -117,7 +146,7 @@ public class CreepDAOImplementation {
                 boolean isActive = resultSet.getBoolean("is_active");
                 String firstName = resultSet.getString("first_name");
                 String lastName = resultSet.getString("last_name");
-                System.out.println(id + "| " + login+ "| " + password+ "| " + userTypeId2+ "| " + firstName+ "| " + lastName);
+                //System.out.println(id + "| " + login+ "| " + password+ "| " + userTypeId2+ "| " + firstName+ "| " + lastName);
                 mentor = new Mentor(id, login, password, userTypeId2, isActive, firstName, lastName);
                 System.out.println(mentor.toString());
             }
