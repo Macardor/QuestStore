@@ -25,14 +25,14 @@ public class loginHandler implements HttpHandler {
         user = cookieHandler.cookieChecker(httpExchange);
         if(user != null){
             if(user.getUserType() == 1){
-                httpExchange.getResponseHeaders().set("Location", "cyberStore/student");
+                httpExchange.getResponseHeaders().add("Location", "/student");
                 httpExchange.sendResponseHeaders(303, 0);
             }
             else if(user.getUserType() == 2){
-                httpExchange.getResponseHeaders().set("Location", "cyberStore/mentor");
+                httpExchange.getResponseHeaders().add("Location", "/mentor");
                 httpExchange.sendResponseHeaders(303, 0);
             }else{
-                httpExchange.getResponseHeaders().set("Location", "cyberStore/creep");
+                httpExchange.getResponseHeaders().add("Location", "/creep");
                 httpExchange.sendResponseHeaders(303, 0);
             }
         }
@@ -58,13 +58,13 @@ public class loginHandler implements HttpHandler {
                         System.out.println("you log in as Student");
                         cookieHandler.setCookieNewExpireDateToActiveSession(httpExchange);
                         cookieHandler.setUserIdToCookieInDB(user, httpExchange);
-                        httpExchange.getResponseHeaders().set("Location", "cyberStore/student");
+                        httpExchange.getResponseHeaders().add("Location", "/student");
                         httpExchange.sendResponseHeaders(303, 0);
                     } else if (user.getClass().getSimpleName().equals("Mentor")){
                         System.out.println("you log in as Mentor");
                         cookieHandler.setCookieNewExpireDateToActiveSession(httpExchange);
 
-                        httpExchange.getResponseHeaders().set("Location", "cyberStore/mentor");
+                        httpExchange.getResponseHeaders().add("Location", "cyberStore/mentor");
                         httpExchange.sendResponseHeaders(303, 0);
                     }else {
                         System.out.println("you log in as Creep");

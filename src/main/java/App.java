@@ -11,12 +11,14 @@ public class App {
 
         // set routes
 
-        server.createContext("/cyberStore", new loginHandler());
-        server.createContext("/cyberStore/student", new StudentLoginPageHandler());
-        server.createContext("/cyberStore/student/coincubator", new StudentCoincubatorHandler());
-        server.createContext("/cyberStore/creep", new CreepHandler());
-        server.createContext("/cyberStore/creep/showMentors", new ShowMentorsHandler());
-        server.createContext("/cyberStore/creep/addMentor", new AddMentorHandler());
+        server.createContext("/login", new loginHandler());
+        server.createContext("/student", new StudentLoginPageHandler());
+        server.createContext("/student/coincubator", new StudentCoincubatorHandler());
+        server.createContext("/student/quests", new StudentQuestsHandler());
+        server.createContext("/student/store", new StudentStoreHandler());
+        server.createContext("/creep", new CreepHandler());
+        server.createContext("/creep/showMentors", new ShowMentorsHandler());
+        server.createContext("/creep/addMentor", new AddMentorHandler());
 
         server.setExecutor(null); // creates a default executor
 
