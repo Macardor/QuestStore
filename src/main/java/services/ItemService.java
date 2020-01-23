@@ -4,6 +4,7 @@ import daoImplementation.ItemDAOImplementation;
 import models.Item;
 import view.StaticUi;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class ItemService {
@@ -51,8 +52,8 @@ public class ItemService {
         itemDAOImplementation.deleteItem(StaticUi.getIdInput());
     }
 
-    public void getItemsList() {
-        itemDAOImplementation.getItemsList();
+    public List<Item> getItemsList() {
+        return itemDAOImplementation.getItemsList();
     }
 
     public void getItemById() {
