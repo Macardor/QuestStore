@@ -8,9 +8,6 @@ import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
 import java.io.*;
-import java.net.URLDecoder;
-import java.util.HashMap;
-import java.util.Map;
 
 public class CreepHandler implements HttpHandler {
 
