@@ -44,7 +44,7 @@ public class AddItemHandler implements HttpHandler {
             response = template.render(model);
 
             System.out.println(inputs.get("name").toString() + inputs.get("price").toString() + inputs.get("description").toString());
-            itemService.addNewItem(new Item(inputs.get("name").toString(), Integer.parseInt(inputs.get("price").toString()), inputs.get("description").toString(),  true));
+            itemService.addNewItem(new Item(inputs.get("name").toString(), Integer.parseInt(inputs.get("price").toString()), inputs.get("description").toString(),true));
 
 //            httpExchange.getResponseHeaders().set("Location", "/mentor/add-item" );
 //            httpExchange.sendResponseHeaders(303,0);
