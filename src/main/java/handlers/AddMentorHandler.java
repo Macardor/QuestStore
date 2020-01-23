@@ -6,30 +6,66 @@ import daoImplementation.CreepDAOImplementation;
 import models.Mentor;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
-import view.StaticUi;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.List;
+import java.io.*;
+import java.net.URLDecoder;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AddMentorHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
 
-        String method = httpExchange.getRequestMethod();
         CreepDAOImplementation creepDAOImplementation = new CreepDAOImplementation();
-        //creepDAOImplementation.addMentor();
+        String method = httpExchange.getRequestMethod();
+        String response = "";
 
         if (method.equals("GET")){
             JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/addMentor.twig");
             JtwigModel model = JtwigModel.newModel();
-            //model.with("addMentor", creepDAOImplementation.addMentor());
-            String response = template.render(model);
-
-            httpExchange.sendResponseHeaders(200, response.length());
-            OutputStream os = httpExchange.getResponseBody();
-            os.write(response.getBytes());
-            os.close();
+            response = template.render(model);
         }
+
+        if (method.equals("POST")){
+            InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(),"utf-8");
+            BufferedReader br = new BufferedReader(isr);
+            String formData = br.readLine();
+
+            Map inputs = parseFormData(formData);
+            String login = inputs.get("login").toString();
+            String password = inputs.get("password").toString();
+            String firstName = inputs.get("firstName").toString();
+            String lastName = inputs.get("lastName").toString();
+            System.out.println(login +password+ firstName+lastName);
+            Mentor mentorToAdd = new Mentor(login,password,2,true,firstName,lastName);
+            System.out.println(mentorToAdd.getLastname());
+            creepDAOImplementation.addMentor(mentorToAdd);
+
+
+            httpExchange.getResponseHeaders().set("Location", "/cyberStore/creep/showMentors");
+            httpExchange.sendResponseHeaders(303, 0);
+
+        }
+
+        httpExchange.sendResponseHeaders(200, response.length());
+        OutputStream os = httpExchange.getResponseBody();
+        os.write(response.getBytes());
+        os.close();
+    }
+
+    private Map<String, String> parseFormData(String formData) {
+        Map<String, String> map = new HashMap<String, String>();
+        String[] pairs = formData.split("&");
+        for(String pair : pairs){
+            String[] keyValue = pair.split("=");
+            String value = null;
+            try {
+                value = new URLDecoder().decode(keyValue[1], "UTF-8");
+                map.put(keyValue[0], value);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
+        return map;
     }
 }
