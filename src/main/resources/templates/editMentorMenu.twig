@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Quest Store Mentor</title>
+    <title>Quest Store Creep</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <link rel="stylesheet" type="text/css" href="http://localhost:63342/QuestStore/static/css/mainStyle.css">
     <link href="https://fonts.googleapis.com/css?family=Quantico:400,700&display=swap" rel="stylesheet">
@@ -15,16 +15,19 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item active">
-                <a class="nav-link" href="../mentor/store" >STORE <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="#">SHOW MENTORS <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="../mentor/coincubators" >COINCUBATORS</a>
+                <a class="nav-link" href="#">ADD MENTOR</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="../mentor/students-menu" >STUDENTS</a>
+                <a class="nav-link" href="coincubator.html">EDIT MENTOR</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="../mentor/quests" >QUEST</a>
+                <a class="nav-link" href="quests.html">REMOVE MENTOR</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">HOME PAGE</a>
             </li>
         </ul>
         <ul class="navbar-nav ml-auto">
@@ -34,34 +37,52 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item" href="#">Profile</a>
-                    <a class="dropdown-item" href="../loginPage.twig">Logout</a>
+                    <a class="dropdown-item" href="#">Example</a>
+                    <a class="dropdown-item" href="#">Inventory</a>
                 </div>
             </li>
         </ul>
     </div>
 </nav>
 
+
 <div id="front">
     <form method="POST">
+        <div id="front">
             <div class="form-group">
-                <label for="login">Login</label>
-                <input type="text" class="form-control" id="login" name="login" placeholder="login...">
+                <label for="questId">Identification number</label>
+                <input type="text" id="mentorid" class="form-control" name="mentorId" placeholder="Type id...">
             </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="text"  class="form-control"id="password" name="password" placeholder="password...">
+            <div class="form-action">
+                <button type="submit" class="btn btn-primary text-center" value="Submit">Edit Mentor</button>
             </div>
-            <div class="form-group">
-                <label for="firstname">First Name</label>
-                <input type="text" class="form-control" id="firstname" name="firstname" placeholder="first name...">            </div>
-            <div class="form-group">
-                <label for="inputLastName">Last Name</label>
-                <input type="text"  class="form-control"id="lastname" name="lastname" placeholder="Your last name...">
-            </div>
-        <div class="form-action"><button type="submit" class="btn btn-primary text-center">Add Student</button>
         </div>
-
     </form>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Login</th>
+            <th>Password</th>
+            <th>Student Type</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+        </tr>
+        {% for mentor in mentorsList %}
+            <tr>
+                <td>{{ mentor.id }}</td>
+                <td>{{ mentor.login }}</td>
+                <td>{{ mentor.password }}</td>
+                <td>{{ mentor.userType }}</td>
+                <td>{{ mentor.firstname }}</td>
+                <td>{{ mentor.lastname }}</td>
+            </tr>
+        {% endfor %}
+
+    </table>
+
+
+
+
 
 </div>
 </body>

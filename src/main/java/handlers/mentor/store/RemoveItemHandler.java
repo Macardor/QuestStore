@@ -1,62 +1,66 @@
-package handlers;
+package handlers.mentor.store;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import daoImplementation.CreepDAOImplementation;
-import models.Mentor;
+import models.Item;
+import models.Student;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
+import services.ItemService;
+import services.StudentService;
 
 import java.io.*;
 import java.net.URLDecoder;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class AddMentorHandler implements HttpHandler {
+public class RemoveItemHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
-
-        CreepDAOImplementation creepDAOImplementation = new CreepDAOImplementation();
+        ItemService itemService = new ItemService();
         String method = httpExchange.getRequestMethod();
+        System.out.println(method);
+
+        List<Item> itemList = itemService.getActiveItemsList();
         String response = "";
 
-        if (method.equals("GET")){
-            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/addMentor.twig");
+
+        if (method.equals("GET")) {
+            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentor/remove-item.twig");
             JtwigModel model = JtwigModel.newModel();
+            model.with("itemList", itemList);
             response = template.render(model);
         }
 
-        if (method.equals("POST")){
-            InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(),"utf-8");
+        if (method.equals("POST")) {
+            InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
             BufferedReader br = new BufferedReader(isr);
             String formData = br.readLine();
 
             Map inputs = parseFormData(formData);
-            String login = inputs.get("login").toString();
-            String password = inputs.get("password").toString();
-            String firstName = inputs.get("firstName").toString();
-            String lastName = inputs.get("lastName").toString();
-            System.out.println(login +password+ firstName+lastName);
-            Mentor mentorToAdd = new Mentor(login,password,2,true,firstName,lastName);
-            System.out.println(mentorToAdd.getLastname());
-            creepDAOImplementation.addMentor(mentorToAdd);
 
+            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentor/remove-item.twig");
+            JtwigModel model = JtwigModel.newModel();
+            model.with("itemList", itemList);
 
-            httpExchange.getResponseHeaders().set("Location", "/cyberStore/creep/showMentors");
-            httpExchange.sendResponseHeaders(303, 0);
-
+            response = template.render(model);
+            itemService.turnOffItem(Integer.parseInt(inputs.get("userId").toString()));
+            httpExchange.getResponseHeaders().set("Location", "/mentor/remove-item" );
+            httpExchange.sendResponseHeaders(303,0);
+            System.out.println(Integer.parseInt(inputs.get("userId").toString()));
         }
-
         httpExchange.sendResponseHeaders(200, response.length());
         OutputStream os = httpExchange.getResponseBody();
         os.write(response.getBytes());
         os.close();
     }
 
+
     private Map<String, String> parseFormData(String formData) {
         Map<String, String> map = new HashMap<String, String>();
         String[] pairs = formData.split("&");
-        for(String pair : pairs){
+        for (String pair : pairs) {
             String[] keyValue = pair.split("=");
             String value = null;
             try {

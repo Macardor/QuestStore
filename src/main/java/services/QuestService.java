@@ -4,21 +4,22 @@ import daoImplementation.QuestDAOImplementation;
 import models.Quest;
 import view.StaticUi;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class QuestService {
     QuestDAOImplementation questDAOImplementation = new QuestDAOImplementation();
     Scanner scanner = new Scanner(System.in);
-    public void addNewQuest(){
-        questDAOImplementation.addQuest(new Quest(StaticUi.getNameInput(), StaticUi.getDescriptionInput(), StaticUi.getRewardInput(), StaticUi.getBoolInput()));
+    public void addNewQuest(Quest quest){
+        questDAOImplementation.addQuest(quest);
 
     }
     public void editQuest(){
         editStudentSubmenu();
 
     }
-    public void deleteQuest(){
-        questDAOImplementation.deleteQuest(StaticUi.getIdInput());
+    public void deleteQuest(int id){
+        questDAOImplementation.deleteQuest(id);
 
     }
     public void getQuestList(){
@@ -62,5 +63,9 @@ public class QuestService {
             }
         }
         questDAOImplementation.editQuest(quest);
+    }
+
+    public List<Quest> getAllActiveQuestList() {
+        return questDAOImplementation.getAllActiveQuests();
     }
 }

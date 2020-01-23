@@ -75,7 +75,7 @@ body
 #front
 {
     color: #d0d0d0;
-    padding: 20% 250px 250px 300px;
+    padding: 100px 200px 20px 200px;
     background-color: rgba(16, 16, 33, 0.5);
 
 }
@@ -121,7 +121,7 @@ td{
 
 #front{
     text-align: center;
-    padding: 10% 250px 250px 300px;
+    /*padding: 10% 250px 250px 300px;*/
 }
 
 button, input {
@@ -134,3 +134,13 @@ label{
     font-size: 19px;
     font-weight: 700;
 }
+#previoustext{
+    color: #6b6d8b;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.div#front{
+    padding: 0;
+}
+
