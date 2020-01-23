@@ -16,7 +16,7 @@ public class QuestDAOImplementation{
     PreparedStatement ps = null;
     public void addQuest(Quest quest) {
 
-        String sqlQuery = "INSERT INTO quests (name, description, reward) VALUES(?, ?, ?)";
+        String sqlQuery = "INSERT INTO quests (name, description, reward, is_active) VALUES(?, ?, ?, ?)";
 
         try {
             ps = postgreSQLJDBC.connect().prepareStatement(sqlQuery);
@@ -24,6 +24,7 @@ public class QuestDAOImplementation{
             ps.setString(1, quest.getName());
             ps.setString(2, quest.getDescription());
             ps.setInt(3, quest.getReward());
+            ps.setBoolean(4, quest.isActive());
 
             ps.executeUpdate();
             ps.close();
@@ -85,7 +86,6 @@ public class QuestDAOImplementation{
                 boolean isActive = resultSet.getBoolean("is_active");
                 Quest quest = new Quest(id, name, description, reward, isActive);
                 quests.add(quest);
-//                System.out.println(id + " | " + name + " | " + description + " | " + reward + " | " + isActive);
             }
             ps.close();
         }catch (SQLException e){

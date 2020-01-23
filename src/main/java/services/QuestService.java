@@ -22,9 +22,8 @@ public class QuestService {
         questDAOImplementation.deleteQuest(id);
 
     }
-    public void getQuestList(){
-        questDAOImplementation.getAllQuests();
-
+    public List<Quest> getQuestList(){
+        return questDAOImplementation.getAllQuests();
     }
     public void getQuestById(){
         questDAOImplementation.getQuestById(StaticUi.getIdInput());

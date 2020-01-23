@@ -2,17 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Quest Store Login</title>
-    <link rel="stylesheet" type="text/css" href="http://localhost:63342/QuestStore/static/css/mainStyle.css">
+    <title>Quest Store</title>
+    <link rel="stylesheet" type="text/css" href="http://localhost:63342/QuestStore/src/main/resources/static/css/mainStyle.css">
     <link href="https://fonts.googleapis.com/css?family=Quantico:400,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="http://localhost:63342/QuestStore/static/css/cardHolo.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/c5e394a33c.js" crossorigin="anonymous"></script>
+    <script src="http://localhost:63342/QuestStore/src/main/resources/static/js/cardHolo.js"></script>
 </head>
-
-
-<!--MENU BAR-->
 <body>
-
 <nav class="navbar navbar-expand-sm navbar-light bg-dark">
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
@@ -42,25 +41,27 @@
         </ul>
     </div>
 </nav>
-
-<div id="mentor-menu">
-    <table style="width: 100%">
-        <tr class="mentor-table">
-            <td class="mentor-thread">
-                <a href="../mentor/add-student">ADD STUDENT</a>
-            </td>
-                <td class="mentor-thread"><a href="/mentor/edit-student">EDIT STUDENT</a></td>
-        </tr>
-        <tr class="mentor-table">
-                <td class="mentor-thread">
-                    <a href="../mentor/remove-student">DELETE STUDENT</a>
-                </td>
-                <td class="mentor-thread">
-                    <a href="../mentor/students">GET ALL STUDENTS</a>
-                </td>
-        </tr>
-    </table>
-</div>
+<main class="main-area">
+    <div class="centered">
+        <section class="cards">dupa
+            {% for quest in questList %}
+                <article class="card">
+                    <a href="#">
+                        <figure class="thumbnail">
+                            <img src="http://localhost:63342/QuestStore/src/main/resources/templates/cardexample.jpg" alt="cardexample">
+                        </figure>
+                        <div class="card-content">
+                            <h2>{{ quest.name }}</h2>
+                            <p >{{ quest.description }}</p>
+                            <p>{{ quest.reward }}</p>
+                        </div>
+                    </a>
+                </article>
+            {% endfor %}
+            <style class="hover"></style>
+        </section>
+    </div>
+</main>
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
@@ -70,3 +71,4 @@
 <footer>
 
 </footer>
+</html>
