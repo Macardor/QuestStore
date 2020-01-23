@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quest Store</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/storeStyle.css">
+    <link href="https://fonts.googleapis.com/css?family=Quantico:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="../static/css/cardHolo.css">
+    <script
+            src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/c5e394a33c.js" crossorigin="anonymous"></script>
+    <script src="../static/js/cardHolo.js"></script>
+</head>
+<body>
+<div id="background">
+    <img src="background-image.jpg" alt="Image couldn't load">
+</div>
+<div id = "menu">
+    <ul class="nav">
+        <li class="nav-left"><a href="store.twig">STORE</a></li>
+        <li class="nav-left"><a href="#">INVENTORY</a></li>
+        <li class="nav-left"><a href="coincubator.twig">COINcubator</a></li>
+        <li class="nav-left"><a href="quests.twig">QUESTS</a></li>
+        <li class="nav-left"><a href="#">TRANSACTIONS</a></li>
+        <li class="nav-right"><i class="fas fa-user"></i></li>
+    </ul>
+</div>
+
+<!--<main id=app>-->
+
+<!--    <div class="card charizard"></div>-->
+
+
+<!--    <style class="hover"></style>-->
+
+<!--</main>-->
+
+
+<main class="main-area">
+    <div class="centered">
+        <section class="cards">
+            <article class="card">
+                <a href="#">
+                    <figure class="thumbnail">
+                        <img src="cardexample.jpg" alt="cardexample">
+                    </figure>
+                    <div class="card-content">
+                        <h2>Combat training</h2>
+                        <p>Private mentoring (consultancy)</p>
+                    </div>
+                </a>
+            </article>
+            <article class="card">
+                <a href="#">
+                    <figure class="thumbnail">
+                        <img src="cardexample3.jpg" alt="meow">
+                    </figure>
+                    <div class="card-content">
+                        <h2>Tipping the fanfare-guy</h2>
+                        <p>The student can use jukebox exclusively for half day</p>
+                    </div>
+                </a>
+            </article>
+            <article class="card">
+                <a href="#">
+                    <figure class="thumbnail">
+                        <img src="cardexample2.jpg" alt="meow">
+                    </figure>
+                    <div class="card-content">
+                        <h2>Crown of prestige</h2>
+                        <p>You can wear the Crown of prestige for a whole day and thus everyone in your room should call you by a title of your choice (first student who pays on that day)</p>
+                    </div>
+                </a>
+            </article>
+            <article class="card">
+                <a href="#">
+                    <figure class="thumbnail">
+                        <img src="cardexample.jpg" alt="meow">
+                    </figure>
+                    <div class="card-content">
+                        <h2>Summon Code Elemental</h2>
+                        <p> Mentor joins a student team for one hour (all team members must buy this item).</p>
+                    </div>
+                </a>
+            </article>
+            <article class="card">
+                <a href="#">
+                    <figure class="thumbnail">
+                        <img src="cardexample2.jpg" alt="meow">
+                    </figure>
+                    <div class="card-content">
+                        <h2>Royal game session</h2>
+                        <p>You can choose from a huge list of boardgames to rent for a game afternoon (Arcadia Quest, Arcadia Quest Inferno - KS exclusive edition, Rising Sun - KS exclusive edition, Mechs vs Minions, Dead of Winter - Hungarian edition, Captain Sonar, Hero Realms, Clank in Space, Sheriff of Nottingham etc.)</p>
+                    </div>
+                </a>
+            </article>
+            <article class="card">
+                <a href="#">
+                    <figure class="thumbnail">
+                        <img src="cardexample3.jpg" alt="meow">
+                    </figure>
+                    <div class="card-content">
+                        <h2>Circle of Sorcery</h2>
+                        <p>60 min workshop by a mentor(s) of the chosen topic (mentors will organize it within a month)</p>
+                    </div>
+                </a>
+            </article>
+            <article class="card">
+                <a href="#">
+                    <figure class="thumbnail">
+                        <img src="cardexample3.jpg" alt="meow">
+                    </figure>
+                    <div class="card-content">
+                        <h2>Tome of knowledge</h2>
+                        <p>Extra material for the current topic (mentors will do it within 2 weeks)</p>
+                    </div>
+                </a>
+            </article>
+            <article class="card">
+                <a href="#">
+                    <figure class="thumbnail">
+                        <img src="cardexample3.jpg" alt="meow">
+                    </figure>
+                    <div class="card-content">
+                        <h2>Transform mentors</h2>
+                        <p>All mentors in the room should dress up funny (or pirates) for the specified day (which is at least 2 days ahead)</p>
+                    </div>
+                </a>
+            </article>
+            <article class="card">
+                <a href="#">
+                    <figure class="thumbnail">
+                        <img src="cardexample3.jpg" alt="meow">
+                    </figure>
+                    <div class="card-content">
+                        <h2>Teleport</h2>
+                        <p>The whole room goes to an off-school program instead for a specified day (which is at least 2 weeks ahead)</p>
+                    </div>
+                </a>
+            </article>
+            <style class="hover"></style>
+        </section>
+
+    </div>
+</main>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+</body>
+</html>

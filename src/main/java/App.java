@@ -1,4 +1,5 @@
 import com.sun.net.httpserver.HttpServer;
+import handlers.StudentLoginPageHandler;
 import handlers.loginHandler;
 import handlers.testHandler;
 
@@ -13,7 +14,7 @@ public class App {
         // set routes
 
         server.createContext("/cyberStore", new loginHandler());
-        server.createContext("/cyberStore/student", new loginHandler());
+        server.createContext("/cyberStore/student", new StudentLoginPageHandler());
 
         server.setExecutor(null); // creates a default executor
 

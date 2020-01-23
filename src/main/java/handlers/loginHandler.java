@@ -42,7 +42,7 @@ public class loginHandler implements HttpHandler {
                         System.out.println("you log in as Student");
 //                        StudentController studentController = new StudentController();
 //                        studentController.run(user);
-                        httpExchange.getResponseHeaders().set("Location", "cyberStore/student");
+                        httpExchange.getResponseHeaders().add("Location", "cyberStore/student");
                         httpExchange.sendResponseHeaders(303, 0);
                     } else if (user.getClass().getSimpleName().equals("Mentor")){
                         System.out.println("you log in as Mentor");
