@@ -47,31 +47,40 @@
 
 
 <div id="front">
-    <div class="form-action"><button type="submit" class="btn btn-primary text-center">Add Mentor</button>
-    </div>
-    <form method="GET">
+
+
+        <form method="POST">
 
         <div class="form-group">
-            <label for="inputLogin">Login</label>
+            <label for="inputLogin">Login</label></div>
+        <div class="form-group"><label for="logindb" id="previoustext">Previous Login: {{ mentor.login }}</label>
             <input type="text" class="form-control" id="login" name="login">
         </div>
         <div class="form-group">
-            <label for="inputPassword">Password</label>
+            <label for="inputPassword">Password</label></div>
+            <div class="form-group">
+            <label for="passworddb" id="previoustext">Previous password: {{ mentor.password }}</label>
             <input type="password" class="form-control" id="password" name="password">
         </div>
         <div class="form-group">
-            <label for="inputFirstName">First Name</label>
+            <label for="inputFirstName">First Name</label></div>
+            <div class="form-group">
+            <label for="firstnamedb" id="previoustext">Previous first name: {{ mentor.firstname }}</label>
             <input type="text" class="form-control" id="firstName" name="firstName">
         </div>
         <div class="form-group">
-            <label for="inputLastName">Last Name</label>
+            <label for="inputLastName">Last Name</label></div>
+            <div class="form-group">
+            <label for="lastnamedb" id="previoustext">Previous last name: {{ mentor.lastname }}</label>
             <input type="text" class="form-control" id="lastName" name="lastName">
         </div>
-
-
+        <div class="form-action">
+            <button type="submit" class="btn btn-primary text-center" value="Submit">Edit Mentor</button>
+        </div>
     </form>
-
 </div>
+
+
 </body>
 <footer>
 

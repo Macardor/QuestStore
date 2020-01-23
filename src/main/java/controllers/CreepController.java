@@ -28,7 +28,7 @@ public class CreepController implements BaseController {
                 creepDAOImplementation.showAllMentors();
                 break;
             case "2":
-                creepDAOImplementation.addMentor();
+                //creepDAOImplementation.addMentor();
                 //StaticUi.addMentor();
                 break;
             case "3":

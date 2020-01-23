@@ -36,6 +36,7 @@ public class App {
         server.createContext("/creep", new CreepHandler());
         server.createContext("/creep/showMentors", new ShowMentorsHandler());
         server.createContext("/creep/addMentor", new AddMentorHandler());
+        server.createContext("/cyberStore/creep/editMentor", new EditMentorHandler());
 
         server.setExecutor(null); // creates a default executor
 
