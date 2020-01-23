@@ -45,10 +45,10 @@ public class RemoveItemHandler implements HttpHandler {
             model.with("itemList", itemList);
 
             response = template.render(model);
-            itemService.turnOffItem(Integer.parseInt(inputs.get("userId").toString()));
+            itemService.turnOffItem(Integer.parseInt(inputs.get("itemId").toString()));
             httpExchange.getResponseHeaders().set("Location", "/mentor/remove-item" );
             httpExchange.sendResponseHeaders(303,0);
-            System.out.println(Integer.parseInt(inputs.get("userId").toString()));
+            System.out.println(Integer.parseInt(inputs.get("itemId").toString()));
         }
         httpExchange.sendResponseHeaders(200, response.length());
         OutputStream os = httpExchange.getResponseBody();

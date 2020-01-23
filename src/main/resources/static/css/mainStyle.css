@@ -143,3 +143,27 @@ label{
     padding: 0;
 }
 
+#mentor-menu{
+    color: #d0d0d0;
+    background-color: rgba(16, 16, 33, 0.5);
+    text-align: center;
+    padding: 10% 250px 250px 300px;
+
+}
+.mentor-table{
+    background-color: rgba(16, 16, 33, 0.5);
+    margin: 1%;
+
+}
+.mentor-thread{
+    font-size: 20px;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    border: deeppink solid;
+    -webkit-text-stroke: 1px #f008b7;
+
+}
+.mentor-thread:hover{
+    -webkit-filter: drop-shadow(2px 2px 20px #f008b7);
+    z-index: 20;
+}

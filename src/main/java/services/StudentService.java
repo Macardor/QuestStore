@@ -81,4 +81,12 @@ public class StudentService {
     public List<Student> getActiveStudentsList() {
         return studentDAOImplementation.getActiveStudentsList();
     }
+
+    public int getUserDetailsId(Student student){
+        return studentDAOImplementation.getUserDetailsId(student);
+    }
+
+    public void editStudent(Student student, int studentDetailsId) {
+        studentDAOImplementation.editStudent(student, studentDetailsId);
+    }
 }

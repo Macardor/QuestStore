@@ -1,16 +1,15 @@
 import com.sun.net.httpserver.HttpServer;
 import handlers.*;
-import handlers.mentor.coincubator.StudentCoincubatorHandler;
 import handlers.mentor.quests.AddQuestHandler;
+import handlers.mentor.quests.QuestListHandler;
+import handlers.mentor.quests.QuestMenuHandler;
 import handlers.mentor.quests.RemoveQuestHandler;
 import handlers.mentor.store.AddItemHandler;
 import handlers.mentor.store.RemoveItemHandler;
 import handlers.StudentCoincubatorHandler;
 import handlers.mentor.store.StoreHandler;
-import handlers.mentor.students.AddStudentHandler;
-import handlers.mentor.students.PupilsListHandler;
-import handlers.mentor.students.RemoveStudentHandler;
-import handlers.mentor.students.StudentMenuHandler;
+import handlers.mentor.store.StoreMenuHandler;
+import handlers.mentor.students.*;
 
 import java.net.InetSocketAddress;
 
@@ -39,6 +38,10 @@ public class App {
         server.createContext("/mentor/add-item", new AddItemHandler());
         server.createContext("/mentor/remove-item", new RemoveItemHandler());
         server.createContext("/mentor/students", new PupilsListHandler());
+        server.createContext("/mentor/edit-student", new EditStudentHandler());
+        server.createContext("/mentor/quest-menu", new QuestMenuHandler());
+        server.createContext("/mentor/quest-list", new QuestListHandler());
+        server.createContext("/mentor/store-menu", new StoreMenuHandler());
 
 
         //Student handler

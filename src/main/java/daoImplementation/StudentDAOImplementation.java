@@ -218,27 +218,20 @@ public class StudentDAOImplementation {
 
     public int getUserDetailsId(Student student) {
         String orderToSql = "SELECT * FROM users WHERE id = ?";
+        int userDetailId = 0;
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
             preparedStatement.setInt(1, student.getId());
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                int userDetailId = resultSet.getInt("user_details_id");
-                return userDetailId;
+                userDetailId = resultSet.getInt("user_details_id");
             }
             preparedStatement.executeQuery();
+            preparedStatement.close();
         } catch (SQLException e) {
             System.out.println(e);
-        } finally {
-            try {
-                preparedStatement.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-
-            }
-
         }
-        return 0;
+        return userDetailId;
     }
 
     public int getStudentId(User student) {
