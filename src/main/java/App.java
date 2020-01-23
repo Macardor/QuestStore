@@ -1,8 +1,5 @@
 import com.sun.net.httpserver.HttpServer;
-import handlers.ManagePupilsHandler;
-import handlers.MentorHandler;
-import handlers.StoreHandler;
-import handlers.loginHandler;
+import handlers.*;
 
 import java.net.InetSocketAddress;
 
@@ -18,6 +15,7 @@ public class App {
         server.createContext("/mentor/homepage", new MentorHandler());
         server.createContext("/mentor/store", new StoreHandler());
         server.createContext("/mentor/students", new ManagePupilsHandler());
+        server.createContext("/mentor/add-student", new AddStudentHandler());
 
         server.setExecutor(null); // creates a default executor
 

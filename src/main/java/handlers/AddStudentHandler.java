@@ -10,7 +10,6 @@ import services.StudentService;
 import java.io.*;
 import java.net.URLDecoder;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class AddStudentHandler implements HttpHandler {
@@ -18,17 +17,14 @@ public class AddStudentHandler implements HttpHandler {
     public void handle(HttpExchange httpExchange) throws IOException {
         StudentService studentService = new StudentService();
         String method = httpExchange.getRequestMethod();
-        List<Student> studentList = studentService.getStudentList();
         System.out.println(method);
 
         String response = "";
 
 
         if (method.equals("GET")) {
-            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/AddStudentForm.twig");
+            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentor/add-student.twig");
             JtwigModel model = JtwigModel.newModel();
-
-            model.with("studentList", studentList);
 
             response = template.render(model);
         }
@@ -40,14 +36,17 @@ public class AddStudentHandler implements HttpHandler {
 
             Map inputs = parseFormData(formData);
 
-            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/submit.twig");
+            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentor/add-student.twig");
             JtwigModel model = JtwigModel.newModel();
             model.with("login", inputs.get("login"));
             model.with("password", inputs.get("password"));
-            model.with("firstName", inputs.get("firstname"));
-            model.with("lastName", inputs.get("lastname"));
+            model.with("firstName", inputs.get("firstName"));
+            model.with("lastName", inputs.get("lastName"));
             response = template.render(model);
+            System.out.println(inputs.get("login").toString() + inputs.get("password").toString() + inputs.get("firstname").toString() + inputs.get("lastname").toString());
             studentService.addNewStudent(new Student(inputs.get("login").toString(), inputs.get("password").toString(), 1, true, inputs.get("firstname").toString(), inputs.get("lastname").toString()));
+
+
         }
         httpExchange.sendResponseHeaders(200, response.length());
         OutputStream os = httpExchange.getResponseBody();
