@@ -172,4 +172,18 @@ create table creeps
 alter table creeps
     owner to postgres;
 
+create table cookies
+(
+    id          serial not null
+        constraint cookies_pk
+            primary key,
+    sesion_id   text,
+    expire_date date,
+    user_id     integer
+        constraint cookies_users_id_fk
+            references users
+);
+
+alter table cookies
+    owner to postgres;
 
