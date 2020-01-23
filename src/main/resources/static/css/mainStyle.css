@@ -7,6 +7,8 @@ body
 {
     background-image: url("../../templates/background-image.jpg");
     font-family: 'Quantico', sans-serif;
+    background-attachment: fixed !important;
+    background-size:cover !important;
 }
 
 #menu
@@ -19,6 +21,9 @@ body
 /*navbar settings*/
 .navbar.navbar-expand-sm.navbar-light.bg-dark{
     background: rgba(12, 12, 13, 0.8) !important;
+    position: fixed !important;
+    width: 100% !important;
+    z-index: 50 !important;
 }
 
 .navbar.navbar-expand-sm.navbar-light.bg-dark a{
