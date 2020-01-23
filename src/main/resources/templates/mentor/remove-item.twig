@@ -41,24 +41,33 @@
     </div>
 </nav>
 
+
 <div id="front">
+    <table style="width: 100%">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Description</th>
+            <th>Is active</th>
+        </tr>
+        {% for item in itemList %}
+            <tr>
+                <td>{{ item.id }}</td>
+                <td>{{ item.name }}</td>
+                <td>{{ item.price }}</td>
+                <td>{{ item.description }}</td>
+                <td>{{ item.isactive }}</td>
+            </tr>
+        {% endfor %}
+    </table>
     <form method="POST">
-            <div class="form-group">
-                <label for="login">Login</label>
-                <input type="text" class="form-control" id="login" name="login" placeholder="login...">
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="text"  class="form-control"id="password" name="password" placeholder="password...">
-            </div>
-            <div class="form-group">
-                <label for="firstname">First Name</label>
-                <input type="text" class="form-control" id="firstname" name="firstname" placeholder="first name...">            </div>
-            <div class="form-group">
-                <label for="inputLastName">Last Name</label>
-                <input type="text"  class="form-control"id="lastname" name="lastname" placeholder="Your last name...">
-            </div>
-        <div class="form-action"><button type="submit" class="btn btn-primary text-center">Add Student</button>
+        <div class="form-group">
+            <label for="itemId">Identification number</label>
+            <input type="text" id="itemId" name="itemId" placeholder="Type id...">
+        </div>
+        <div class="form-action">
+            <button type="submit" class="btn btn-primary text-center">Delete Item</button>
         </div>
 
     </form>

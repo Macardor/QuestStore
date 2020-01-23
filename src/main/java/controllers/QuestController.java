@@ -14,13 +14,13 @@ public class QuestController {
         String option = scanner.next();
         switch (option){
             case "1":
-                qs.addNewQuest();
+//                qs.addNewQuest();
                 break;
             case "2":
                 qs.editQuest();
                 break;
             case "3":
-                qs.deleteQuest();
+//                qs.deleteQuest();
                 break;
             case "4":
                 qs.getQuestList();
