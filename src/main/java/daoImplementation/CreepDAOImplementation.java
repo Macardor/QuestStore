@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class CreepDAOImplementation {
 
@@ -42,22 +43,39 @@ public class CreepDAOImplementation {
         }return mentorsList;
     }
 
-    public void addMentor(Mentor mentor) {
+    public Mentor addMentor() {
         String insertIntoTwoTables = "WITH insertIntoUserDetails AS (INSERT INTO user_details (login, password, first_name, last_name) " +
                 "VALUES (?, ?, ?, ?) RETURNING id), inserIntoUsers AS (INSERT INTO users (user_type_id, is_active, user_details_id) " +
                 "VALUES (2, 'true', (SELECT id FROM insertIntoUserDetails)) RETURNING id) INSERT INTO mentors (user_id) VALUES ((SELECT id FROM inserIntoUsers))";
+        Scanner scanner = new Scanner(System.in);
+        List<Mentor> mentorsList = new ArrayList<>();
+        Mentor mentor = null;
         try {
+
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(insertIntoTwoTables);
 
-            preparedStatement.setString(1, mentor.getLogin());
-            preparedStatement.setString(2, mentor.getPassword());
-            preparedStatement.setString(3, mentor.getFirstname());
-            preparedStatement.setString(4, mentor.getLastname());
+            System.out.println("Insert mentor's login: ");
+            String login = scanner.next();
+            System.out.println("Insert mentor's password: ");
+            String password = scanner.next();
+            System.out.println("Insert mentor's name: ");
+            String firstName = scanner.next();
+            System.out.println("Insert mentor's last name: ");
+            String lastName = scanner.next();
+            int studentTypeId = 2;
+            boolean isActive = true;
+            mentor = new Mentor(login, password, studentTypeId, isActive, firstName, lastName);
+            mentorsList.add(mentor);
+            preparedStatement.setString(1, login);
+            preparedStatement.setString(2, password);
+            preparedStatement.setString(3, firstName);
+            preparedStatement.setString(4, lastName);
             preparedStatement.executeQuery();
             preparedStatement.close();
+
         } catch (Exception e) {
             System.out.println(e);
-        }
+        }return mentor;
     }
 
     public void editMentor(Mentor mentor) {

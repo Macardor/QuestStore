@@ -291,7 +291,7 @@ public class StaticUi {
         boolean isActive = true;
         Mentor mentor = new Mentor(login, password, studentTypeId, isActive, firstName, lastName);
         CreepDAOImplementation creepDAOImplementation = new CreepDAOImplementation();
-        creepDAOImplementation.addMentor(mentor);
+        //creepDAOImplementation.addMentor(mentor);
         mentorsList.add(mentor);
         return mentorsList;
     }

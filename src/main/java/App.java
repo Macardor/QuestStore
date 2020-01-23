@@ -1,6 +1,5 @@
 import com.sun.net.httpserver.HttpServer;
-import handlers.StudentLoginPageHandler;
-import handlers.loginHandler;
+import handlers.*;
 
 import java.net.InetSocketAddress;
 

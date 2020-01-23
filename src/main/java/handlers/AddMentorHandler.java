@@ -18,9 +18,9 @@ public class AddMentorHandler implements HttpHandler {
 
         String method = httpExchange.getRequestMethod();
         CreepDAOImplementation creepDAOImplementation = new CreepDAOImplementation();
-        //List<Mentor> addMentor = StaticUi.addMentor();
+        //creepDAOImplementation.addMentor();
 
-        if (method.equals("POST")){
+        if (method.equals("GET")){
             JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/addMentor.twig");
             JtwigModel model = JtwigModel.newModel();
             //model.with("addMentor", creepDAOImplementation.addMentor());
