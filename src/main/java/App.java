@@ -1,5 +1,6 @@
 import com.sun.net.httpserver.HttpServer;
-import handlers.*;
+import handlers.StudentLoginPageHandler;
+import handlers.loginHandler;
 
 import java.net.InetSocketAddress;
 
@@ -12,7 +13,7 @@ public class App {
         // set routes
 
         server.createContext("/cyberStore", new loginHandler());
-        server.createContext("/cyberStore/student", new loginHandler());
+        server.createContext("/cyberStore/student", new StudentLoginPageHandler());
         server.createContext("/cyberStore/creep", new CreepHandler());
         server.createContext("/cyberStore/creep/showMentors", new ShowMentorsHandler());
         server.createContext("/cyberStore/creep/addMentor", new AddMentorHandler());
