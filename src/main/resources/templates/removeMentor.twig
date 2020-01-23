@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Quest Store Creep</title>
+    <title>Quest Store Mentor</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <link rel="stylesheet" type="text/css" href="http://localhost:63342/QuestStore/static/css/mainStyle.css">
     <link href="https://fonts.googleapis.com/css?family=Quantico:400,700&display=swap" rel="stylesheet">
@@ -47,27 +47,32 @@
 
 
 <div id="front">
-    <div class="form-action"><button type="submit" class="btn btn-primary text-center">Add Mentor</button>
-    </div>
-    <form method="GET">
-
+    <table style="width: 100%">
+        <tr>
+            <th>ID</th>
+            <th>Login</th>
+            <th>Password</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+        </tr>
+        {% for mentor in mentorList %}
+            <tr>
+                <td>{{ mentor.id }}</td>
+                <td>{{ mentor.login }}</td>
+                <td>{{ mentor.password }}</td>
+                <td>{{ mentor.firstname }}</td>
+                <td>{{ mentor.lastname }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <form method="POST">
         <div class="form-group">
-            <label for="inputLogin">Login</label>
-            <input type="text" class="form-control" id="login" name="login">
+            <label for="userId">Identification number</label>
+            <input type="text" id="userId" name="userId" placeholder="Type id...">
         </div>
-        <div class="form-group">
-            <label for="inputPassword">Password</label>
-            <input type="password" class="form-control" id="password" name="password">
+        <div class="form-action">
+            <button type="submit" class="btn btn-primary text-center">Delete Mentor</button>
         </div>
-        <div class="form-group">
-            <label for="inputFirstName">First Name</label>
-            <input type="text" class="form-control" id="firstName" name="firstName">
-        </div>
-        <div class="form-group">
-            <label for="inputLastName">Last Name</label>
-            <input type="text" class="form-control" id="lastName" name="lastName">
-        </div>
-
 
     </form>
 
