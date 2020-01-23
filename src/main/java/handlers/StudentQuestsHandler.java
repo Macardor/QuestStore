@@ -30,11 +30,14 @@ public class StudentQuestsHandler implements HttpHandler {
         String method = httpExchange.getRequestMethod();
         QuestDAOImplementation questDAOImplementation = new QuestDAOImplementation();
         List<Quest> questsList = questDAOImplementation.getAllQuestsNotDoneByStudent((Student) user);
+        StudentDAOImplementation studentDAOImplementation = new StudentDAOImplementation();
+        int coins = studentDAOImplementation.showUserCoins(user.getId());
 
         if (method.equals("GET")){
             JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/student/quests.twig");
             JtwigModel model = JtwigModel.newModel();
             model.with("questsList", questsList);
+            model.with("coins", coins);
             String response = template.render(model);
 
             httpExchange.sendResponseHeaders(200, response.length());

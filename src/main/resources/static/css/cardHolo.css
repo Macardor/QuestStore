@@ -28,9 +28,6 @@
     transform: translate3d(0%, 0%, -400px);
 
 }
-card:hover {
-     z-index: 2;
- }
 
 .card:before,
 .card:after {
@@ -107,4 +104,20 @@ card:hover {
         opacity: 0;
         background-position: 0% 0%;
     }
+}
+
+.card-button{
+    width: 8em;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 3;
+}
+
+.card-input{
+    width: 10em;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 3;
 }

@@ -42,10 +42,10 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item" href="#">Profile</a>
-                    <a class="dropdown-item" href="#">Example</a>
-                    <a class="dropdown-item" href="#">Inventory</a>
+                    <a class="dropdown-item" href="#">Log Out</a>
                 </div>
             </li>
+            <h2>Coins: {{ coins }}</h2>
         </ul>
     </div>
 </nav>
@@ -65,6 +65,7 @@
                             <h2>Price: {{ item.price }} </h2>
                             <p>{{ item.description }}</p>
                         </div>
+                        <button type="button" class="card-button" onclick="payCoins()">Pay up</button>
                     </a>
                 </article>
             {% endfor %}
