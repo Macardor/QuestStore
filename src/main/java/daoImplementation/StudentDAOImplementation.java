@@ -5,14 +5,13 @@ import models.Coincubator;
 import models.Student;
 import models.User;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
-import java.sql.Date;
 
 public class StudentDAOImplementation {
 
@@ -71,7 +70,7 @@ public class StudentDAOImplementation {
     public List<Student> getStudentsList() {
         String orderToSql = "SELECT * FROM users " +
                 "join user_details " +
-                "on users.user_details_id = user_details.id WHERE users.user_type_id = ?";
+                "on users.user_details_id = user_details.id WHERE users.user_type_id = ? ORDER BY user_details.id ";
         List<Student> studentList = new ArrayList<>();
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
@@ -103,7 +102,7 @@ public class StudentDAOImplementation {
     public List<Student> getActiveStudentsList() {
         String orderToSql = "SELECT * FROM users " +
                 "join user_details " +
-                "on users.user_details_id = user_details.id WHERE users.user_type_id = ? and users.is_active = ?";
+                "on users.user_details_id = user_details.id WHERE users.user_type_id = ? and users.is_active = ? ORDER BY user_details.id ";
         List<Student> studentList = new ArrayList<>();
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
@@ -137,7 +136,7 @@ public class StudentDAOImplementation {
         Student student = null;
         String orderToSql = "SELECT * FROM users " +
                 "join user_details " +
-                "on users.user_details_id = user_details.id WHERE users.user_type_id = ? and users.id = ?";
+                "on users.user_details_id = user_details.id WHERE users.user_type_id = ? and users.id = ? ";
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
             preparedStatement.setInt(1, Student.userType);

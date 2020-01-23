@@ -24,7 +24,7 @@ public class MentorController implements BaseController {
 //                    ss.addNewStudent();
                     break;
                 case "2":
-                    ss.deleteStudent();
+//                    ss.deleteStudent();
                     break;
                 case "3":
                     StaticUi.displayAllStudents(ss.getStudentList());
