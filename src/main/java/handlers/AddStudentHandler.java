@@ -40,13 +40,11 @@ public class AddStudentHandler implements HttpHandler {
             JtwigModel model = JtwigModel.newModel();
             model.with("login", inputs.get("login"));
             model.with("password", inputs.get("password"));
-            model.with("firstName", inputs.get("firstName"));
-            model.with("lastName", inputs.get("lastName"));
+            model.with("firstName", inputs.get("firstname"));
+            model.with("lastName", inputs.get("lastname"));
             response = template.render(model);
             System.out.println(inputs.get("login").toString() + inputs.get("password").toString() + inputs.get("firstname").toString() + inputs.get("lastname").toString());
             studentService.addNewStudent(new Student(inputs.get("login").toString(), inputs.get("password").toString(), 1, true, inputs.get("firstname").toString(), inputs.get("lastname").toString()));
-
-
         }
         httpExchange.sendResponseHeaders(200, response.length());
         OutputStream os = httpExchange.getResponseBody();
