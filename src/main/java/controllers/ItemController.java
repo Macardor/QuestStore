@@ -20,7 +20,7 @@ class ItemController {
                 itemService.editItemSubmenu();
                 break;
             case "3":
-                itemService.turnOffItem();
+//                itemService.turnOffItem();
                 break;
             case "4":
                 itemService.getItemsList();

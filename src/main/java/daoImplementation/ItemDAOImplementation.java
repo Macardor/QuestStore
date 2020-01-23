@@ -96,6 +96,31 @@ public class ItemDAOImplementation{
         }
         return itemList;
     }
+    public List<Item> getActiveItemsList() {
+        PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
+        String orderForSql = ("SELECT * FROM items WHERE is_active = true");
+        List<Item> itemList = new ArrayList<>();
+        try{
+            ps = postgreSQLJDBC.connect().prepareStatement(orderForSql);
+            resultSet = ps.executeQuery();
+            while (resultSet.next()){
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                int price = resultSet.getInt("price");
+                String description = resultSet.getString("description");
+                boolean isActive = resultSet.getBoolean("is_active");
+
+//                System.out.println(id + " | " + name + " | " + price + " | " + description + " | " + isActive);  //test method
+
+                Item item = new Item(id, name, price, description, isActive);
+                itemList.add(item);
+            }
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return itemList;
+    }
 
     public List<Item> getUserItemsList(int userId) {
         String orderForSql = ("SELECT i.id, i.name, i.price, i.description, i.is_active FROM items as i join user_items ui on i.id = ui.item_id join students s on ui.student_id = s.id join users u on s.user_id = u.id where u.id = ? and ui.is_available = true ;");//TODO
