@@ -1,4 +1,4 @@
-package handlers;
+package handlers.mentor.students;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 
-public class ManagePupilsHandler implements HttpHandler {
+public class PupilsListHandler implements HttpHandler {
     StudentService studentService = new StudentService();
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
