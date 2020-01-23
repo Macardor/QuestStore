@@ -23,7 +23,7 @@
                 <a class="nav-link" href="../student/store">STORE <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">INVENTORY</a>
+                <a class="nav-link" href="../student/inventory">INVENTORY</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="../student/coincubator">COINcubator</a>
@@ -54,20 +54,22 @@
 <main class="main-area">
     <div class="centered">
         <section class="cards">
-            {% for quest in questsList %}
-                <article class="card">
-                    <a href="#">
-                        <figure class="thumbnail">
-                            <img src="http://localhost:63342/QuestStore/templates/cardexample3.jpg" alt="meow">
-                        </figure>
-                        <div class="card-content">
-                            <h2>{{ quest.name }}</h2>
-                            <h2>Reward: {{ quest.reward }} </h2>
-                            <p>{{ quest.description }}</p>
-                        </div>
-                    </a>
-                </article>
-            {% endfor %}
+            {% if (questsList != null) %}
+                {% for quest in questsList %}
+                    <article class="card">
+                        <a href="#">
+                            <figure class="thumbnail">
+                                <img src="http://localhost:63342/QuestStore/templates/cardexample3.jpg" alt="meow">
+                            </figure>
+                            <div class="card-content">
+                                <h2>{{ quest.name }}</h2>
+                                <h2>Reward: {{ quest.reward }} </h2>
+                                <p>{{ quest.description }}</p>
+                            </div>
+                        </a>
+                    </article>
+                {% endfor %}
+            {% endif %}
             <style class="hover"></style>
         </section>
     </div>

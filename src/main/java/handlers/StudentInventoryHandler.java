@@ -2,10 +2,9 @@ package handlers;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import daoImplementation.QuestDAOImplementation;
-import daoImplementation.StudentDAOImplementation;
+import daoImplementation.ItemDAOImplementation;
 import helpers.CookieHandler;
-import models.Quest;
+import models.Item;
 import models.Student;
 import models.User;
 import org.jtwig.JtwigModel;
@@ -15,7 +14,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 
-public class StudentQuestsHandler implements HttpHandler {
+public class StudentInventoryHandler implements HttpHandler {
     User user = null;
     CookieHandler cookieHandler = new CookieHandler();
 
@@ -28,13 +27,13 @@ public class StudentQuestsHandler implements HttpHandler {
         }
 
         String method = httpExchange.getRequestMethod();
-        QuestDAOImplementation questDAOImplementation = new QuestDAOImplementation();
-        List<Quest> questsList = questDAOImplementation.getAllQuestsNotDoneByStudent((Student) user);
+        ItemDAOImplementation itemDAOImplementation = new ItemDAOImplementation();
+        List<Item> userItemsList = itemDAOImplementation.getUserItemsList(user.getId());
 
         if (method.equals("GET")){
-            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/student/quests.twig");
+            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/student/inventory.twig");
             JtwigModel model = JtwigModel.newModel();
-            model.with("questsList", questsList);
+            model.with("userItemsList", userItemsList);
             String response = template.render(model);
 
             httpExchange.sendResponseHeaders(200, response.length());
