@@ -29,7 +29,7 @@ public class loginHandler implements HttpHandler {
                 httpExchange.sendResponseHeaders(303, 0);
             }
             else if(user.getUserType() == 2){
-                httpExchange.getResponseHeaders().add("Location", "/mentor");
+                httpExchange.getResponseHeaders().add("Location", "/mentor/homepage");
                 httpExchange.sendResponseHeaders(303, 0);
             }else{
                 httpExchange.getResponseHeaders().add("Location", "/creep");
@@ -63,13 +63,13 @@ public class loginHandler implements HttpHandler {
                     } else if (user.getClass().getSimpleName().equals("Mentor")){
                         System.out.println("you log in as Mentor");
                         cookieHandler.setCookieNewExpireDateToActiveSession(httpExchange);
-
-                        httpExchange.getResponseHeaders().add("Location", "cyberStore/mentor");
+                        cookieHandler.setUserIdToCookieInDB(user, httpExchange);
+                        httpExchange.getResponseHeaders().add("Location", "/mentor/homepage");
                         httpExchange.sendResponseHeaders(303, 0);
                     }else {
                         System.out.println("you log in as Creep");
                         cookieHandler.setCookieNewExpireDateToActiveSession(httpExchange);
-
+                        cookieHandler.setUserIdToCookieInDB(user, httpExchange);
                         httpExchange.getResponseHeaders().set("Location", "cyberStore/mentor");
                         httpExchange.sendResponseHeaders(303, 0);
                     }
