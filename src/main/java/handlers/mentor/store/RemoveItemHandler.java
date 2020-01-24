@@ -2,8 +2,10 @@ package handlers.mentor.store;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import helpers.CookieHandler;
 import models.Item;
 import models.Student;
+import models.User;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 import services.ItemService;
@@ -16,8 +18,17 @@ import java.util.List;
 import java.util.Map;
 
 public class RemoveItemHandler implements HttpHandler {
+    User user = null;
+    CookieHandler cookieHandler = new CookieHandler();
+
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
+        user = cookieHandler.cookieChecker(httpExchange);
+        if(user == null || user.getUserType() != 2){
+            httpExchange.getResponseHeaders().set("Location", "/login");
+            httpExchange.sendResponseHeaders(303, 0);
+        }
+
         ItemService itemService = new ItemService();
         String method = httpExchange.getRequestMethod();
         System.out.println(method);
