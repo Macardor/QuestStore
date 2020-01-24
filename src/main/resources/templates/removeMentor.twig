@@ -15,16 +15,19 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item active">
-                <a class="nav-link" href="../mentor/store-menu" >STORE <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/creep/showMentors">SHOW MENTORS <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="../mentor/coincubators" >COINCUBATORS</a>
+                <a class="nav-link" href="/creep/addMentor">ADD MENTOR</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="../mentor/students-menu" >STUDENTS</a>
+                <a class="nav-link" href="/cyberStore/creep/editMentor">EDIT MENTOR</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="../mentor/quest-menu" >QUEST</a>
+                <a class="nav-link" href="/cyberStore/creep/removeMentor">REMOVE MENTOR</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/creep">HOME PAGE</a>
             </li>
         </ul>
         <ul class="navbar-nav ml-auto">
@@ -34,7 +37,8 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item" href="#">Profile</a>
-                    <a class="dropdown-item" href="../loginPage.twig">Logout</a>
+                    <a class="dropdown-item" href="#">Example</a>
+                    <a class="dropdown-item" href="#">Inventory</a>
                 </div>
             </li>
         </ul>
@@ -46,28 +50,28 @@
     <table style="width: 100%">
         <tr>
             <th>ID</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Reward</th>
-            <th>Is active</th>
+            <th>Login</th>
+            <th>Password</th>
+            <th>First Name</th>
+            <th>Last Name</th>
         </tr>
-        {% for quest in questList %}
+        {% for mentor in mentorList %}
             <tr>
-                <td>{{ quest.id }}</td>
-                <td>{{ quest.name }}</td>
-                <td>{{ quest.description }}</td>
-                <td>{{ quest.reward }}</td>
-                <td>{{ quest.isActive }}</td>
+                <td>{{ mentor.id }}</td>
+                <td>{{ mentor.login }}</td>
+                <td>{{ mentor.password }}</td>
+                <td>{{ mentor.firstname }}</td>
+                <td>{{ mentor.lastname }}</td>
             </tr>
         {% endfor %}
     </table>
     <form method="POST">
         <div class="form-group">
-            <label for="questId">Identification number</label>
-            <input type="text" id="questId" name="questId" placeholder="Type id...">
+            <label for="userId">Identification number</label>
+            <input type="text" id="userId" name="userId" placeholder="Type id...">
         </div>
         <div class="form-action">
-            <button type="submit" class="btn btn-primary text-center">Delete Item</button>
+            <button type="submit" class="btn btn-primary text-center">Delete Mentor</button>
         </div>
 
     </form>

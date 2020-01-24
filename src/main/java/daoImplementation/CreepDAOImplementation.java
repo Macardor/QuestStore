@@ -18,7 +18,7 @@ public class CreepDAOImplementation {
     ResultSet resultSet = null;
 
     public List<User> showAllMentors() {
-        String orderToSql = "SELECT * FROM user_details JOIN users on user_details.id = users.user_details_id WHERE user_type_id = 2 ORDER BY user_details.id ";
+        String orderToSql = "SELECT * FROM users JOIN user_details on user_details.id = users.user_details_id WHERE user_type_id = 2 and users.is_active = true ORDER BY users.id ";
         List<User> mentorsList = new ArrayList<>();
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
