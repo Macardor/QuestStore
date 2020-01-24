@@ -127,4 +127,22 @@ public class CookieDAOImplementation {
             System.out.println(e);
         }
     }
+
+    public void setCookieForLogout(String cookieSessionId) {
+        PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
+        String orderForSql = ("UPDATE cookies SET user_id = ?  WHERE sesion_id = ? ");
+
+        try {
+            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderForSql);
+
+            preparedStatement.setDate(1, null);
+
+            preparedStatement.setString(2, cookieSessionId);
+
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
 }
