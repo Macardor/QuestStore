@@ -2,35 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Quest Store Login</title>
+    <title>Quest Store Mentor</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <link rel="stylesheet" type="text/css" href="http://localhost:63342/QuestStore/static/css/mainStyle.css">
     <link href="https://fonts.googleapis.com/css?family=Quantico:400,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/c5e394a33c.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" type="text/css" href="http://localhost:63342/QuestStore/static/css/storeStyle.css">
 </head>
 
-
-<!--MENU BAR-->
 <body>
-
 <nav class="navbar navbar-expand-sm navbar-light bg-dark">
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item active">
-                <a class="nav-link" href="../student/store">STORE <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="../mentor/store-menu" >STORE <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="../student/inventory">INVENTORY</a>
+                <a class="nav-link" href="../mentor/coincubators" >COINCUBATORS</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="../student/coincubator">COINcubator</a>
+                <a class="nav-link" href="../mentor/students-menu" >STUDENTS</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href=../student/quests">QUEST</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="../student/transactions">TRANSACTIONS</a>
+                <a class="nav-link" href="../mentor/quest-menu" >QUEST</a>
             </li>
         </ul>
         <ul class="navbar-nav ml-auto">
@@ -40,14 +34,46 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item" href="#">Profile</a>
-                    <a class="dropdown-item" href="#">Log Out</a>
+                    <a class="dropdown-item" href="../loginPage.twig">Logout</a>
                 </div>
             </li>
-            <h2>Coins: {{ coins }}</h2>
         </ul>
     </div>
 </nav>
+
+
 <div id="front">
-    <h2>Nope</h2>
+    <table style="width: 100%">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Reward</th>
+            <th>Is active</th>
+        </tr>
+        {% for quest in questList %}
+            <tr>
+                <td>{{ quest.id }}</td>
+                <td>{{ quest.name }}</td>
+                <td>{{ quest.description }}</td>
+                <td>{{ quest.reward }}</td>
+                <td>{{ quest.isActive }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <form method="POST">
+        <div class="form-group">
+            <label for="questId">Identification number</label>
+            <input type="text" id="questId" name="questId" placeholder="Type id...">
+        </div>
+        <div class="form-action">
+            <button type="submit" class="btn btn-primary text-center">Delete Item</button>
+        </div>
+
+    </form>
+
 </div>
 </body>
+<footer>
+
+</footer>

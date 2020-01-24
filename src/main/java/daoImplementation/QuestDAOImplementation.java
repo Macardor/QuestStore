@@ -16,7 +16,7 @@ public class QuestDAOImplementation{
     PreparedStatement ps = null;
     public void addQuest(Quest quest) {
 
-        String sqlQuery = "INSERT INTO quests (name, description, reward) VALUES(?, ?, ?)";
+        String sqlQuery = "INSERT INTO quests (name, description, reward, is_active) VALUES(?, ?, ?, ?)";
 
         try {
             ps = postgreSQLJDBC.connect().prepareStatement(sqlQuery);
@@ -24,6 +24,7 @@ public class QuestDAOImplementation{
             ps.setString(1, quest.getName());
             ps.setString(2, quest.getDescription());
             ps.setInt(3, quest.getReward());
+            ps.setBoolean(4, quest.isActive());
 
             ps.executeUpdate();
             ps.close();
@@ -72,6 +73,28 @@ public class QuestDAOImplementation{
 
     public List<Quest> getAllQuests(){
         String orderForSql = "SELECT * FROM quests";
+        List<Quest> quests = new ArrayList<>();
+        try{
+            ps = postgreSQLJDBC.connect().prepareStatement(orderForSql);
+            //ps.setInt(1, id);
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()){
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                String description = resultSet.getString("description");
+                int reward = resultSet.getInt("reward");
+                boolean isActive = resultSet.getBoolean("is_active");
+                Quest quest = new Quest(id, name, description, reward, isActive);
+                quests.add(quest);
+            }
+            ps.close();
+        }catch (SQLException e){
+            System.out.println(e);
+        }
+        return quests;
+    }
+    public List<Quest> getAllActiveQuests(){
+        String orderForSql = "SELECT * FROM quests where is_active = true; ";
         List<Quest> quests = new ArrayList<>();
         try{
             ps = postgreSQLJDBC.connect().prepareStatement(orderForSql);

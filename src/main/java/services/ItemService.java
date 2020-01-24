@@ -48,8 +48,8 @@ public class ItemService {
         itemDAOImplementation.editItem(item);
     }
 
-    public void turnOffItem() {
-        itemDAOImplementation.deleteItem(StaticUi.getIdInput());
+    public void turnOffItem(int id) {
+        itemDAOImplementation.deleteItem(id);
     }
 
     public List<Item> getItemsList() {
@@ -58,5 +58,13 @@ public class ItemService {
 
     public void getItemById() {
         itemDAOImplementation.getItemById(StaticUi.getIdInput());
+    }
+
+    public void addNewItem(Item item) {
+        itemDAOImplementation.addItem(item);
+    }
+
+    public List<Item> getActiveItemsList() {
+        return itemDAOImplementation.getActiveItemsList();
     }
 }

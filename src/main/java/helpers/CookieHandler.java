@@ -64,4 +64,10 @@ public class CookieHandler {
         int studentId = user.getId();
         cookieDAOImplementation.putUserIdToCookieInDB(studentId, cookieSessionId);
     }
+
+    public void logout (HttpExchange httpExchange){
+        Optional<HttpCookie> cookieList = getSessionIdCookie(httpExchange);
+        String cookieSessionId = cookieList.get().getValue();
+        cookieDAOImplementation.setCookieForLogout(cookieSessionId);
+    }
 }

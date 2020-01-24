@@ -1,35 +1,35 @@
-package handlers.mentor.quests;
+package handlers.mentor.store;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import models.Item;
-import models.Quest;
 import models.Student;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 import services.ItemService;
-import services.QuestService;
 import services.StudentService;
 
 import java.io.*;
 import java.net.URLDecoder;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class AddQuestHandler implements HttpHandler {
+public class RemoveItemHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
-        QuestService questService = new QuestService();
+        ItemService itemService = new ItemService();
         String method = httpExchange.getRequestMethod();
         System.out.println(method);
 
+        List<Item> itemList = itemService.getActiveItemsList();
         String response = "";
 
 
         if (method.equals("GET")) {
-            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentor/add-quest.twig");
+            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentor/remove-item.twig");
             JtwigModel model = JtwigModel.newModel();
-
+            model.with("itemList", itemList);
             response = template.render(model);
         }
 
@@ -40,15 +40,15 @@ public class AddQuestHandler implements HttpHandler {
 
             Map inputs = parseFormData(formData);
 
-            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentor/add-quest.twig");
+            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentor/remove-item.twig");
             JtwigModel model = JtwigModel.newModel();
+            model.with("itemList", itemList);
+
             response = template.render(model);
-
-            System.out.println(inputs.get("name").toString() + inputs.get("reward").toString() + inputs.get("description").toString());
-            questService.addNewQuest(new Quest(inputs.get("name").toString(), inputs.get("description").toString(), Integer.parseInt(inputs.get("reward").toString()), true));
-
-//            httpExchange.getResponseHeaders().set("Location", "/mentor/add-quest" );
-//            httpExchange.sendResponseHeaders(303,0);
+            itemService.turnOffItem(Integer.parseInt(inputs.get("itemId").toString()));
+            httpExchange.getResponseHeaders().set("Location", "/mentor/remove-item" );
+            httpExchange.sendResponseHeaders(303,0);
+            System.out.println(Integer.parseInt(inputs.get("itemId").toString()));
         }
         httpExchange.sendResponseHeaders(200, response.length());
         OutputStream os = httpExchange.getResponseBody();
@@ -60,7 +60,7 @@ public class AddQuestHandler implements HttpHandler {
     private Map<String, String> parseFormData(String formData) {
         Map<String, String> map = new HashMap<String, String>();
         String[] pairs = formData.split("&");
-        for(String pair : pairs){
+        for (String pair : pairs) {
             String[] keyValue = pair.split("=");
             String value = null;
             try {
