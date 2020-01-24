@@ -130,7 +130,7 @@ public class CookieDAOImplementation {
 
     public void setCookieForLogout(String cookieSessionId) {
         PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
-        String orderForSql = ("UPDATE cookies SET user_id = ?  WHERE sesion_id = ? ");
+        String orderForSql = ("UPDATE cookies SET expire_date = ?  WHERE sesion_id = ? ");
 
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderForSql);
