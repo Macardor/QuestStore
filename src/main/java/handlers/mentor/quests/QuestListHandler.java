@@ -2,7 +2,9 @@ package handlers.mentor.quests;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import helpers.CookieHandler;
 import models.Quest;
+import models.User;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 import services.ItemService;
@@ -12,8 +14,16 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 public class QuestListHandler implements HttpHandler {
+    User user = null;
+    CookieHandler cookieHandler = new CookieHandler();
+
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
+        user = cookieHandler.cookieChecker(httpExchange);
+        if(user == null || user.getUserType() != 2){
+            httpExchange.getResponseHeaders().set("Location", "/login");
+            httpExchange.sendResponseHeaders(303, 0);
+        }
         String method = httpExchange.getRequestMethod();
         String response = null;
         QuestService qs = new QuestService();

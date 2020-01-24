@@ -2,7 +2,9 @@ package handlers.mentor.students;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import helpers.CookieHandler;
 import models.Student;
+import models.User;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 import services.StudentService;
@@ -13,8 +15,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AddStudentHandler implements HttpHandler {
+    User user = null;
+    CookieHandler cookieHandler = new CookieHandler();
+
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
+        user = cookieHandler.cookieChecker(httpExchange);
+        if(user == null || user.getUserType() != 2){
+            httpExchange.getResponseHeaders().set("Location", "/login");
+            httpExchange.sendResponseHeaders(303, 0);
+        }
+
         StudentService studentService = new StudentService();
         String method = httpExchange.getRequestMethod();
         System.out.println(method);

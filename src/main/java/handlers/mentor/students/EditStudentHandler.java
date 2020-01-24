@@ -2,6 +2,7 @@ package handlers.mentor.students;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import daoImplementation.CreepDAOImplementation;
+import helpers.CookieHandler;
 import models.Student;
 import models.User;
 import org.jtwig.JtwigModel;
@@ -15,10 +16,20 @@ import java.util.List;
 import java.util.Map;
 
 public class EditStudentHandler implements HttpHandler {
+    User user = null;
+    CookieHandler cookieHandler = new CookieHandler();
+
     private int postIndex=1;
     private int studentDetailsId;
+
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
+        user = cookieHandler.cookieChecker(httpExchange);
+        if(user == null || user.getUserType() != 2){
+            httpExchange.getResponseHeaders().set("Location", "/login");
+            httpExchange.sendResponseHeaders(303, 0);
+        }
+
         StudentService studentService = new StudentService();
         List<Student> studentList = studentService.getActiveStudentList();
 
