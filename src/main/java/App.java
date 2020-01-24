@@ -57,6 +57,9 @@ public class App {
         server.createContext("/cyberStore/creep/editMentor", new EditMentorHandler());
         server.createContext("/cyberStore/creep/removeMentor", new RemoveMentorHandler());
 
+        //LogoutHandler
+        server.createContext("/logout", new LogoutHandler());
+
 
         server.setExecutor(null); // creates a default executor
 
