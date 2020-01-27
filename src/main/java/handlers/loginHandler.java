@@ -70,7 +70,7 @@ public class loginHandler implements HttpHandler {
                         System.out.println("you log in as Creep");
                         cookieHandler.setCookieNewExpireDateToActiveSession(httpExchange);
                         cookieHandler.setUserIdToCookieInDB(user, httpExchange);
-                        httpExchange.getResponseHeaders().set("Location", "cyberStore/mentor");
+                        httpExchange.getResponseHeaders().set("Location", "/creep");
                         httpExchange.sendResponseHeaders(303, 0);
                     }
                 }

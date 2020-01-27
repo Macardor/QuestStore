@@ -20,11 +20,12 @@ public class App {
         HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
 
         // set routes
+        //Login
+        server.createContext("/login", new loginHandler());
+        //logout
+        server.createContext("/logout", new LogoutHandler());
 
-        server.createContext("/cyberStore/creep", new CreepHandler());
-        server.createContext("/cyberStore/creep/showMentors", new ShowMentorsHandler());
-        server.createContext("/cyberStore/creep/addMentor", new AddMentorHandler());
-        server.createContext("/mentor/add-student", new AddStudentHandler());
+
         //Mentor handler
         server.createContext("/mentor/store", new StoreHandler());
         server.createContext("/mentor/students-menu", new StudentMenuHandler()); //all students
@@ -50,15 +51,18 @@ public class App {
         server.createContext("/student/quests", new StudentQuestsHandler());
         server.createContext("/student/store", new StudentStoreHandler());
         server.createContext("/student/inventory", new StudentInventoryHandler());
+
         //CreepHandler
         server.createContext("/creep", new CreepHandler());
         server.createContext("/creep/showMentors", new ShowMentorsHandler());
         server.createContext("/creep/addMentor", new AddMentorHandler());
         server.createContext("/cyberStore/creep/editMentor", new EditMentorHandler());
         server.createContext("/cyberStore/creep/removeMentor", new RemoveMentorHandler());
-
-        //LogoutHandler
-        server.createContext("/logout", new LogoutHandler());
+        //Creep
+        server.createContext("/cyberStore/creep", new CreepHandler());
+        server.createContext("/cyberStore/creep/showMentors", new ShowMentorsHandler());
+        server.createContext("/cyberStore/creep/addMentor", new AddMentorHandler());
+        server.createContext("/mentor/add-student", new AddStudentHandler());
 
 
         server.setExecutor(null); // creates a default executor
