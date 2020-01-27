@@ -27,9 +27,9 @@ public class App {
 
 
         //Mentor handler
+        server.createContext("/mentor/homepage", new MentorHandler());
         server.createContext("/mentor/store", new StoreHandler());
         server.createContext("/mentor/students-menu", new StudentMenuHandler()); //all students
-        server.createContext("/mentor/homepage", new MentorHandler());
         server.createContext("/mentor/add-student", new AddStudentHandler());
 //        server.createContext("/mentor/student-menu", new StudentMenuHandler());
         server.createContext("/mentor/remove-student", new RemoveStudentHandler()); //remove student menu
