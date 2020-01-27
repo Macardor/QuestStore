@@ -3,6 +3,7 @@ package handlers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import daoImplementation.CreepDAOImplementation;
+import helpers.CookieHandler;
 import models.User;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
@@ -12,8 +13,16 @@ import java.io.OutputStream;
 import java.util.List;
 
 public class ShowMentorsHandler implements HttpHandler {
+    User user = null;
+    CookieHandler cookieHandler = new CookieHandler();
+
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
+        user = cookieHandler.cookieChecker(httpExchange);
+        if(user == null || user.getUserType() != 3){
+            httpExchange.getResponseHeaders().set("Location", "/login");
+            httpExchange.sendResponseHeaders(303, 0);
+        }
 
         String method = httpExchange.getRequestMethod();
         CreepDAOImplementation creepDAOImplementation = new CreepDAOImplementation();

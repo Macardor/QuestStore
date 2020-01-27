@@ -33,7 +33,6 @@ public class App {
         server.createContext("/mentor/add-student", new AddStudentHandler());
 //        server.createContext("/mentor/student-menu", new StudentMenuHandler());
         server.createContext("/mentor/remove-student", new RemoveStudentHandler()); //remove student menu
-        server.createContext("/login", new loginHandler());
         server.createContext("/mentor/add-quest", new AddQuestHandler());
         server.createContext("/mentor/remove-quest", new RemoveQuestHandler());
         server.createContext("/mentor/add-item", new AddItemHandler());
@@ -56,13 +55,10 @@ public class App {
         server.createContext("/creep", new CreepHandler());
         server.createContext("/creep/showMentors", new ShowMentorsHandler());
         server.createContext("/creep/addMentor", new AddMentorHandler());
-        server.createContext("/cyberStore/creep/editMentor", new EditMentorHandler());
-        server.createContext("/cyberStore/creep/removeMentor", new RemoveMentorHandler());
-        //Creep
-        server.createContext("/cyberStore/creep", new CreepHandler());
-        server.createContext("/cyberStore/creep/showMentors", new ShowMentorsHandler());
-        server.createContext("/cyberStore/creep/addMentor", new AddMentorHandler());
-        server.createContext("/mentor/add-student", new AddStudentHandler());
+        server.createContext("/creep/editMentor", new EditMentorHandler());
+        server.createContext("/creep/removeMentor", new RemoveMentorHandler());
+
+
 
 
         server.setExecutor(null); // creates a default executor

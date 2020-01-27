@@ -4,18 +4,23 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import controllers.CreepController;
 import helpers.CookieHandler;
+import models.User;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
 import java.io.*;
 
 public class CreepHandler implements HttpHandler {
-
-    private CreepController creepController = new CreepController();
-    private CookieHandler cookieHandler = new CookieHandler();
+    User user = null;
+    CookieHandler cookieHandler = new CookieHandler();
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
+        user = cookieHandler.cookieChecker(httpExchange);
+        if(user == null || user.getUserType() != 3){
+            httpExchange.getResponseHeaders().set("Location", "/login");
+            httpExchange.sendResponseHeaders(303, 0);
+        }
 
         cookieHandler.cookieChecker(httpExchange);
         String method = httpExchange.getRequestMethod();
