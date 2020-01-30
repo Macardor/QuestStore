@@ -32,8 +32,6 @@ public class RemoveQuestHandler implements HttpHandler {
         }
         QuestService questService = new QuestService();
         String method = httpExchange.getRequestMethod();
-        System.out.println(method);
-
         List<Quest> questList = questService.getAllActiveQuestList();
         String response = "";
 

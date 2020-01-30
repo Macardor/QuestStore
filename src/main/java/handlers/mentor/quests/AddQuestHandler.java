@@ -55,11 +55,7 @@ public class AddQuestHandler implements HttpHandler {
             JtwigModel model = JtwigModel.newModel();
             response = template.render(model);
 
-            System.out.println(inputs.get("name").toString() + inputs.get("reward").toString() + inputs.get("description").toString());
             questService.addNewQuest(new Quest(inputs.get("name").toString(), inputs.get("description").toString(), Integer.parseInt(inputs.get("reward").toString()), true));
-
-//            httpExchange.getResponseHeaders().set("Location", "/mentor/add-quest" );
-//            httpExchange.sendResponseHeaders(303,0);
         }
         httpExchange.sendResponseHeaders(200, response.length());
         OutputStream os = httpExchange.getResponseBody();
