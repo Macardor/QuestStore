@@ -1,6 +1,7 @@
 package daoImplementation;
 
 import SQL.PostgreSQLJDBC;
+import models.Creep;
 import models.Mentor;
 import models.User;
 
@@ -86,7 +87,7 @@ public class CreepDAOImplementation {
         }
     }
 
-    public int getUserDetailsId(Mentor mentor) {
+    public int getUserDetailsId(User mentor) {
         String orderToSql = "SELECT * FROM users WHERE id = ?";
         int userDetailId = 0;
         try {
@@ -148,5 +149,25 @@ public class CreepDAOImplementation {
         }catch (SQLException e) {
             System.out.println(e);
         }return mentor;
+    }
+
+    public void editCreep(Creep creepToEdit, int creepDetailsId) {
+        PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
+        String orderForSql = ("UPDATE user_details SET login = ?, password = ?, first_name = ?, last_name = ? WHERE id = ?");
+
+        try {
+            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderForSql);
+            preparedStatement.setString(1, creepToEdit.getLogin());
+            preparedStatement.setString(2, creepToEdit.getPassword());
+            preparedStatement.setString(3, creepToEdit.getFirstname());
+            preparedStatement.setString(4, creepToEdit.getLastname());
+            preparedStatement.setInt(5, creepDetailsId);
+
+
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
     }
 }

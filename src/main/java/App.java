@@ -60,6 +60,7 @@ public class App {
         server.createContext("/creep/addMentor", new AddMentorHandler());
         server.createContext("/creep/editMentor", new EditMentorHandler());
         server.createContext("/creep/removeMentor", new RemoveMentorHandler());
+        server.createContext("/creep/editProfile", new CreepEditProfile());
 
 
 

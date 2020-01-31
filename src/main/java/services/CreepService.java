@@ -1,14 +1,17 @@
 package services;
 
 import daoImplementation.CreepDAOImplementation;
+import models.Creep;
 import models.Mentor;
 import models.Quest;
+import models.User;
 import view.StaticUi;
 
 import java.awt.*;
 import java.util.Scanner;
 
 public class CreepService {
+    CreepDAOImplementation creepDAOImplementation = new CreepDAOImplementation();
 
     public void editMentorSubmenu(){
         CreepDAOImplementation creepDAOImplementation = new CreepDAOImplementation();
@@ -43,6 +46,14 @@ public class CreepService {
             }
         }
         //creepDAOImplementation.editMentor(mentor);
+    }
+
+    public int getUserDetailsId(User mentor) {
+        return creepDAOImplementation.getUserDetailsId(mentor);
+    }
+
+    public void editCreep(Creep creepToEdit, int creepDetailsId) {
+        creepDAOImplementation.editCreep(creepToEdit, creepDetailsId);
     }
 }
 

@@ -2,9 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Quest Store Creep</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <link rel="stylesheet" type="text/css" href="http://localhost:63342/QuestStore/static/css/mainStyle.css">
+    <title>Quest Store Login</title>
+    <link rel="stylesheet" type="text/css" href="http://localhost:63342/QuestStore/src/main/resources/static/css/mainStyle.css">
     <link href="https://fonts.googleapis.com/css?family=Quantico:400,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/c5e394a33c.js" crossorigin="anonymous"></script>
@@ -44,46 +43,40 @@
     </div>
 </nav>
 
+<main class="main-area">
+    <div id="front">
 
-<div id="front">
-    <form method="POST">
-        <div id="front">
+        <form method="POST">
             <div class="form-group">
-                <label for="questId">Identification number</label>
-                <input type="text" id="mentorid" class="form-control" name="mentorId" placeholder="Type id...">
+                <label for="inputLogin">Login</label></div>
+            <div class="form-group"><label for="logindb" id="previoustext">Previous Login: {{ user.login }}</label>
+                <input type="text" class="form-control" id="login" name="login">
+            </div>
+            <div class="form-group">
+                <label for="inputPassword">Password</label></div>
+            <div class="form-group">
+                <label for="passworddb" id="previoustext">Previous password: {{ user.password }}</label>
+                <input type="password" class="form-control" id="password" name="password">
+            </div>
+            <div class="form-group">
+                <label for="inputFirstName">First Name</label></div>
+            <div class="form-group">
+                <label for="firstnamedb" id="previoustext">Previous first name: {{ user.firstname }}</label>
+                <input type="text" class="form-control" id="firstName" name="firstName">
+            </div>
+            <div class="form-group">
+                <label for="inputLastName">Last Name</label></div>
+            <div class="form-group">
+                <label for="lastnamedb" id="previoustext">Previous last name: {{ user.lastname }}</label>
+                <input type="text" class="form-control" id="lastName" name="lastName">
             </div>
             <div class="form-action">
-                <button type="submit" class="btn btn-primary text-center" value="Submit">Edit Mentor</button>
+                <button type="submit" class="btn btn-primary text-center" value="Submit">Edit</button>
             </div>
-        </div>
-    </form>
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Login</th>
-            <th>Password</th>
-            <th>Student Type</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-        </tr>
-        {% for mentor in mentorsList %}
-            <tr>
-                <td>{{ mentor.id }}</td>
-                <td>{{ mentor.login }}</td>
-                <td>{{ mentor.password }}</td>
-                <td>{{ mentor.userType }}</td>
-                <td>{{ mentor.firstname }}</td>
-                <td>{{ mentor.lastname }}</td>
-            </tr>
-        {% endfor %}
+        </form>
 
-    </table>
-
-
-
-
-
-</div>
+    </div>
+</main>
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>

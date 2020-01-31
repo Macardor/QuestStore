@@ -36,7 +36,6 @@ public class MentorEditProfile implements HttpHandler {
             JtwigModel model = JtwigModel.newModel();
             model.with("user", user);
             String response = template.render(model);
-            System.out.println(response);
 
             httpExchange.sendResponseHeaders(200, response.length());
             OutputStream os = httpExchange.getResponseBody();
