@@ -31,7 +31,7 @@ public class QuestListHandler implements HttpHandler {
         if (method.equals("GET")){
             JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentor/quest-list.twig");
             JtwigModel model = JtwigModel.newModel();
-            model.with("questList", qs.getQuestList());
+            model.with("questList", qs.getAllActiveQuestList());
             response = template.render(model);
         }
 
