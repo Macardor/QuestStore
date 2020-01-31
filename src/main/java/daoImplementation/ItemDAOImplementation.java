@@ -2,7 +2,9 @@ package daoImplementation;
 
 import SQL.PostgreSQLJDBC;
 import models.Item;
+import models.ItemTransaction;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -167,5 +169,37 @@ public class ItemDAOImplementation{
             e.printStackTrace();
         }
         return item;
+    }
+
+    public List<ItemTransaction> getUsertransactionList(int studentId) {
+        String orderForSql = ("SELECT ui.id as transaction_id, i.id as item_id, name, description,bought_date,used_date,is_available FROM user_items as ui\n" +
+                "join items as i \n" +
+                "    on ui.item_id = i.id \n" +
+                "where student_id = ? order by transaction_id;");
+        List<ItemTransaction> itemTransactionListList = new ArrayList<>();
+        try{
+            ps = postgreSQLJDBC.connect().prepareStatement(orderForSql);
+            ps.setInt(1, studentId);
+            resultSet = ps.executeQuery();
+            while (resultSet.next()){
+                int id = resultSet.getInt("transaction_id");
+                int itemId = resultSet.getInt("item_id");
+                String itemName = resultSet.getString("name");
+                String itemDescription = resultSet.getString("description");
+                Date boughtDate = resultSet.getDate("bought_date");
+                Date useDate = resultSet.getDate("used_date");
+                boolean isActive = resultSet.getBoolean("is_available");
+
+
+                ItemTransaction itemTransaction = new ItemTransaction(id, itemId, itemName, itemDescription , boughtDate, useDate, isActive );
+                itemTransactionListList.add(itemTransaction);
+                //test method
+                System.out.println(itemTransaction.toString());
+            }
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return itemTransactionListList;
     }
 }

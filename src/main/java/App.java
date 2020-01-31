@@ -50,6 +50,7 @@ public class App {
         server.createContext("/student/quests", new StudentQuestsHandler());
         server.createContext("/student/store", new StudentStoreHandler());
         server.createContext("/student/inventory", new StudentInventoryHandler());
+        server.createContext("/student/transactions", new StudentTransationsHandler());
 
         //CreepHandler
         server.createContext("/creep", new CreepHandler());
