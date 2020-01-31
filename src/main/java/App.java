@@ -42,6 +42,7 @@ public class App {
         server.createContext("/mentor/quest-menu", new QuestMenuHandler());
         server.createContext("/mentor/quest-list", new QuestListHandler());
         server.createContext("/mentor/store-menu", new StoreMenuHandler());
+        server.createContext("/mentor/editProfile", new MentorEditProfile());
 
 
         //Student handler

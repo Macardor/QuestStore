@@ -110,6 +110,44 @@ public class MentorDAOImplementation{
 
         return mentor;
     }
+
+    public int getUserDetailsId(User mentor) {
+        String orderToSql = "SELECT * FROM users WHERE id = ?";
+        int userDetailId = 0;
+        try {
+            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            preparedStatement.setInt(1, mentor.getId());
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                userDetailId = resultSet.getInt("user_details_id");
+            }
+            preparedStatement.executeQuery();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return userDetailId;
+    }
+
+    public void editMentor(Mentor mentorToEdit, int mentorDetailsId) {
+        PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
+        String orderForSql = ("UPDATE user_details SET login = ?, password = ?, first_name = ?, last_name = ? WHERE id = ?");
+
+        try {
+            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderForSql);
+            preparedStatement.setString(1, mentorToEdit.getLogin());
+            preparedStatement.setString(2, mentorToEdit.getPassword());
+            preparedStatement.setString(3, mentorToEdit.getFirstname());
+            preparedStatement.setString(4, mentorToEdit.getLastname());
+            preparedStatement.setInt(5, mentorDetailsId);
+
+
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
 }
 
 

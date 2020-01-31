@@ -36,7 +36,10 @@ body
 
 .navbar.navbar-expand-sm.navbar-light.bg-dark li{
     padding-right: 10px;
-    margin-right: 3em !important;
+}
+
+.dropdown-menu.show {
+    left: auto !important;
 }
 
 .navbar.navbar-expand-sm.navbar-light.bg-dark li:hover {
