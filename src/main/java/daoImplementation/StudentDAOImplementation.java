@@ -216,7 +216,7 @@ public class StudentDAOImplementation {
         }
     }
 
-    public int getUserDetailsId(Student student) {
+    public int getUserDetailsId(User student) {
         String orderToSql = "SELECT * FROM users WHERE id = ?";
         int userDetailId = 0;
         try {

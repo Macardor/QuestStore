@@ -29,7 +29,6 @@ public class ShowMentorsHandler implements HttpHandler {
         List<User> showMentorsList = creepDAOImplementation.showAllMentors();
 
         if (method.equals("GET")){
-            System.out.println("vjhghjgjh");
             JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/showMentors.twig");
             JtwigModel model = JtwigModel.newModel();
             model.with("mentorsList", showMentorsList);

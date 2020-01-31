@@ -5,6 +5,7 @@ import daoImplementation.QuestDAOImplementation;
 import daoImplementation.StudentDAOImplementation;
 import models.Quest;
 import models.Student;
+import models.User;
 import view.StaticUi;
 
 import java.sql.Date;
@@ -82,7 +83,7 @@ public class StudentService {
         return studentDAOImplementation.getActiveStudentsList();
     }
 
-    public int getUserDetailsId(Student student){
+    public int getUserDetailsId(User student){
         return studentDAOImplementation.getUserDetailsId(student);
     }
 
