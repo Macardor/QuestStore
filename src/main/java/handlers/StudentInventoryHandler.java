@@ -19,6 +19,8 @@ public class StudentInventoryHandler implements HttpHandler {
     User user = null;
     CookieHandler cookieHandler = new CookieHandler();
 
+    StudentDAOImplementation studentDAOImplementation = new StudentDAOImplementation();
+
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         user = cookieHandler.cookieChecker(httpExchange);
@@ -29,8 +31,7 @@ public class StudentInventoryHandler implements HttpHandler {
 
         String method = httpExchange.getRequestMethod();
         ItemDAOImplementation itemDAOImplementation = new ItemDAOImplementation();
-        List<Item> userItemsList = itemDAOImplementation.getUserItemsList(user.getId());
-        StudentDAOImplementation studentDAOImplementation = new StudentDAOImplementation();
+        List<Item> userItemsList = itemDAOImplementation.getUserItemsList(studentDAOImplementation.getStudentId(user));
         int coins = studentDAOImplementation.showUserCoins(user.getId());
 
         if (method.equals("GET")){

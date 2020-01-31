@@ -54,8 +54,8 @@
 <main class="main-area">
     <div class="centered">
         <section class="cards">
-            {% if (itemsList != null) %}
-                {% for item in itemsList %}
+            {% if (userItemsList != null) %}
+                {% for item in userItemsList %}
                     <article class="card">
                         <a href="#">
                             <figure class="thumbnail">
@@ -66,6 +66,7 @@
                                 <h2>Price: {{ item.price }} </h2>
                                 <p>{{ item.description }}</p>
                             </div>
+                            <button type="button" class="card-button" onclick="active()">Active</button>
                         </a>
                     </article>
                 {% endfor %}
