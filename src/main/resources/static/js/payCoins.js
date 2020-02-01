@@ -1,6 +1,7 @@
-function payCoins() {
-    let num = document.getElementsByClassName("card-input").valueOf();
+function payCoins(value) {
+    var num = value;
     console.log(num);
+    alert("Item Id = " + num);
 }
 
 function active() {

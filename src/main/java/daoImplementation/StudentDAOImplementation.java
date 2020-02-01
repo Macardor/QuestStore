@@ -443,5 +443,19 @@ public class StudentDAOImplementation {
     }
 
 
+    public void setStudentCoins(int coinsToSet, int studentId) {
+        PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
+        String orderToSql ="UPDATE students SET coins = ? WHERE id = ?";
+        try {
+            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+
+            preparedStatement.setInt(1, coinsToSet);
+            preparedStatement.setInt(2, studentId);
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
 }
 

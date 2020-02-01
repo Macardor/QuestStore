@@ -75,7 +75,7 @@ public class ItemDAOImplementation{
 
     public List<Item> getItemsList() {
         PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
-        String orderForSql = ("SELECT * FROM items");
+        String orderForSql = ("SELECT * FROM items order by id ");
         List<Item> itemList = new ArrayList<>();
         try{
             ps = postgreSQLJDBC.connect().prepareStatement(orderForSql);
@@ -201,5 +201,22 @@ public class ItemDAOImplementation{
             e.printStackTrace();
         }
         return itemTransactionListList;
+    }
+
+    public int getItemPriceById(int itemID) {
+        String orderToSql =  "SELECT * FROM items where id = ?";
+        int price = 0;
+        try {
+            ps = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            ps.setInt(1, itemID);
+            ResultSet resultSet = ps.executeQuery();
+            if (resultSet.next()) {
+                price = resultSet.getInt("price");
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return price;
     }
 }
