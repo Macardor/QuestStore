@@ -57,16 +57,29 @@
             {% if (userItemsList != null) %}
                 {% for item in userItemsList %}
                     <article class="card">
-                        <a href="#">
+                        <a>
                             <figure class="thumbnail">
                                 <img src="http://localhost:63342/QuestStore/templates/cardexample3.jpg" alt="meow">
                             </figure>
                             <div class="card-content">
-                                <h2>{{ item.name }}</h2>
-                                <h2>Price: {{ item.price }} </h2>
-                                <p>{{ item.description }}</p>
+                                <h2>{{ item.itemName }}</h2>
+                                <h2>Price: {{ item.itemPrice }} </h2>
+                                <p>{{ item.itemDescription }}</p>
                             </div>
-                            <button type="button" class="card-button" onclick="active()">Active</button>
+
+                                {% if (item.isUsed == true) %}
+                            <form method="POST" >
+                                <div>
+                                    <button type="submit" name="itemID" class="card-button" value="{{ item.transactionId }}">Active</button>
+                                </div>
+                            </form>
+                                {% endif %}
+
+                            {% if (item.isUsed == false) %}
+                                    <div>
+                                        <button class="card-button">Already active</button>
+                                    </div>
+                            {% endif %}
                         </a>
                     </article>
                 {% endfor %}

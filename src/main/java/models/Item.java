@@ -6,6 +6,7 @@ public class Item {
     private int price;
     private String description;
     private boolean isActive;
+    private boolean isUsed;
 
     public Item(int id, String name, int price, String description, boolean isActive){
 
@@ -14,6 +15,16 @@ public class Item {
         this.price = price;
         this.description = description;
         this.isActive = isActive;
+    }
+
+    public Item(int id, String name, int price, String description, boolean isActive, boolean isUsed){
+
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.description = description;
+        this.isActive = isActive;
+        this.isUsed = isUsed;
     }
 
     public Item(String name, int price, String description, boolean isActive){

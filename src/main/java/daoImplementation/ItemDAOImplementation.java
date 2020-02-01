@@ -124,25 +124,26 @@ public class ItemDAOImplementation{
         return itemList;
     }
 
-    public List<Item> getUserItemsList(int userId) {
-        String orderForSql = ("SELECT i.id, i.name, i.price, i.description, i.is_active FROM items as i join user_items ui on i.id = ui.item_id join students s on ui.student_id = s.id join users u on s.user_id = u.id where s.id = ? and ui.is_available = true ;");//TODO
-        List<Item> itemList = new ArrayList<>();
+    public List<ItemTransaction> getUserItemsList(int userId) {
+        String orderForSql = ("SELECT i.id as itemid, ui.id as transactionid, i.name, i.price, i.description, i.is_active, ui.is_available FROM items as i join user_items ui on i.id = ui.item_id join students s on ui.student_id = s.id join users u on s.user_id = u.id where s.id = ?");//TODO
+        List<ItemTransaction> itemList = new ArrayList<>();
         try{
             ps = postgreSQLJDBC.connect().prepareStatement(orderForSql);
             ps.setInt(1,userId);
             resultSet = ps.executeQuery();
             while (resultSet.next()){
-                int id = resultSet.getInt("id");
+                int transactionId = resultSet.getInt("transactionid");
+                int itemId = resultSet.getInt("itemid");
                 String name = resultSet.getString("name");
                 int price = resultSet.getInt("price");
                 String description = resultSet.getString("description");
                 boolean isActive = resultSet.getBoolean("is_active");
+                boolean isUsed = resultSet.getBoolean("is_available");
 
 
-                Item item = new Item(id, name, price, description, isActive);
-                itemList.add(item);
+                ItemTransaction itemTransaction = new ItemTransaction(transactionId, itemId, name, price, description, isActive, isUsed);
+                itemList.add(itemTransaction);
                 //test method
-                System.out.println(id + " | " + name + " | " + price + " | " + description + " | " + isActive +"");
             }
             ps.close();
         } catch (SQLException e) {
@@ -218,5 +219,24 @@ public class ItemDAOImplementation{
             e.printStackTrace();
         }
         return price;
+    }
+
+    public void setTransactionItemActive(int itemId, Date usedDate) {
+        PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
+        String orderForSql = ("UPDATE user_items SET is_available = ?, used_date = ? WHERE id = ?");
+
+        try {
+            ps = postgreSQLJDBC.connect().prepareStatement(orderForSql);
+            ps.setBoolean(1, false);
+            ps.setDate(2, usedDate);
+            ps.setInt(3, itemId);
+
+//            System.out.println(ps.toString()); //test method
+
+            ps.executeUpdate();
+            ps.close();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
     }
 }

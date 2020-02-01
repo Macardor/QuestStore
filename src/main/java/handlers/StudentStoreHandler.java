@@ -54,8 +54,8 @@ public class StudentStoreHandler implements HttpHandler {
             Map inputs = parseFormData(formData);
 
             int itemID = Integer.parseInt(inputs.get("itemID").toString());
-            System.out.println( "------> " + itemID);
             int itemPrice = itemDAOImplementation.getItemPriceById(itemID);
+
             if (coins >= itemPrice && coins >= 0){
                 System.out.println("you buy item");
                 int coinsToSet = coins - itemPrice;

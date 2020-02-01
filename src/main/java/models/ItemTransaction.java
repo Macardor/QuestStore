@@ -3,16 +3,18 @@ package models;
 import java.sql.Date;
 
 public class ItemTransaction {
-    private int id;
+    private int transactionId;
     private int itemId;
     private String itemName;
     private String itemDescription;
+    private int price;
     private Date boughtDate;
     private Date useDate;
     private boolean isAvailable;
+    private boolean isUsed;
 
-    public ItemTransaction(int id, int itemId, String itemName, String itemDescription, Date boughtDate, Date useDate, boolean isAvailable) {
-        this.id = id;
+    public ItemTransaction(int transactionId, int itemId, String itemName, String itemDescription, Date boughtDate, Date useDate, boolean isAvailable) {
+        this.transactionId = transactionId;
         this.itemId = itemId;
         this.itemName = itemName;
         this.itemDescription = itemDescription;
@@ -21,12 +23,22 @@ public class ItemTransaction {
         this.isAvailable = isAvailable;
     }
 
-    public int getId() {
-        return id;
+    public ItemTransaction(int transactionId, int itemId, String itemName, int price, String itemDescription, boolean isAvailable, boolean isUsed) {
+        this.transactionId = transactionId;
+        this.itemId = itemId;
+        this.itemName = itemName;
+        this.price = price;
+        this.itemDescription = itemDescription;
+        this.isAvailable = isAvailable;
+        this.isUsed = isUsed;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public int getTransactionId() {
+        return transactionId;
+    }
+
+    public void setTransactionId(int transactionId) {
+        this.transactionId = transactionId;
     }
 
     public int getItemId() {
@@ -53,6 +65,14 @@ public class ItemTransaction {
         this.itemDescription = itemDescription;
     }
 
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
     public Date getBoughtDate() {
         return boughtDate;
     }
@@ -75,5 +95,13 @@ public class ItemTransaction {
 
     public void setAvailable(boolean available) {
         isAvailable = available;
+    }
+
+    public boolean isUsed() {
+        return isUsed;
+    }
+
+    public void setUsed(boolean used) {
+        isUsed = used;
     }
 }
