@@ -25,13 +25,13 @@ public class QuestListHandler implements HttpHandler {
             httpExchange.sendResponseHeaders(303, 0);
         }
         String method = httpExchange.getRequestMethod();
-        String response = null;
         QuestService qs = new QuestService();
+        String response = null;
 
         if (method.equals("GET")){
             JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentor/quest-list.twig");
             JtwigModel model = JtwigModel.newModel();
-            model.with("questList", qs.getQuestList());
+            model.with("questList", qs.getAllActiveQuestList());
             response = template.render(model);
         }
 

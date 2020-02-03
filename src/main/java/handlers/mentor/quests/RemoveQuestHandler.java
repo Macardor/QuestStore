@@ -32,8 +32,6 @@ public class RemoveQuestHandler implements HttpHandler {
         }
         QuestService questService = new QuestService();
         String method = httpExchange.getRequestMethod();
-        System.out.println(method);
-
         List<Quest> questList = questService.getAllActiveQuestList();
         String response = "";
 
@@ -61,7 +59,6 @@ public class RemoveQuestHandler implements HttpHandler {
 
             httpExchange.getResponseHeaders().set("Location", "/mentor/remove-quest" );
             httpExchange.sendResponseHeaders(303,0);
-            System.out.println(Integer.parseInt(inputs.get("questId").toString()));
         }
         httpExchange.sendResponseHeaders(200, response.length());
         OutputStream os = httpExchange.getResponseBody();
