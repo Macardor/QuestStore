@@ -4,6 +4,9 @@ import daoImplementation.ItemDAOImplementation;
 import models.Item;
 import view.StaticUi;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -12,6 +15,17 @@ public class ItemService {
 
     public void addNewItem() {
         itemDAOImplementation.addItem(new Item(StaticUi.getNameInput(), StaticUi.getPriceInput(), StaticUi.getDescriptionInput(), StaticUi.getBoolInput()));
+    }
+
+    public void addItem (PreparedStatement ps, Item item){
+        try {
+            ps.setString(1, item.getName());
+            ps.setInt(2, item.getPrice());
+            ps.setString(3, item.getDescription());
+            ps.setBoolean(4, item.isActive());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
     public void editItemSubmenu(){
         Scanner sc = new Scanner(System.in);

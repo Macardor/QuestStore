@@ -35,6 +35,17 @@ public class ItemDAOImplementation{
         }
     }
 
+    public PreparedStatement getAddItemPs(){
+        String sqlQuery = "INSERT INTO items (name, price, description, is_active) VALUES(?, ?, ?, ?) ";
+        PreparedStatement ps = null;
+        try {
+            ps = postgreSQLJDBC.connect().prepareStatement(sqlQuery);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ps;
+    }
+
     public void deleteItem(int id) {
         String orderForSql = "UPDATE items SET is_active = ? WHERE id = ?";
         try {
