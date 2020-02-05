@@ -1,46 +1,40 @@
-package handlers;
+package handlers.mentor;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import daoImplementation.ItemDAOImplementation;
-import daoImplementation.StudentDAOImplementation;
 import helpers.CookieHandler;
-import models.Item;
+import models.Mentor;
 import models.Student;
 import models.User;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
-import services.StudentService;
+import services.MentorService;
 
 import java.io.*;
 import java.net.URLDecoder;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-public class StudentEditProfile implements HttpHandler {
+public class MentorEditProfile implements HttpHandler {
     User user = null;
     CookieHandler cookieHandler = new CookieHandler();
 
-    StudentDAOImplementation studentDAOImplementation = new StudentDAOImplementation();
-    StudentService studentService = new StudentService();
+    MentorService mentorService = new MentorService();
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         user = cookieHandler.cookieChecker(httpExchange);
-        if(user == null || user.getUserType() != 1){
+        if(user == null || user.getUserType() != 2){
             httpExchange.getResponseHeaders().set("Location", "/login");
             httpExchange.sendResponseHeaders(303, 0);
         }
 
         String method = httpExchange.getRequestMethod();
-        int coins = studentDAOImplementation.showUserCoins(user.getId());
 
         if (method.equals("GET")){
-            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/student/studentEditProfile.twig");
+            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentor/mentorEditProfile.twig");
             JtwigModel model = JtwigModel.newModel();
             model.with("user", user);
-            model.with("coins", coins);
             String response = template.render(model);
 
             httpExchange.sendResponseHeaders(200, response.length());
@@ -60,12 +54,12 @@ public class StudentEditProfile implements HttpHandler {
             String password = inputs.get("password").toString();
             String firstName = inputs.get("firstName").toString();
             String lastName = inputs.get("lastName").toString();
-            int studentDetailsId = studentService.getUserDetailsId(user);
+            int mentorDetailsId = mentorService.getUserDetailsId(user);
 
-            Student studentToEdit = new Student(login,password,1,true,firstName,lastName);
-            studentService.editStudent(studentToEdit,studentDetailsId);
+            Mentor mentorToEdit = new Mentor(login,password,2,true,firstName,lastName);
+            mentorService.editMentor(mentorToEdit, mentorDetailsId);
 
-            httpExchange.getResponseHeaders().set("Location", "/student");
+            httpExchange.getResponseHeaders().set("Location", "/mentor/homepage");
             httpExchange.sendResponseHeaders(303, 0);
         }
     }

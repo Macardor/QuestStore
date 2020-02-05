@@ -1,24 +1,22 @@
 package services;
 
-import daoImplementation.CreepDAOImplementation;
+import daoImplementation.CreepDAO;
 import models.Creep;
 import models.Mentor;
-import models.Quest;
 import models.User;
 import view.StaticUi;
 
-import java.awt.*;
 import java.util.Scanner;
 
 public class CreepService {
-    CreepDAOImplementation creepDAOImplementation = new CreepDAOImplementation();
+    CreepDAO creepDAO = new CreepDAO();
 
     public void editMentorSubmenu(){
-        CreepDAOImplementation creepDAOImplementation = new CreepDAOImplementation();
+        CreepDAO creepDAO = new CreepDAO();
         int idToEdit = StaticUi.getIdInput();
         Scanner sc = new Scanner(System.in);
         StaticUi.displayEditQuestChoice();
-        Mentor mentor = creepDAOImplementation.getMentorById(idToEdit);
+        Mentor mentor = creepDAO.getMentorById(idToEdit);
         boolean isRunning = true;
         while (isRunning) {
             StaticUi.displayCreepSubmenu();
@@ -49,11 +47,11 @@ public class CreepService {
     }
 
     public int getUserDetailsId(User mentor) {
-        return creepDAOImplementation.getUserDetailsId(mentor);
+        return creepDAO.getUserDetailsId(mentor);
     }
 
     public void editCreep(Creep creepToEdit, int creepDetailsId) {
-        creepDAOImplementation.editCreep(creepToEdit, creepDetailsId);
+        creepDAO.editCreep(creepToEdit, creepDetailsId);
     }
 }
 

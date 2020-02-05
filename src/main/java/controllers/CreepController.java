@@ -1,6 +1,6 @@
 package controllers;
 
-import daoImplementation.CreepDAOImplementation;
+import daoImplementation.CreepDAO;
 import models.User;
 import view.StaticUi;
 
@@ -10,7 +10,7 @@ public class CreepController implements BaseController {
 
     private User thisUser;
 
-    CreepDAOImplementation creepDAOImplementation = new CreepDAOImplementation();
+    CreepDAO creepDAO = new CreepDAO();
     Scanner scanner = new Scanner(System.in);
 
     @Override
@@ -25,22 +25,22 @@ public class CreepController implements BaseController {
         String option = scanner.next();
         switch (option){
             case "1":
-                creepDAOImplementation.showAllMentors();
+                creepDAO.showAllMentors();
                 break;
             case "2":
                 //creepDAOImplementation.addMentor();
                 //StaticUi.addMentor();
                 break;
             case "3":
-                creepDAOImplementation.showAllMentors();
-                creepDAOImplementation.getMentorById(StaticUi.getIdInput());
-                creepDAOImplementation.showAllMentors();
+                creepDAO.showAllMentors();
+                creepDAO.getMentorById(StaticUi.getIdInput());
+                creepDAO.showAllMentors();
                 break;
             case "4":
-                creepDAOImplementation.showAllMentors();
+                creepDAO.showAllMentors();
                 StaticUi.setMentorUnactive();
                 int idMentor = scanner.nextInt();
-                creepDAOImplementation.setMentorToUnactive(idMentor);
+                creepDAO.setMentorToUnactive(idMentor);
                 break;
             case "0":
                 creepMenu();

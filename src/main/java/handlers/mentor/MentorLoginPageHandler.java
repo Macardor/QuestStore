@@ -1,23 +1,18 @@
-package handlers.mentor.students;
+package handlers.mentor;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import helpers.CookieHandler;
-import models.Student;
 import models.User;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
-import services.StudentService;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.List;
 
-public class PupilsListHandler implements HttpHandler {
+public class MentorLoginPageHandler implements HttpHandler {
     User user = null;
     CookieHandler cookieHandler = new CookieHandler();
-
-    StudentService studentService = new StudentService();
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
@@ -28,19 +23,16 @@ public class PupilsListHandler implements HttpHandler {
         }
 
         String method = httpExchange.getRequestMethod();
-        List<Student> studentList = studentService.getStudentList() ;
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentor/students.twig");
+
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentor/homepage.twig");
         JtwigModel model = JtwigModel.newModel();
-
-        model.with("studentList", studentList);
-
         String response = template.render(model);
-
-
+        System.out.println(httpExchange.getRequestURI());
 
         httpExchange.sendResponseHeaders(200, response.length());
         OutputStream os = httpExchange.getResponseBody();
         os.write(response.getBytes());
         os.close();
     }
+
 }

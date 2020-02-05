@@ -1,43 +1,32 @@
-package handlers;
+package handlers.creep;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import daoImplementation.QuestDAOImplementation;
-import daoImplementation.StudentDAOImplementation;
 import helpers.CookieHandler;
-import models.Quest;
-import models.Student;
 import models.User;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.List;
+import java.io.*;
 
-public class StudentQuestsHandler implements HttpHandler {
+public class CreepLoginPageHandler implements HttpHandler {
     User user = null;
     CookieHandler cookieHandler = new CookieHandler();
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         user = cookieHandler.cookieChecker(httpExchange);
-        if(user == null || user.getUserType() != 1){
+        if(user == null || user.getUserType() != 3){
             httpExchange.getResponseHeaders().set("Location", "/login");
             httpExchange.sendResponseHeaders(303, 0);
         }
 
+        cookieHandler.cookieChecker(httpExchange);
         String method = httpExchange.getRequestMethod();
-        QuestDAOImplementation questDAOImplementation = new QuestDAOImplementation();
-        List<Quest> questsList = questDAOImplementation.getAllQuestsNotDoneByStudent((Student) user);
-        StudentDAOImplementation studentDAOImplementation = new StudentDAOImplementation();
-        int coins = studentDAOImplementation.showUserCoins(user.getId());
 
         if (method.equals("GET")){
-            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/student/quests.twig");
+            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/creep/CreepMainPage.twig");
             JtwigModel model = JtwigModel.newModel();
-            model.with("questsList", questsList);
-            model.with("coins", coins);
             String response = template.render(model);
 
             httpExchange.sendResponseHeaders(200, response.length());
@@ -46,4 +35,9 @@ public class StudentQuestsHandler implements HttpHandler {
             os.close();
         }
     }
+
+
+
 }
+
+

@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class StudentDAOImplementation {
+public class StudentDAO {
 
     PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
     PreparedStatement preparedStatement = null;
@@ -426,8 +426,8 @@ public class StudentDAOImplementation {
         String orderToSql ="UPDATE students SET coins = ? WHERE id = ?";
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
-            StudentDAOImplementation studentDAOImplementation = new StudentDAOImplementation();
-            int newCoins = studentDAOImplementation.showUserCoins(id) - coinAmount;
+            StudentDAO studentDAO = new StudentDAO();
+            int newCoins = studentDAO.showUserCoins(id) - coinAmount;
             System.out.println("Your coins after transaction: " + newCoins);
             preparedStatement.setInt(1, newCoins);
             preparedStatement.setInt(2, id);

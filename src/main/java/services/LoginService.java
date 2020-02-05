@@ -1,13 +1,10 @@
 package services;
 
-import daoImplementation.LoginDAOImplementation;
+import daoImplementation.LoginDAO;
 import models.User;
-import view.StaticUi;
-
-import java.util.List;
 
 public class LoginService {
-    LoginDAOImplementation loginDAOImplementation = new LoginDAOImplementation();
+    LoginDAO loginDAO = new LoginDAO();
 
 
     public User loginChecker(String login, String password){
@@ -17,7 +14,7 @@ public class LoginService {
 
 //        String login = list.get(0);
 //        String password = list.get(1);
-        user = loginDAOImplementation.isLoginAndPasswordInDB(login,password);
+        user = loginDAO.isLoginAndPasswordInDB(login,password);
 
         return user;
     }

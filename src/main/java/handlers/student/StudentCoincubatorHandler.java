@@ -1,9 +1,11 @@
-package handlers;
+package handlers.student;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import daoImplementation.CreepDAOImplementation;
+import daoImplementation.CoincubatorDAO;
+import daoImplementation.StudentDAO;
 import helpers.CookieHandler;
+import models.Coincubator;
 import models.User;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
@@ -12,26 +14,28 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 
-public class ShowMentorsHandler implements HttpHandler {
+public class StudentCoincubatorHandler implements HttpHandler {
     User user = null;
     CookieHandler cookieHandler = new CookieHandler();
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         user = cookieHandler.cookieChecker(httpExchange);
-        if(user == null || user.getUserType() != 3){
+        if(user == null || user.getUserType() != 1){
             httpExchange.getResponseHeaders().set("Location", "/login");
             httpExchange.sendResponseHeaders(303, 0);
         }
-
         String method = httpExchange.getRequestMethod();
-        CreepDAOImplementation creepDAOImplementation = new CreepDAOImplementation();
-        List<User> showMentorsList = creepDAOImplementation.showAllMentors();
+        CoincubatorDAO coincubatorDAO = new CoincubatorDAO();
+        List<Coincubator> coincubatorsList = coincubatorDAO.getAllCoincubators();
+        StudentDAO studentDAO = new StudentDAO();
+        int coins = studentDAO.showUserCoins(user.getId());
 
         if (method.equals("GET")){
-            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/showMentors.twig");
+            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/student/coincubator.twig");
             JtwigModel model = JtwigModel.newModel();
-            model.with("mentorsList", showMentorsList);
+            model.with("coincubatorsList", coincubatorsList);
+            model.with("coins", coins);
             String response = template.render(model);
 
             httpExchange.sendResponseHeaders(200, response.length());
@@ -40,6 +44,4 @@ public class ShowMentorsHandler implements HttpHandler {
             os.close();
         }
     }
-
-
 }

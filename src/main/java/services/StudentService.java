@@ -1,8 +1,8 @@
 package services;
 
-import daoImplementation.MentorDAOImplementation;
-import daoImplementation.QuestDAOImplementation;
-import daoImplementation.StudentDAOImplementation;
+import daoImplementation.MentorDAO;
+import daoImplementation.QuestDAO;
+import daoImplementation.StudentDAO;
 import models.Quest;
 import models.Student;
 import models.User;
@@ -13,31 +13,31 @@ import java.util.Calendar;
 import java.util.List;
 
 public class StudentService {
-    StudentDAOImplementation studentDAOImplementation = new StudentDAOImplementation();
-    MentorDAOImplementation mentorDAOImplementation = new MentorDAOImplementation();
-    QuestDAOImplementation questDAOImplementation = new QuestDAOImplementation();
+    StudentDAO studentDAO = new StudentDAO();
+    MentorDAO mentorDAO = new MentorDAO();
+    QuestDAO questDAO = new QuestDAO();
 
 
     public void editChooseToStudent() {
-        mentorDAOImplementation.getActiveStudentsList();
+        mentorDAO.getActiveStudentsList();
         int id = StaticUi.getIdInput();
         int option = StaticUi.menuToChoseEditStudentOption();
-        Student student = studentDAOImplementation.isStudentWithIdInDB(id);
+        Student student = studentDAO.isStudentWithIdInDB(id);
         if (student != null) {
             if (option == 1) {
                 Student newStudent = StaticUi.editStudent(student);
-                int userDetailsId = studentDAOImplementation.getUserDetailsId(newStudent);
-                studentDAOImplementation.editStudent(newStudent, userDetailsId);
+                int userDetailsId = studentDAO.getUserDetailsId(newStudent);
+                studentDAO.editStudent(newStudent, userDetailsId);
             } else if (option == 2) {
-                List<Quest> questsList = questDAOImplementation.getAllQuestsNotDoneByStudent(student);
+                List<Quest> questsList = questDAO.getAllQuestsNotDoneByStudent(student);
 
                 System.out.println("(" + questsList.size() + ") quest more to finish!");
                 if (!questsList.isEmpty()) {
                     int questID = StaticUi.getIdInput();
-                    int studentId = studentDAOImplementation.getStudentId(student);
+                    int studentId = studentDAO.getStudentId(student);
                     Quest questToActive = getGuestFromListById(questsList, questID);
                     Date date = getCurrentDate();
-                    questDAOImplementation.setQuestActiveForStudent(studentId, questToActive, date);
+                    questDAO.setQuestActiveForStudent(studentId, questToActive, date);
                 } else {
                     System.out.println("no more quests for this student");
                 }
@@ -49,19 +49,19 @@ public class StudentService {
     }
 
     public void addNewStudent(Student student){
-        studentDAOImplementation.addStudent(student);
+        studentDAO.addStudent(student);
     }
     public void deleteStudent(int id){
-        studentDAOImplementation.deleteStudent(id);
+        studentDAO.deleteStudent(id);
     }
     public List<Student> getStudentList(){
-        return studentDAOImplementation.getStudentsList();
+        return studentDAO.getStudentsList();
     }
     public List<Student> getActiveStudentList(){
-        return studentDAOImplementation.getActiveStudentsList();
+        return studentDAO.getActiveStudentsList();
     }
     public Student getStudentByUserId(int id){
-        return studentDAOImplementation.getStudentByUserId(id);
+        return studentDAO.getStudentByUserId(id);
     }
 
     private Date getCurrentDate() {
@@ -80,14 +80,14 @@ public class StudentService {
 
 
     public List<Student> getActiveStudentsList() {
-        return studentDAOImplementation.getActiveStudentsList();
+        return studentDAO.getActiveStudentsList();
     }
 
     public int getUserDetailsId(User student){
-        return studentDAOImplementation.getUserDetailsId(student);
+        return studentDAO.getUserDetailsId(student);
     }
 
     public void editStudent(Student student, int studentDetailsId) {
-        studentDAOImplementation.editStudent(student, studentDetailsId);
+        studentDAO.editStudent(student, studentDetailsId);
     }
 }

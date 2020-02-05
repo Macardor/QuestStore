@@ -1,12 +1,11 @@
 package helpers;
 
 import com.sun.net.httpserver.HttpExchange;
-import daoImplementation.CookieDAOImplementation;
+import daoImplementation.CookieDAO;
 import models.User;
 import services.CookieService;
 
 import java.net.HttpCookie;
-import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -16,7 +15,7 @@ public class CookieHandler {
     private CookieService cookieService = new CookieService();
     CookieHelper cookieHelper = new CookieHelper();
     String SESSION_COOKIE_NAME = "sesion_id";
-    CookieDAOImplementation cookieDAOImplementation = new CookieDAOImplementation();
+    CookieDAO cookieDAO = new CookieDAO();
 
     public User cookieChecker(HttpExchange httpExchange) {
 
@@ -26,7 +25,7 @@ public class CookieHandler {
             System.out.println("test1");
             String cookieSessionId = cookieList.get().getValue();
 
-            User userToCheck = cookieDAOImplementation.getUserByCookieSessionId(cookieSessionId);
+            User userToCheck = cookieDAO.getUserByCookieSessionId(cookieSessionId);
             if (cookieService.checkIfCookieIsActive(cookieSessionId)){
                 return userToCheck;
             }else{
@@ -40,7 +39,7 @@ public class CookieHandler {
             String cookieSessionIdToAdd = uuid.toString();
             cookieSessionIdToAdd = '"'+cookieSessionIdToAdd+'"';
 
-            cookieDAOImplementation.putNewCookieToDB(cookieSessionIdToAdd);
+            cookieDAO.putNewCookieToDB(cookieSessionIdToAdd);
         }
         return user;
 
@@ -62,12 +61,12 @@ public class CookieHandler {
         Optional<HttpCookie> cookieList = getSessionIdCookie(httpExchange);
         String cookieSessionId = cookieList.get().getValue();
         int studentId = user.getId();
-        cookieDAOImplementation.putUserIdToCookieInDB(studentId, cookieSessionId);
+        cookieDAO.putUserIdToCookieInDB(studentId, cookieSessionId);
     }
 
     public void logout (HttpExchange httpExchange){
         Optional<HttpCookie> cookieList = getSessionIdCookie(httpExchange);
         String cookieSessionId = cookieList.get().getValue();
-        cookieDAOImplementation.setCookieForLogout(cookieSessionId);
+        cookieDAO.setCookieForLogout(cookieSessionId);
     }
 }

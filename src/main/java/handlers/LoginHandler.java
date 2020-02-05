@@ -14,7 +14,7 @@ import java.io.*;
 import java.net.URLDecoder;
 import java.util.*;
 
-public class loginHandler implements HttpHandler {
+public class LoginHandler implements HttpHandler {
     private LoginService loginService = new LoginService();
     private CookieHandler cookieHandler = new CookieHandler();
     User user = null;
@@ -29,7 +29,7 @@ public class loginHandler implements HttpHandler {
                 httpExchange.sendResponseHeaders(303, 0);
             }
             else if(user.getUserType() == 2){
-                httpExchange.getResponseHeaders().add("Location", "/mentor/homepage");
+                httpExchange.getResponseHeaders().add("Location", "/mentor/");
                 httpExchange.sendResponseHeaders(303, 0);
             }else{
                 httpExchange.getResponseHeaders().add("Location", "/creep");

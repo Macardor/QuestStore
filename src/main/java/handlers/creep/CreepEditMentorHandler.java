@@ -1,8 +1,8 @@
-package handlers;
+package handlers.creep;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import daoImplementation.CreepDAOImplementation;
+import daoImplementation.CreepDAO;
 import helpers.CookieHandler;
 import models.Mentor;
 import models.User;
@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class EditMentorHandler implements HttpHandler {
+public class CreepEditMentorHandler implements HttpHandler {
     User user = null;
     CookieHandler cookieHandler = new CookieHandler();
 
@@ -29,14 +29,14 @@ public class EditMentorHandler implements HttpHandler {
             httpExchange.sendResponseHeaders(303, 0);
         }
 
-        CreepDAOImplementation creepDAOImplementation = new CreepDAOImplementation();
-        List<User>showMentorsList = creepDAOImplementation.showAllMentors();
+        CreepDAO creepDAO = new CreepDAO();
+        List<User>showMentorsList = creepDAO.showAllMentors();
         String method = httpExchange.getRequestMethod();
         String response = "";
 
         if (method.equals("GET")){
             postIndex = 1;
-            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/editMentorMenu.twig");
+            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/creep/editMentorMenu.twig");
             JtwigModel model = JtwigModel.newModel();
             model.with("mentorsList", showMentorsList);
             response = template.render(model);
@@ -63,11 +63,11 @@ public class EditMentorHandler implements HttpHandler {
 //            System.out.println(login + password + firstName + lastName);
             int userId = Integer.parseInt(id);
 
-            Mentor mentorId = creepDAOImplementation.getMentorById(userId);
-            mentorDetailsId = creepDAOImplementation.getUserDetailsId(mentorId);
+            Mentor mentorId = creepDAO.getMentorById(userId);
+            mentorDetailsId = creepDAO.getUserDetailsId(mentorId);
 
 
-            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/editMentor.twig");
+            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/creep/editMentor.twig");
             JtwigModel model = JtwigModel.newModel();
             model.with("mentor", mentorId);
             response = template.render(model);
@@ -96,7 +96,7 @@ public class EditMentorHandler implements HttpHandler {
             String firstName = inputs.get("firstName").toString();
             String lastName = inputs.get("lastName").toString();
 
-            creepDAOImplementation.editMentor(new Mentor(login,password,2,true,firstName,lastName), mentorDetailsId);
+            creepDAO.editMentor(new Mentor(login,password,2,true,firstName,lastName), mentorDetailsId);
 
 
             httpExchange.getResponseHeaders().set("Location", "/cyberStore/creep/editMentor");

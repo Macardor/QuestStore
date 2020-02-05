@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class CoincubatorDAOImplementation {
+public class CoincubatorDAO {
     PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
@@ -179,8 +179,8 @@ public class CoincubatorDAOImplementation {
                     coinsToPay = coinAmount - (currentDonation + coinAmount - targetDonation);
                 }
                 payCoinsToCoincubator(coincubatorId, coinsToPay);
-                StudentDAOImplementation studentDAOImplementation = new StudentDAOImplementation();
-                studentDAOImplementation.takeCoinsFromStudent(studentId, coinsToPay);
+                StudentDAO studentDAO = new StudentDAO();
+                studentDAO.takeCoinsFromStudent(studentId, coinsToPay);
                 addDonor(studentId, coincubatorId, coinsToPay);
             }
 

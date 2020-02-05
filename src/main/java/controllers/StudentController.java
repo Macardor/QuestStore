@@ -1,7 +1,7 @@
 package controllers;
 
-import daoImplementation.ItemDAOImplementation;
-import daoImplementation.StudentDAOImplementation;
+import daoImplementation.ItemDAO;
+import daoImplementation.StudentDAO;
 import models.User;
 import view.StaticUi;
 
@@ -10,8 +10,8 @@ import java.util.Scanner;
 public class StudentController implements BaseController {
     private User thisUser;
 
-    StudentDAOImplementation studentDAOImplementation = new StudentDAOImplementation();
-    ItemDAOImplementation itemDAOImplementation = new ItemDAOImplementation();
+    StudentDAO studentDAO = new StudentDAO();
+    ItemDAO itemDAO = new ItemDAO();
     StaticUi staticUi = new StaticUi();
     Scanner scanner = new Scanner(System.in);
 
@@ -26,11 +26,11 @@ public class StudentController implements BaseController {
         String option = scanner.next();
         switch (option) {
             case "1":
-                itemDAOImplementation.getItemsList();
+                itemDAO.getItemsList();
                 buyItemMenu();
                 break;
             case "2":
-                studentDAOImplementation.showCoincubatos();
+                studentDAO.showCoincubatos();
                 staticUi.printStudentCoincubatorMenu();
                 option = scanner.next();
                 switch (option){
@@ -43,10 +43,10 @@ public class StudentController implements BaseController {
                 }
                 break;
             case "3":
-                studentDAOImplementation.showUserCoins(studentDAOImplementation.getStudentId(thisUser));
+                studentDAO.showUserCoins(studentDAO.getStudentId(thisUser));
                 break;
             case "4":
-                itemDAOImplementation.getUserItemsList(studentDAOImplementation.getStudentId(thisUser));
+                itemDAO.getUserItemsList(studentDAO.getStudentId(thisUser));
                 useCardMenu();
                 break;
             case "0":
@@ -62,7 +62,7 @@ public class StudentController implements BaseController {
             case "1":
                 StaticUi.chooseItemById();
                 int itemId = scanner.nextInt();
-                studentDAOImplementation.buyItem(itemId, thisUser.getId());
+                studentDAO.buyItem(itemId, thisUser.getId());
                 break;
             case "2":
                 studentMenu();
@@ -71,10 +71,10 @@ public class StudentController implements BaseController {
     }
 
     private void useCard(){
-        itemDAOImplementation.getUserItemsList(thisUser.getId());
+        itemDAO.getUserItemsList(thisUser.getId());
         StaticUi.printUseCardId();
         int itemId = scanner.nextInt();
-        studentDAOImplementation.useCard(itemId, thisUser.getId());
+        studentDAO.useCard(itemId, thisUser.getId());
     }
 
     private void useCardMenu(){

@@ -1,6 +1,6 @@
 package services;
 
-import daoImplementation.ItemDAOImplementation;
+import daoImplementation.ItemDAO;
 import models.Item;
 import view.StaticUi;
 
@@ -8,16 +8,16 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ItemService {
-    private ItemDAOImplementation itemDAOImplementation = new ItemDAOImplementation();
+    private ItemDAO itemDAO = new ItemDAO();
 
     public void addNewItem() {
-        itemDAOImplementation.addItem(new Item(StaticUi.getNameInput(), StaticUi.getPriceInput(), StaticUi.getDescriptionInput(), StaticUi.getBoolInput()));
+        itemDAO.addItem(new Item(StaticUi.getNameInput(), StaticUi.getPriceInput(), StaticUi.getDescriptionInput(), StaticUi.getBoolInput()));
     }
     public void editItemSubmenu(){
         Scanner sc = new Scanner(System.in);
         StaticUi.displayEditItemChoice();
         int idToEdit = StaticUi.getIdInput();
-        Item item = itemDAOImplementation.getItemById(idToEdit);
+        Item item = itemDAO.getItemById(idToEdit);
 
         boolean isRunning = true;
         while (isRunning) {
@@ -45,26 +45,26 @@ public class ItemService {
                     break;
             }
         }
-        itemDAOImplementation.editItem(item);
+        itemDAO.editItem(item);
     }
 
     public void turnOffItem(int id) {
-        itemDAOImplementation.deleteItem(id);
+        itemDAO.deleteItem(id);
     }
 
     public List<Item> getItemsList() {
-        return itemDAOImplementation.getItemsList();
+        return itemDAO.getItemsList();
     }
 
     public void getItemById() {
-        itemDAOImplementation.getItemById(StaticUi.getIdInput());
+        itemDAO.getItemById(StaticUi.getIdInput());
     }
 
     public void addNewItem(Item item) {
-        itemDAOImplementation.addItem(item);
+        itemDAO.addItem(item);
     }
 
     public List<Item> getActiveItemsList() {
-        return itemDAOImplementation.getActiveItemsList();
+        return itemDAO.getActiveItemsList();
     }
 }

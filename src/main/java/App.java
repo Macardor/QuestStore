@@ -1,12 +1,15 @@
 import com.sun.net.httpserver.HttpServer;
 import handlers.*;
+import handlers.creep.*;
+import handlers.mentor.MentorEditProfile;
+import handlers.mentor.MentorLoginPageHandler;
 import handlers.mentor.quests.AddQuestHandler;
 import handlers.mentor.quests.QuestListHandler;
 import handlers.mentor.quests.QuestMenuHandler;
 import handlers.mentor.quests.RemoveQuestHandler;
 import handlers.mentor.store.AddItemHandler;
 import handlers.mentor.store.RemoveItemHandler;
-import handlers.StudentCoincubatorHandler;
+import handlers.student.*;
 import handlers.mentor.store.StoreHandler;
 import handlers.mentor.store.StoreMenuHandler;
 import handlers.mentor.students.*;
@@ -20,13 +23,13 @@ public class App {
         HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
         // set routes
         //Login
-        server.createContext("/login", new loginHandler());
+        server.createContext("/login", new LoginHandler());
         //logout
         server.createContext("/logout", new LogoutHandler());
 
 
         //Mentor handler
-        server.createContext("/mentor/homepage", new MentorHandler());
+        server.createContext("/mentor/homepage", new MentorLoginPageHandler());
         server.createContext("/mentor/store", new StoreHandler());
         server.createContext("/mentor/students-menu", new StudentMenuHandler()); //all students
         server.createContext("/mentor/add-student", new AddStudentHandler());
@@ -36,7 +39,7 @@ public class App {
         server.createContext("/mentor/remove-quest", new RemoveQuestHandler());
         server.createContext("/mentor/add-item", new AddItemHandler());
         server.createContext("/mentor/remove-item", new RemoveItemHandler());
-        server.createContext("/mentor/students", new PupilsListHandler());
+        server.createContext("/mentor/students", new StudentsListHandler());
         server.createContext("/mentor/edit-student", new EditStudentHandler());
         server.createContext("/mentor/quest-menu", new QuestMenuHandler());
         server.createContext("/mentor/quest-list", new QuestListHandler());
@@ -54,11 +57,11 @@ public class App {
         server.createContext("/student/editProfile", new StudentEditProfile());
 
         //CreepHandler
-        server.createContext("/creep", new CreepHandler());
-        server.createContext("/creep/showMentors", new ShowMentorsHandler());
-        server.createContext("/creep/addMentor", new AddMentorHandler());
-        server.createContext("/creep/editMentor", new EditMentorHandler());
-        server.createContext("/creep/removeMentor", new RemoveMentorHandler());
+        server.createContext("/creep", new CreepLoginPageHandler());
+        server.createContext("/creep/showMentors", new CreepShowMentorsHandler());
+        server.createContext("/creep/addMentor", new CreepAddMentorHandler());
+        server.createContext("/creep/editMentor", new CreepEditMentorHandler());
+        server.createContext("/creep/removeMentor", new CreepRemoveMentorHandler());
         server.createContext("/creep/editProfile", new CreepEditProfile());
 
 

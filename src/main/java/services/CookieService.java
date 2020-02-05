@@ -1,18 +1,16 @@
 package services;
 
-import daoImplementation.CookieDAOImplementation;
-import models.User;
+import daoImplementation.CookieDAO;
 
 import java.sql.Date;
-import java.time.LocalDateTime;
 import java.util.Calendar;
 
 public class CookieService {
-private CookieDAOImplementation cookieDAOImplementation = new CookieDAOImplementation();
+private CookieDAO cookieDAO = new CookieDAO();
 
     public boolean checkIfCookieIsActive(String cookieSessionId) {
         Date currentDate = getCurrentDate();
-        Date cookieExpireDate =  cookieDAOImplementation.getCookieExpireDate(cookieSessionId);
+        Date cookieExpireDate =  cookieDAO.getCookieExpireDate(cookieSessionId);
 
         if(cookieExpireDate == null){
             return false;
@@ -37,6 +35,6 @@ private CookieDAOImplementation cookieDAOImplementation = new CookieDAOImplement
 
         Date expireDate = new Date(c.getTimeInMillis());
 
-        cookieDAOImplementation.setNewExpireDateForCookie(cookieSessionId, expireDate);
+        cookieDAO.setNewExpireDateForCookie(cookieSessionId, expireDate);
     }
 }

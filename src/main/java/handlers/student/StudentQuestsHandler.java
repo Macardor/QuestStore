@@ -1,17 +1,21 @@
-package handlers;
+package handlers.student;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import daoImplementation.StudentDAOImplementation;
+import daoImplementation.QuestDAO;
+import daoImplementation.StudentDAO;
 import helpers.CookieHandler;
+import models.Quest;
+import models.Student;
 import models.User;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.List;
 
-public class StudentLoginPageHandler implements HttpHandler {
+public class StudentQuestsHandler implements HttpHandler {
     User user = null;
     CookieHandler cookieHandler = new CookieHandler();
 
@@ -24,12 +28,15 @@ public class StudentLoginPageHandler implements HttpHandler {
         }
 
         String method = httpExchange.getRequestMethod();
-        StudentDAOImplementation studentDAOImplementation = new StudentDAOImplementation();
-        int coins = studentDAOImplementation.showUserCoins(user.getId());
+        QuestDAO questDAO = new QuestDAO();
+        List<Quest> questsList = questDAO.getAllQuestsNotDoneByStudent((Student) user);
+        StudentDAO studentDAO = new StudentDAO();
+        int coins = studentDAO.showUserCoins(user.getId());
 
         if (method.equals("GET")){
-            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/student/student-homepage.twig");
+            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/student/quests.twig");
             JtwigModel model = JtwigModel.newModel();
+            model.with("questsList", questsList);
             model.with("coins", coins);
             String response = template.render(model);
 

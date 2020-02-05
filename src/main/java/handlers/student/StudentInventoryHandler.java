@@ -1,24 +1,28 @@
-package handlers;
+package handlers.student;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import daoImplementation.ItemDAOImplementation;
-import daoImplementation.StudentDAOImplementation;
+import daoImplementation.ItemDAO;
+import daoImplementation.StudentDAO;
 import helpers.CookieHandler;
-import models.Item;
+import models.ItemTransaction;
 import models.User;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
 import java.io.*;
 import java.net.URLDecoder;
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class StudentStoreHandler implements HttpHandler {
+public class StudentInventoryHandler implements HttpHandler {
     User user = null;
     CookieHandler cookieHandler = new CookieHandler();
+
+    StudentDAO studentDAO = new StudentDAO();
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
@@ -29,15 +33,14 @@ public class StudentStoreHandler implements HttpHandler {
         }
 
         String method = httpExchange.getRequestMethod();
-        ItemDAOImplementation itemDAOImplementation = new ItemDAOImplementation();
-        List<Item> itemsList = itemDAOImplementation.getItemsList();
-        StudentDAOImplementation studentDAOImplementation = new StudentDAOImplementation();
-        int coins = studentDAOImplementation.showUserCoins(user.getId());
+        ItemDAO itemDAO = new ItemDAO();
+        List<ItemTransaction> userItemsList = itemDAO.getUserItemsList(studentDAO.getStudentId(user));
+        int coins = studentDAO.showUserCoins(user.getId());
 
         if (method.equals("GET")){
-            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/student/store.twig");
+            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/student/inventory.twig");
             JtwigModel model = JtwigModel.newModel();
-            model.with("itemsList", itemsList);
+            model.with("userItemsList", userItemsList);
             model.with("coins", coins);
             String response = template.render(model);
 
@@ -46,6 +49,7 @@ public class StudentStoreHandler implements HttpHandler {
             os.write(response.getBytes());
             os.close();
         }
+
         if (method.equals("POST")){
             InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
             BufferedReader br = new BufferedReader(isr);
@@ -53,17 +57,12 @@ public class StudentStoreHandler implements HttpHandler {
 
             Map inputs = parseFormData(formData);
 
-            int itemID = Integer.parseInt(inputs.get("itemID").toString());
-            int itemPrice = itemDAOImplementation.getItemPriceById(itemID);
+            int itemId = Integer.parseInt(inputs.get("itemID").toString());
+            Date currentDate = getCurrentDate();
+            itemDAO.setTransactionItemActive(itemId, currentDate);
 
-            if (coins >= itemPrice && coins >= 0){
-                System.out.println("you buy item");
-                int coinsToSet = coins - itemPrice;
-                studentDAOImplementation.buyItem(itemID, studentDAOImplementation.getStudentId(user));
-                studentDAOImplementation.setStudentCoins(coinsToSet, studentDAOImplementation.getStudentId(user));
-            }
 
-            httpExchange.getResponseHeaders().add("Location", "/student/store");
+            httpExchange.getResponseHeaders().add("Location", "/student/inventory");
             httpExchange.sendResponseHeaders(303, 0);
         }
     }
@@ -78,5 +77,9 @@ public class StudentStoreHandler implements HttpHandler {
             map.put(keyValue[0], value);
         }
         return map;
+    }
+
+    private Date getCurrentDate() {
+        return new Date(Calendar.getInstance().getTime().getTime());
     }
 }

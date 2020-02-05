@@ -1,6 +1,6 @@
 package services;
 
-import daoImplementation.QuestDAOImplementation;
+import daoImplementation.QuestDAO;
 import models.Quest;
 import view.StaticUi;
 
@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.Scanner;
 
 public class QuestService {
-    QuestDAOImplementation questDAOImplementation = new QuestDAOImplementation();
+    QuestDAO questDAO = new QuestDAO();
     Scanner scanner = new Scanner(System.in);
     public void addNewQuest(Quest quest){
-        questDAOImplementation.addQuest(quest);
+        questDAO.addQuest(quest);
 
     }
     public void editQuest(){
@@ -19,14 +19,14 @@ public class QuestService {
 
     }
     public void deleteQuest(int id){
-        questDAOImplementation.deleteQuest(id);
+        questDAO.deleteQuest(id);
 
     }
     public List<Quest> getQuestList(){
-        return questDAOImplementation.getAllQuests();
+        return questDAO.getAllQuests();
     }
     public void getQuestById(){
-        questDAOImplementation.getQuestById(StaticUi.getIdInput());
+        questDAO.getQuestById(StaticUi.getIdInput());
 
     }
     public void editStudentSubmenu(){
@@ -34,7 +34,7 @@ public class QuestService {
         StaticUi.displayEditQuestChoice();
         int idToEdit = StaticUi.getIdInput();
 
-        Quest quest = questDAOImplementation.getQuestById(idToEdit);
+        Quest quest = questDAO.getQuestById(idToEdit);
         boolean isRunning = true;
         while (isRunning) {
             StaticUi.displayStudentSubmenu();
@@ -61,10 +61,10 @@ public class QuestService {
                     break;
             }
         }
-        questDAOImplementation.editQuest(quest);
+        questDAO.editQuest(quest);
     }
 
     public List<Quest> getAllActiveQuestList() {
-        return questDAOImplementation.getAllActiveQuests();
+        return questDAO.getAllActiveQuests();
     }
 }

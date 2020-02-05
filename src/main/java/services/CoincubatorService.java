@@ -1,18 +1,17 @@
 package services;
 
-import daoImplementation.CoincubatorDAOImplementation;
+import daoImplementation.CoincubatorDAO;
 import models.Coincubator;
 import view.StaticUi;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CoincubatorService {
-    private CoincubatorDAOImplementation coincubatorDAOImplementation = new CoincubatorDAOImplementation();
+    private CoincubatorDAO coincubatorDAO = new CoincubatorDAO();
 
     public List<Coincubator> showAllCoincubators(){
         List<Coincubator> coincubators;
-            coincubators = coincubatorDAOImplementation.getAllCoincubators();
+            coincubators = coincubatorDAO.getAllCoincubators();
         return coincubators;
 
 
@@ -21,16 +20,16 @@ public class CoincubatorService {
     public void addNewCoincubator() {
         Coincubator coincubator;
         coincubator = StaticUi.newCoincubator();
-        coincubatorDAOImplementation.addCoincubator(coincubator);
+        coincubatorDAO.addCoincubator(coincubator);
     }
 
     public void editCoincubatorById() {
         int coincubatorIdToEdit = StaticUi.idToEdit();
-        Coincubator coincubator = coincubatorDAOImplementation.isCoincubatorWithIdInDB(coincubatorIdToEdit);
+        Coincubator coincubator = coincubatorDAO.isCoincubatorWithIdInDB(coincubatorIdToEdit);
         if (coincubator != null){
             Coincubator newCoincubator;
             newCoincubator = StaticUi.coincubatorEditor(coincubator);
-            coincubatorDAOImplementation.ediCoincubator(newCoincubator);
+            coincubatorDAO.ediCoincubator(newCoincubator);
         }else{
             StaticUi.errorMassageIdNotInDB();
         }
@@ -39,10 +38,10 @@ public class CoincubatorService {
 
     public void deleteCoincubatorById() {
         int coincubatorIdToEdit = StaticUi.idToEdit();
-        Coincubator coincubator = coincubatorDAOImplementation.isCoincubatorWithIdInDB(coincubatorIdToEdit);
+        Coincubator coincubator = coincubatorDAO.isCoincubatorWithIdInDB(coincubatorIdToEdit);
         if (coincubator != null){
             coincubator.setActive(false);
-            coincubatorDAOImplementation.deleteCoincubator(coincubator);
+            coincubatorDAO.deleteCoincubator(coincubator);
         }else{
             StaticUi.errorMassageIdNotInDB();
         }

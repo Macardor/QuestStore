@@ -1,6 +1,6 @@
 package controllers;
 
-import daoImplementation.MentorDAOImplementation;
+import daoImplementation.MentorDAO;
 import models.User;
 import services.CoincubatorService;
 import services.StudentService;
@@ -12,7 +12,7 @@ public class MentorController implements BaseController {
     private User thisUser;
 
     public void mentorMenu(){
-        MentorDAOImplementation mentorDAOImplementation = new MentorDAOImplementation();
+        MentorDAO mentorDAO = new MentorDAO();
         Scanner scanner = new Scanner(System.in);
         StudentService ss = new StudentService();
         CoincubatorService coincubatorService = new CoincubatorService();

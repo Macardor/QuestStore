@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemDAOImplementation{
+public class ItemDAO {
     private PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
     private PreparedStatement ps = null;
     private ResultSet resultSet = null;
