@@ -139,7 +139,7 @@ public class StudentDAOImplementation {
                 "on users.user_details_id = user_details.id WHERE users.user_type_id = ? and users.id = ? ";
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
-            preparedStatement.setInt(1, Student.userType);
+            preparedStatement.setInt(1, 1);
             preparedStatement.setInt(2, userId);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
