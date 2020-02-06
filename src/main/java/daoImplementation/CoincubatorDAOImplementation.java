@@ -27,7 +27,6 @@ public class CoincubatorDAOImplementation {
             preparedStatement.setInt(4, coincubator.getTargetDonation());
             preparedStatement.setBoolean(5, coincubator.isActive());
 
-
             preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (SQLException e) {
@@ -68,7 +67,6 @@ public class CoincubatorDAOImplementation {
                 e.printStackTrace();
 
             }
-
         }
 
         return  coincubators;

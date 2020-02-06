@@ -15,6 +15,8 @@ import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 
+//Mockito.RETURN_DEEP_STUBS       httpExchange
+
 public class CreepEditProfile implements HttpHandler {
     User user = null;
     CookieHandler cookieHandler = new CookieHandler();
