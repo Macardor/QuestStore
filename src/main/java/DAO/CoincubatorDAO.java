@@ -1,5 +1,6 @@
 package DAO;
 
+import DAO.StudentDAO;
 import SQL.PostgreSQLJDBC;
 import models.Coincubator;
 
@@ -38,10 +39,10 @@ public class CoincubatorDAO {
     public ResultSet getAllCoincubatorsFromDb(){
         String orderToSql = "SELECT * FROM coincubators " +
                 "WHERE is_active = true;";
-
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
             resultSet = preparedStatement.executeQuery();
+            //preparedStatement.executeQuery();
         }catch (SQLException e) {
             System.out.println(e);
 
@@ -113,6 +114,27 @@ public class CoincubatorDAO {
         }
     }
 
+    public ResultSet payCoinsToCoincubator(){
+        try {
+            PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
+            String orderToSql ="UPDATE coincubators SET current_donation = ? WHERE id = ?";
+            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            preparedStatement.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }return resultSet;
+
+    }
+    public void payCoinsToCoincubator2(int coincubatorId, int coinAmount) {
+        try {
+            int newCurrentDonation = resultSet.getInt("current_donation") + coinAmount;
+            preparedStatement.setInt(1, newCurrentDonation);
+            preparedStatement.setInt(2, coincubatorId);
+            preparedStatement.close();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
     public void payCoinsToCoincubator(int coincubatorId, int coinAmount) {
         PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
         String orderToSql ="UPDATE coincubators SET current_donation = ? WHERE id = ?";
