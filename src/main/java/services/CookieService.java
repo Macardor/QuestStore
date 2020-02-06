@@ -1,6 +1,6 @@
 package services;
 
-import daoImplementation.CookieDAO;
+import DAO.CookieDAO;
 
 import java.sql.Date;
 import java.util.Calendar;

@@ -5,7 +5,7 @@ public class Main {
 //        loginController.run();
 //
 //        CreepDAOImplementation creepDAOImplementation = new CreepDAOImplementation();
-//        creepDAOImplementation.showAllMentors();
+//        creepDAOImplementation.getAllMentorsFromDb();
 
 //        MentorController mentorController = new MentorController();
 //        StudentService studentService = new StudentService();

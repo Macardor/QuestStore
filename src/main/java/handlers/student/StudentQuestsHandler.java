@@ -2,8 +2,8 @@ package handlers.student;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import daoImplementation.QuestDAO;
-import daoImplementation.StudentDAO;
+import DAO.QuestDAO;
+import DAO.StudentDAO;
 import helpers.CookieHandler;
 import models.Quest;
 import models.Student;

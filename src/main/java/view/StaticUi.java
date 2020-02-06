@@ -1,8 +1,8 @@
 package view;
 
-import daoImplementation.CoincubatorDAO;
-import daoImplementation.CreepDAO;
-import daoImplementation.StudentDAO;
+import DAO.CoincubatorDAO;
+import DAO.CreepDAO;
+import DAO.StudentDAO;
 import models.*;
 
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ public class StaticUi {
         StudentDAO studentDAO = new StudentDAO();
         if (coinAmount >= studentDAO.showUserCoins(studentId)){
             CoincubatorDAO coincubatorDAO = new CoincubatorDAO();
-            coincubatorDAO.donateToCoincubator(studentId, coincubatorId, coinAmount);
+            coincubatorDAO.donateToCoincubatorDb(studentId, coincubatorId, coinAmount);
         }
     }
 

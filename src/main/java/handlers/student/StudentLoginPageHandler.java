@@ -2,7 +2,7 @@ package handlers.student;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import daoImplementation.StudentDAO;
+import DAO.StudentDAO;
 import helpers.CookieHandler;
 import models.User;
 import org.jtwig.JtwigModel;

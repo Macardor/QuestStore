@@ -1,4 +1,4 @@
-package daoImplementation;
+package DAO;
 
 import SQL.PostgreSQLJDBC;
 import models.Coincubator;
@@ -99,37 +99,21 @@ public class StudentDAO {
         return studentList;
     }
 
-    public List<Student> getActiveStudentsList() {
+    //Student Refactor
+    public ResultSet getActiveStudentsFromDb() {
         String orderToSql = "SELECT * FROM users " +
                 "join user_details " +
                 "on users.user_details_id = user_details.id WHERE users.user_type_id = ? and users.is_active = ? ORDER BY user_details.id ";
-        List<Student> studentList = new ArrayList<>();
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
             preparedStatement.setInt(1, 1);
             preparedStatement.setBoolean(2, true);
 
             resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String login = resultSet.getString("login");
-                String password = resultSet.getString("password");
-                int userTypeId = resultSet.getInt("user_type_id");
-                boolean isActive = resultSet.getBoolean("is_active");
-                String firstName = resultSet.getString("first_name");
-                String lastName = resultSet.getString("last_name");
-
-                Student student = new Student(id, login, password, userTypeId, isActive, firstName, lastName);
-                studentList.add(student);
-
-            }
-            preparedStatement.close();
-
         } catch (SQLException e) {
             System.out.println(e);
         }
-        return studentList;
+        return resultSet;
     }
 
     public Student getStudentByUserId(int userId) {

@@ -2,8 +2,6 @@ package handlers;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import controllers.CreepController;
-import controllers.MentorController;
 import helpers.CookieHandler;
 import models.User;
 import org.jtwig.JtwigModel;
@@ -12,7 +10,8 @@ import services.LoginService;
 
 import java.io.*;
 import java.net.URLDecoder;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginHandler implements HttpHandler {
     private LoginService loginService = new LoginService();

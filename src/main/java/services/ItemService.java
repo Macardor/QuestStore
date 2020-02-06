@@ -1,6 +1,6 @@
 package services;
 
-import daoImplementation.ItemDAO;
+import DAO.ItemDAO;
 import models.Item;
 import view.StaticUi;
 

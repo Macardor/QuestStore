@@ -1,40 +1,43 @@
-package handlers.creep;
+package handlers.student;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import DAO.StudentDAO;
 import helpers.CookieHandler;
-import models.Creep;
-import models.Mentor;
+import models.Student;
 import models.User;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
-import services.CreepService;
+import services.StudentService;
 
 import java.io.*;
 import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CreepEditProfile implements HttpHandler {
+public class StudentEditProfileHandler implements HttpHandler {
     User user = null;
     CookieHandler cookieHandler = new CookieHandler();
 
-    CreepService creepService = new CreepService();
+    StudentDAO studentDAO = new StudentDAO();
+    StudentService studentService = new StudentService();
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         user = cookieHandler.cookieChecker(httpExchange);
-        if(user == null || user.getUserType() != 3){
+        if(user == null || user.getUserType() != 1){
             httpExchange.getResponseHeaders().set("Location", "/login");
             httpExchange.sendResponseHeaders(303, 0);
         }
 
         String method = httpExchange.getRequestMethod();
+        int coins = studentDAO.showUserCoins(user.getId());
 
         if (method.equals("GET")){
-            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentor/mentorEditProfile.twig");
+            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/student/studentEditProfile.twig");
             JtwigModel model = JtwigModel.newModel();
             model.with("user", user);
+            model.with("coins", coins);
             String response = template.render(model);
 
             httpExchange.sendResponseHeaders(200, response.length());
@@ -54,12 +57,12 @@ public class CreepEditProfile implements HttpHandler {
             String password = inputs.get("password").toString();
             String firstName = inputs.get("firstName").toString();
             String lastName = inputs.get("lastName").toString();
-            int mentorDetailsId = creepService.getUserDetailsId(user);
+            int studentDetailsId = studentService.getUserDetailsId(user);
 
-            Creep creepToEdit = new Creep(login,password,2,true,firstName,lastName);
-            creepService.editCreep(creepToEdit, mentorDetailsId);
+            Student studentToEdit = new Student(login,password,1,true,firstName,lastName);
+            studentService.editStudent(studentToEdit,studentDetailsId);
 
-            httpExchange.getResponseHeaders().set("Location", "/creep");
+            httpExchange.getResponseHeaders().set("Location", "/student");
             httpExchange.sendResponseHeaders(303, 0);
         }
     }

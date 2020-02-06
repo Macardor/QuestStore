@@ -1,5 +1,6 @@
 package handlers.mentor.students;
 
+import DAO.StudentDAO;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import helpers.CookieHandler;
@@ -11,6 +12,7 @@ import services.StudentService;
 
 import java.io.*;
 import java.net.URLDecoder;
+import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +20,8 @@ import java.util.Map;
 public class RemoveStudentHandler implements HttpHandler {
     User user = null;
     CookieHandler cookieHandler = new CookieHandler();
+    StudentDAO studentDAO = new StudentDAO();
+    StudentService studentService = new StudentService();
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
@@ -27,19 +31,16 @@ public class RemoveStudentHandler implements HttpHandler {
             httpExchange.sendResponseHeaders(303, 0);
         }
 
-        StudentService studentService = new StudentService();
         String method = httpExchange.getRequestMethod();
-        System.out.println(method);
-
-        List<Student> studentList = studentService.getActiveStudentsList() ;
+        ResultSet resultSet = studentDAO.getActiveStudentsFromDb();
+        List<Student> studentsList = studentService.getActiveStudentsList(resultSet) ;
         String response = "";
-
 
         if (method.equals("GET")) {
             JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentor/remove-student.twig");
             JtwigModel model = JtwigModel.newModel();
 
-            model.with("studentList", studentList);
+            model.with("studentList", studentsList);
 
             response = template.render(model);
         }
@@ -53,7 +54,7 @@ public class RemoveStudentHandler implements HttpHandler {
 
             JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentor/remove-student.twig");
             JtwigModel model = JtwigModel.newModel();
-            model.with("studentList", studentList);
+            model.with("studentList", studentsList);
 
             response = template.render(model);
             studentService.deleteStudent(Integer.parseInt(inputs.get("userId").toString()));

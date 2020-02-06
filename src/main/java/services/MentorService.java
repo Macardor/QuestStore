@@ -1,6 +1,6 @@
 package services;
 
-import daoImplementation.MentorDAO;
+import DAO.MentorDAO;
 import models.Mentor;
 import models.User;
 

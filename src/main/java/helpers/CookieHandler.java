@@ -1,7 +1,7 @@
 package helpers;
 
 import com.sun.net.httpserver.HttpExchange;
-import daoImplementation.CookieDAO;
+import DAO.CookieDAO;
 import models.User;
 import services.CookieService;
 

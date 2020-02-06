@@ -1,4 +1,4 @@
-package daoImplementation;
+package DAO;
 
 import SQL.PostgreSQLJDBC;
 import models.Quest;

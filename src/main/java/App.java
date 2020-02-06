@@ -54,7 +54,7 @@ public class App {
         server.createContext("/student/store", new StudentStoreHandler());
         server.createContext("/student/inventory", new StudentInventoryHandler());
         server.createContext("/student/transactions", new StudentTransationsHandler());
-        server.createContext("/student/editProfile", new StudentEditProfile());
+        server.createContext("/student/editProfile", new StudentEditProfileHandler());
 
         //CreepHandler
         server.createContext("/creep", new CreepLoginPageHandler());
@@ -62,7 +62,7 @@ public class App {
         server.createContext("/creep/addMentor", new CreepAddMentorHandler());
         server.createContext("/creep/editMentor", new CreepEditMentorHandler());
         server.createContext("/creep/removeMentor", new CreepRemoveMentorHandler());
-        server.createContext("/creep/editProfile", new CreepEditProfile());
+        server.createContext("/creep/editProfile", new CreepEditProfileHandler());
 
 
 

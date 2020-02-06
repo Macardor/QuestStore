@@ -1,4 +1,4 @@
-package daoImplementation;
+package DAO;
 
 import SQL.PostgreSQLJDBC;
 import models.Coincubator;
@@ -35,43 +35,18 @@ public class CoincubatorDAO {
         }
     }
 
-    public List<Coincubator> getAllCoincubators(){
-        List<Coincubator> coincubators = new ArrayList<>();
+    public ResultSet getAllCoincubatorsFromDb(){
         String orderToSql = "SELECT * FROM coincubators " +
                 "WHERE is_active = true;";
 
         try {
-
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
             resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()){
-                int id = resultSet.getInt("id");
-                String name = resultSet.getString("name");
-                String description = resultSet.getString("description");
-                int currentDonation = resultSet.getInt("current_donation");
-                int targetDonation = resultSet.getInt("target_donation");
-                boolean isActive = resultSet.getBoolean("is_active");
-                Coincubator coincubator = new Coincubator(id,name,description,currentDonation, targetDonation,isActive);
-
-                System.out.println(id+ "| " + name+ "| " + description+ "| " + currentDonation+ "| " + targetDonation + "| " + isActive);
-                coincubators.add(coincubator);
-
-            }
-            preparedStatement.executeQuery();
         }catch (SQLException e) {
             System.out.println(e);
-        } finally {
-            try {
-                preparedStatement.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-
-            }
 
         }
-
-        return  coincubators;
+        return  resultSet;
     }
 
     public Coincubator isCoincubatorWithIdInDB(int id){
@@ -98,16 +73,7 @@ public class CoincubatorDAO {
             preparedStatement.executeQuery();
         }catch (SQLException e) {
             System.out.println(e);
-        } finally {
-            try {
-                preparedStatement.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-
-            }
-
         }
-
         return  coincubator;
     }
 
@@ -163,7 +129,7 @@ public class CoincubatorDAO {
     }
 
 
-    public void donateToCoincubator(int studentId, int coincubatorId, int coinAmount) {
+    public void donateToCoincubatorDb(int studentId, int coincubatorId, int coinAmount) {
         PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
         String orderToSql = "SELECT current_donation, target_donation FROM coincubators WHERE id = ?";
         try {

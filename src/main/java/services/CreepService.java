@@ -1,11 +1,15 @@
 package services;
 
-import daoImplementation.CreepDAO;
+import DAO.CreepDAO;
 import models.Creep;
 import models.Mentor;
 import models.User;
 import view.StaticUi;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class CreepService {
@@ -46,8 +50,31 @@ public class CreepService {
         //creepDAOImplementation.editMentor(mentor);
     }
 
+    //Refactored creep
+    public List<User> getAllMentorsList(ResultSet resultSet){
+        List<User> mentorsList = new ArrayList<>();
+        try {
+            while (resultSet.next()){
+                int id = resultSet.getInt("id");
+                String login = resultSet.getString("login");
+                String password = resultSet.getString("password");
+                int userTypeId2 = resultSet.getInt("user_type_id");
+                boolean isActive = resultSet.getBoolean("is_active");
+                String firstName = resultSet.getString("first_name");
+                String lastName = resultSet.getString("last_name");
+                Mentor mentor = new Mentor(id, login, password, userTypeId2, isActive, firstName, lastName);
+                mentorsList.add(mentor);
+            }
+            resultSet.close();
+        }
+        catch (SQLException e){
+            e.getMessage();
+        }
+        return mentorsList;
+    }
+
     public int getUserDetailsId(User mentor) {
-        return creepDAO.getUserDetailsId(mentor);
+        return creepDAO.getMentorDetails(mentor);
     }
 
     public void editCreep(Creep creepToEdit, int creepDetailsId) {

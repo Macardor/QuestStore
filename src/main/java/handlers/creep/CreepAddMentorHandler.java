@@ -1,8 +1,9 @@
 package handlers.creep;
 
+import DAO.MentorDAO;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import daoImplementation.CreepDAO;
+import DAO.CreepDAO;
 import helpers.CookieHandler;
 import models.Mentor;
 import models.User;
@@ -26,7 +27,7 @@ public class CreepAddMentorHandler implements HttpHandler {
             httpExchange.sendResponseHeaders(303, 0);
         }
 
-        CreepDAO creepDAO = new CreepDAO();
+        MentorDAO mentorDAO = new MentorDAO();
         String method = httpExchange.getRequestMethod();
         String response = "";
 
@@ -49,7 +50,7 @@ public class CreepAddMentorHandler implements HttpHandler {
             System.out.println(login +password+ firstName+lastName);
             Mentor mentorToAdd = new Mentor(login,password,2,true,firstName,lastName);
             System.out.println(mentorToAdd.getLastname());
-            creepDAO.addMentor(mentorToAdd);
+            mentorDAO.addMentor(mentorToAdd);
 
 
             httpExchange.getResponseHeaders().set("Location", "/cyberStore/creep/showMentors");

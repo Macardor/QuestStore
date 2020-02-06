@@ -1,4 +1,5 @@
 package handlers.mentor.students;
+import DAO.StudentDAO;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import helpers.CookieHandler;
@@ -10,6 +11,7 @@ import services.StudentService;
 
 import java.io.*;
 import java.net.URLDecoder;
+import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +19,7 @@ import java.util.Map;
 public class EditStudentHandler implements HttpHandler {
     User user = null;
     CookieHandler cookieHandler = new CookieHandler();
+    StudentDAO studentDAO = new StudentDAO();
 
     private int postIndex=1;
     private int studentDetailsId;
@@ -30,7 +33,8 @@ public class EditStudentHandler implements HttpHandler {
         }
 
         StudentService studentService = new StudentService();
-        List<Student> studentList = studentService.getActiveStudentList();
+        ResultSet resultSet = studentDAO.getActiveStudentsFromDb();
+        List<Student> studentList = studentService.getActiveStudentsList(resultSet);
 
         String method = httpExchange.getRequestMethod();
         String response = "";

@@ -1,4 +1,4 @@
-package daoImplementation;
+package DAO;
 
 import SQL.PostgreSQLJDBC;
 import models.Creep;
@@ -10,63 +10,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class CreepDAO {
 
     PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
-
-    public List<User> showAllMentors() {
-        String orderToSql = "SELECT * FROM users JOIN user_details on user_details.id = users.user_details_id WHERE user_type_id = 2 and users.is_active = true ORDER BY users.id ";
-        List<User> mentorsList = new ArrayList<>();
-        try {
-            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
-            resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
-                int id = resultSet.getInt("id");
-                String login = resultSet.getString("login");
-                String password = resultSet.getString("password");
-                int userTypeId2 = resultSet.getInt("user_type_id");
-                boolean isActive = resultSet.getBoolean("is_active");
-                String firstName = resultSet.getString("first_name");
-                String lastName = resultSet.getString("last_name");
-                Mentor mentor = new Mentor(id, login, password, userTypeId2, isActive, firstName, lastName);
-                mentorsList.add(mentor);
-                //System.out.println(id+ "| " + login+ "| " + password+ "| " + userTypeId2+ "| " + firstName+ "| " + lastName);
-
-            }
-            preparedStatement.executeQuery();
-            preparedStatement.close();
-        }catch (SQLException e) {
-            System.out.println(e);
-        }return mentorsList;
-    }
-
-    public void addMentor(Mentor mentor) {
-        String insertIntoTwoTables = "WITH insertIntoUserDetails AS (INSERT INTO user_details (login, password, first_name, last_name) " +
-                "VALUES (?, ?, ?, ?) RETURNING id), inserIntoUsers AS (INSERT INTO users (user_type_id, is_active, user_details_id) " +
-                "VALUES (2, 'true', (SELECT id FROM insertIntoUserDetails)) RETURNING id) INSERT INTO mentors (user_id) VALUES ((SELECT id FROM inserIntoUsers))";
-
-        try {
-            preparedStatement = postgreSQLJDBC.connect().prepareStatement(insertIntoTwoTables);
-
-            int studentTypeId = 2;
-            boolean isActive = true;
-            //mentor = new Mentor(login, password, studentTypeId, isActive, firstName, lastName);
-            //mentorsList.add(mentor);
-            preparedStatement.setString(1, mentor.getLogin());
-            preparedStatement.setString(2, mentor.getPassword());
-            preparedStatement.setString(3, mentor.getLastname());
-            preparedStatement.setString(4, mentor.getLastname());
-            preparedStatement.executeQuery();
-            preparedStatement.close();
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
 
     public void editMentor(Mentor mentor, int id) {
         String orderForSql = ("UPDATE user_details SET login = ?, password = ?, first_name = ?, last_name = ? WHERE id = ?");
@@ -87,7 +36,7 @@ public class CreepDAO {
         }
     }
 
-    public int getUserDetailsId(User mentor) {
+    public int getMentorDetails(User mentor) {
         String orderToSql = "SELECT * FROM users WHERE id = ?";
         int userDetailId = 0;
         try {

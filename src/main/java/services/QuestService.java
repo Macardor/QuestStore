@@ -1,6 +1,6 @@
 package services;
 
-import daoImplementation.QuestDAO;
+import DAO.QuestDAO;
 import models.Quest;
 import view.StaticUi;
 

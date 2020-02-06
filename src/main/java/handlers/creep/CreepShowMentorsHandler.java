@@ -1,20 +1,25 @@
 package handlers.creep;
 
+import DAO.MentorDAO;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import daoImplementation.CreepDAO;
+import DAO.CreepDAO;
 import helpers.CookieHandler;
 import models.User;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
+import services.CreepService;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.sql.ResultSet;
 import java.util.List;
 
 public class CreepShowMentorsHandler implements HttpHandler {
     User user = null;
     CookieHandler cookieHandler = new CookieHandler();
+    MentorDAO mentorDAO = new MentorDAO();
+    CreepService creepService = new CreepService();
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
@@ -25,8 +30,9 @@ public class CreepShowMentorsHandler implements HttpHandler {
         }
 
         String method = httpExchange.getRequestMethod();
-        CreepDAO creepDAO = new CreepDAO();
-        List<User> showMentorsList = creepDAO.showAllMentors();
+
+        ResultSet resultSet = mentorDAO.getAllMentorsFromDb();
+        List<User> showMentorsList = creepService.getAllMentorsList(resultSet);
 
         if (method.equals("GET")){
             JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/creep/showMentors.twig");

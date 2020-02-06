@@ -1,21 +1,38 @@
 package services;
 
-import daoImplementation.CoincubatorDAO;
+import DAO.CoincubatorDAO;
 import models.Coincubator;
 import view.StaticUi;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CoincubatorService {
     private CoincubatorDAO coincubatorDAO = new CoincubatorDAO();
 
-    public List<Coincubator> showAllCoincubators(){
-        List<Coincubator> coincubators;
-            coincubators = coincubatorDAO.getAllCoincubators();
+    public List<Coincubator> showAllCoincubators(ResultSet resultSet){
+        List<Coincubator> coincubators = new ArrayList<>();
+        try {
+            while (resultSet.next()){
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                String description = resultSet.getString("description");
+                int currentDonation = resultSet.getInt("current_donation");
+                int targetDonation = resultSet.getInt("target_donation");
+                boolean isActive = resultSet.getBoolean("is_active");
+                Coincubator coincubator = new Coincubator(id,name,description,currentDonation, targetDonation,isActive);
+                coincubators.add(coincubator);
+                resultSet.close();
+        }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
         return coincubators;
-
-
     };
+
+
 
     public void addNewCoincubator() {
         Coincubator coincubator;

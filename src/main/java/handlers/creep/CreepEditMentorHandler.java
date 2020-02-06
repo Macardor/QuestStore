@@ -1,16 +1,19 @@
 package handlers.creep;
 
+import DAO.MentorDAO;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import daoImplementation.CreepDAO;
+import DAO.CreepDAO;
 import helpers.CookieHandler;
 import models.Mentor;
 import models.User;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
+import services.CreepService;
 
 import java.io.*;
 import java.net.URLDecoder;
+import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +21,9 @@ import java.util.Map;
 public class CreepEditMentorHandler implements HttpHandler {
     User user = null;
     CookieHandler cookieHandler = new CookieHandler();
+    MentorDAO mentorDAO = new MentorDAO();
+    CreepDAO creepDAO = new CreepDAO();
+    CreepService creepService = new CreepService();
 
     private int postIndex=1;
     private int mentorDetailsId;
@@ -29,8 +35,9 @@ public class CreepEditMentorHandler implements HttpHandler {
             httpExchange.sendResponseHeaders(303, 0);
         }
 
-        CreepDAO creepDAO = new CreepDAO();
-        List<User>showMentorsList = creepDAO.showAllMentors();
+
+        ResultSet resultSet = mentorDAO.getAllMentorsFromDb();
+        List<User> showMentorsList = creepService.getAllMentorsList(resultSet);
         String method = httpExchange.getRequestMethod();
         String response = "";
 
@@ -64,7 +71,7 @@ public class CreepEditMentorHandler implements HttpHandler {
             int userId = Integer.parseInt(id);
 
             Mentor mentorId = creepDAO.getMentorById(userId);
-            mentorDetailsId = creepDAO.getUserDetailsId(mentorId);
+            mentorDetailsId = creepDAO.getMentorDetails(mentorId);
 
 
             JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/creep/editMentor.twig");

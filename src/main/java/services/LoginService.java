@@ -1,6 +1,6 @@
 package services;
 
-import daoImplementation.LoginDAO;
+import DAO.LoginDAO;
 import models.User;
 
 public class LoginService {
