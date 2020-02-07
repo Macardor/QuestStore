@@ -4,6 +4,8 @@ import DAO.QuestDAO;
 import models.Quest;
 import view.StaticUi;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -66,5 +68,14 @@ public class QuestService {
 
     public List<Quest> getAllActiveQuestList() {
         return questDAO.getAllActiveQuests();
+    }
+
+    public void addQuest(PreparedStatement ps, Quest quest){
+        ps = questDAO.getPsForAddQuest();
+        try {
+            ps.setString(1, quest.getName());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
