@@ -1,12 +1,3 @@
-import controllers.CreepController;
-import controllers.LoginController;
-import controllers.MentorController;
-import controllers.StudentController;
-import daoImplementation.CreepDAOImplementation;
-import daoImplementation.StudentDAOImplementation;
-import services.StudentService;
-import view.StaticUi;
-
 public class Main {
     public static void main(String[] args) {
 
@@ -14,7 +5,7 @@ public class Main {
 //        loginController.run();
 //
 //        CreepDAOImplementation creepDAOImplementation = new CreepDAOImplementation();
-//        creepDAOImplementation.showAllMentors();
+//        creepDAOImplementation.getAllMentorsFromDb();
 
 //        MentorController mentorController = new MentorController();
 //        StudentService studentService = new StudentService();

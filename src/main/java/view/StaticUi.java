@@ -1,8 +1,8 @@
 package view;
 
-import daoImplementation.CoincubatorDAOImplementation;
-import daoImplementation.CreepDAOImplementation;
-import daoImplementation.StudentDAOImplementation;
+import DAO.CoincubatorDAO;
+import DAO.CreepDAO;
+import DAO.StudentDAO;
 import models.*;
 
 import java.util.ArrayList;
@@ -40,10 +40,10 @@ public class StaticUi {
         int coincubatorId = scanner.nextInt();
         System.out.println("Enter amount of coins you wish to pay: ");
         int coinAmount = scanner.nextInt();
-        StudentDAOImplementation studentDAOImplementation = new StudentDAOImplementation();
-        if (coinAmount >= studentDAOImplementation.showUserCoins(studentId)){
-            CoincubatorDAOImplementation coincubatorDAOImplementation = new CoincubatorDAOImplementation();
-            coincubatorDAOImplementation.donateToCoincubator(studentId, coincubatorId, coinAmount);
+        StudentDAO studentDAO = new StudentDAO();
+        if (coinAmount >= studentDAO.showUserCoins(studentId)){
+            CoincubatorDAO coincubatorDAO = new CoincubatorDAO();
+            coincubatorDAO.donateToCoincubatorDb(studentId, coincubatorId, coinAmount);
         }
     }
 
@@ -290,7 +290,7 @@ public class StaticUi {
         int studentTypeId = 2;
         boolean isActive = true;
         Mentor mentor = new Mentor(login, password, studentTypeId, isActive, firstName, lastName);
-        CreepDAOImplementation creepDAOImplementation = new CreepDAOImplementation();
+        CreepDAO creepDAO = new CreepDAO();
         //creepDAOImplementation.addMentor(mentor);
         mentorsList.add(mentor);
         return mentorsList;

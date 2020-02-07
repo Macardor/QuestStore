@@ -1,13 +1,15 @@
-package handlers.mentor.students;
-import DAO.StudentDAO;
+package handlers.creep;
+
+import DAO.MentorDAO;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import DAO.CreepDAO;
 import helpers.CookieHandler;
-import models.Student;
+import models.Mentor;
 import models.User;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
-import services.StudentService;
+import services.CreepService;
 
 import java.io.*;
 import java.net.URLDecoder;
@@ -16,34 +18,34 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class EditStudentHandler implements HttpHandler {
+public class CreepEditMentorHandler implements HttpHandler {
     User user = null;
     CookieHandler cookieHandler = new CookieHandler();
-    StudentDAO studentDAO = new StudentDAO();
+    MentorDAO mentorDAO = new MentorDAO();
+    CreepDAO creepDAO = new CreepDAO();
+    CreepService creepService = new CreepService();
 
     private int postIndex=1;
-    private int studentDetailsId;
-
+    private int mentorDetailsId;
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         user = cookieHandler.cookieChecker(httpExchange);
-        if(user == null || user.getUserType() != 2){
+        if(user == null || user.getUserType() != 3){
             httpExchange.getResponseHeaders().set("Location", "/login");
             httpExchange.sendResponseHeaders(303, 0);
         }
 
-        StudentService studentService = new StudentService();
-        ResultSet resultSet = studentDAO.getActiveStudentsFromDb();
-        List<Student> studentList = studentService.getActiveStudentsList(resultSet);
 
+        ResultSet resultSet = mentorDAO.getAllMentorsFromDb();
+        List<User> showMentorsList = creepService.getAllMentorsList(resultSet);
         String method = httpExchange.getRequestMethod();
         String response = "";
 
         if (method.equals("GET")){
             postIndex = 1;
-            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentor/edit-student-menu.twig");
+            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/creep/editMentorMenu.twig");
             JtwigModel model = JtwigModel.newModel();
-            model.with("studentList", studentList);
+            model.with("mentorsList", showMentorsList);
             response = template.render(model);
 
             httpExchange.sendResponseHeaders(200, response.length());
@@ -58,23 +60,34 @@ public class EditStudentHandler implements HttpHandler {
             InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
             BufferedReader br = new BufferedReader(isr);
             String formData = br.readLine();
-
+//
             Map inputs = parseFormData(formData);
-            String id = inputs.get("studentId").toString();
+            String id = inputs.get("mentorId").toString();
+//            System.out.println(id);
+//            String password = inputs.get("password").toString();
+//            String firstName = inputs.get("firstName").toString();
+//            String lastName = inputs.get("lastName").toString();
+//            System.out.println(login + password + firstName + lastName);
             int userId = Integer.parseInt(id);
 
-            Student student = studentService.getStudentByUserId(userId);
-            studentDetailsId = studentService.getUserDetailsId(student);
+            Mentor mentorId = creepDAO.getMentorById(userId);
+            mentorDetailsId = creepDAO.getMentorDetails(mentorId);
 
-            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentor/edit-student.twig");
+
+            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/creep/editMentor.twig");
             JtwigModel model = JtwigModel.newModel();
-            model.with("student", student);
+            model.with("mentor", mentorId);
             response = template.render(model);
 
             httpExchange.sendResponseHeaders(200, response.length());
             OutputStream os = httpExchange.getResponseBody();
             os.write(response.getBytes());
             os.close();
+
+            //Mentor mentorToAdd = new Mentor(login, password, 2, true, firstName, lastName);
+            //System.out.println(mentorToAdd.getLastname());
+            //creepDAOImplementation.addMentor(mentorToAdd);
+
         }
 
         if (method.equals("POST") && postIndex == 2) {
@@ -82,11 +95,18 @@ public class EditStudentHandler implements HttpHandler {
             InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
             BufferedReader br = new BufferedReader(isr);
             String formData = br.readLine();
+
             Map inputs = parseFormData(formData);
 
-            studentService.editStudent(new Student(inputs.get("login").toString() ,inputs.get("password").toString(),2,true, inputs.get("firstName").toString(), inputs.get("lastName").toString()), studentDetailsId);
+            String login = inputs.get("login").toString();
+            String password = inputs.get("password").toString();
+            String firstName = inputs.get("firstName").toString();
+            String lastName = inputs.get("lastName").toString();
 
-            httpExchange.getResponseHeaders().set("Location", "/mentor/edit-student");
+            creepDAO.editMentor(new Mentor(login,password,2,true,firstName,lastName), mentorDetailsId);
+
+
+            httpExchange.getResponseHeaders().set("Location", "/cyberStore/creep/editMentor");
             httpExchange.sendResponseHeaders(303, 0);
         }
 

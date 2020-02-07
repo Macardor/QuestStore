@@ -1,46 +1,50 @@
-package handlers.mentor.students;
+package handlers.creep;
 
-import DAO.StudentDAO;
+import DAO.MentorDAO;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import DAO.CreepDAO;
 import helpers.CookieHandler;
-import models.Student;
 import models.User;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
-import services.StudentService;
+import services.CreepService;
 
 import java.io.*;
 import java.net.URLDecoder;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class RemoveStudentHandler implements HttpHandler {
+public class CreepRemoveMentorHandler implements HttpHandler {
     User user = null;
     CookieHandler cookieHandler = new CookieHandler();
-    StudentDAO studentDAO = new StudentDAO();
-    StudentService studentService = new StudentService();
+    CreepDAO creepDAO = new CreepDAO();
+    MentorDAO mentorDAO = new MentorDAO();
+    CreepService creepService = new CreepService();
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         user = cookieHandler.cookieChecker(httpExchange);
-        if(user == null || user.getUserType() != 2){
+        if(user == null || user.getUserType() != 3){
             httpExchange.getResponseHeaders().set("Location", "/login");
             httpExchange.sendResponseHeaders(303, 0);
         }
 
         String method = httpExchange.getRequestMethod();
-        ResultSet resultSet = studentDAO.getActiveStudentsFromDb();
-        List<Student> studentsList = studentService.getActiveStudentsList(resultSet) ;
+
+        ResultSet resultSet = mentorDAO.getAllMentorsFromDb() ;
+        List<User> mentorList = creepService.getAllMentorsList(resultSet);
         String response = "";
 
+
         if (method.equals("GET")) {
-            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentor/remove-student.twig");
+            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/creep/removeMentor.twig");
             JtwigModel model = JtwigModel.newModel();
 
-            model.with("studentList", studentsList);
+            model.with("mentorList", mentorList);
 
             response = template.render(model);
         }
@@ -52,15 +56,12 @@ public class RemoveStudentHandler implements HttpHandler {
 
             Map inputs = parseFormData(formData);
 
-            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentor/remove-student.twig");
-            JtwigModel model = JtwigModel.newModel();
-            model.with("studentList", studentsList);
+            int userIdToDelete = Integer.parseInt(inputs.get("userId").toString());
 
-            response = template.render(model);
-            studentService.deleteStudent(Integer.parseInt(inputs.get("userId").toString()));
-            httpExchange.getResponseHeaders().set("Location", "/mentor/remove-student" );
+            creepDAO.setMentorToUnactive(userIdToDelete);
+            httpExchange.getResponseHeaders().set("Location", "/creep/showMentors");
             httpExchange.sendResponseHeaders(303,0);
-            System.out.println(Integer.parseInt(inputs.get("userId").toString()));
+//            System.out.println(Integer.parseInt(inputs.get("userId").toString()));
         }
         httpExchange.sendResponseHeaders(200, response.length());
         OutputStream os = httpExchange.getResponseBody();
@@ -85,3 +86,4 @@ public class RemoveStudentHandler implements HttpHandler {
         return map;
     }
 }
+

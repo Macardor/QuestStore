@@ -70,14 +70,14 @@
                                 {% if (item.isUsed == true) %}
                             <form method="POST" >
                                 <div>
-                                    <button type="submit" name="itemID" class="card-button" value="{{ item.transactionId }}">Active</button>
+                                    <button type="submit" name="itemID" class="card-button" value="{{ item.transactionId }}">Activate</button>
                                 </div>
                             </form>
                                 {% endif %}
 
                             {% if (item.isUsed == false) %}
                                     <div>
-                                        <button class="card-button">Already active</button>
+                                        <button class="card-button">Active</button>
                                     </div>
                             {% endif %}
                         </a>
