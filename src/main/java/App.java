@@ -5,11 +5,8 @@ import handlers.mentor.MentorEditProfile;
 import handlers.mentor.MentorLoginPageHandler;
 import handlers.mentor.coincubator.*;
 import handlers.mentor.quests.*;
-import handlers.mentor.store.AddItemHandler;
-import handlers.mentor.store.RemoveItemHandler;
+import handlers.mentor.store.*;
 import handlers.student.*;
-import handlers.mentor.store.StoreHandler;
-import handlers.mentor.store.StoreMenuHandler;
 import handlers.mentor.students.*;
 
 import java.net.InetSocketAddress;
@@ -47,6 +44,8 @@ public class App {
         server.createContext("/mentor/edit-coincubator", new EditCoincubatorHandler());
         server.createContext("/mentor/remove-coincubator", new RemoveCoincubatorHandler());
         server.createContext("/mentor/coincubator-list", new CoincubatorListHandler());
+        server.createContext("/mentor/edit-quest", new EditQuestHandler());
+        server.createContext("/mentor/edit-item", new EditItemHandler());
 
 
         //Student handler
