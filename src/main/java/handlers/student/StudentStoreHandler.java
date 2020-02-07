@@ -32,7 +32,7 @@ public class StudentStoreHandler implements HttpHandler {
         ItemDAO itemDAO = new ItemDAO();
         List<Item> itemsList = itemDAO.getItemsList();
         StudentDAO studentDAO = new StudentDAO();
-        int coins = studentDAO.showUserCoins(user.getId());
+        int coins = studentDAO.getStudentCoins(user.getId());
 
         if (method.equals("GET")){
             JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/student/store.twig");

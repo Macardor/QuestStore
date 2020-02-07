@@ -3,6 +3,7 @@ package DAO;
 import DAO.StudentDAO;
 import SQL.PostgreSQLJDBC;
 import models.Coincubator;
+import services.StudentService;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -13,6 +14,8 @@ import java.util.Calendar;
 import java.util.List;
 
 public class CoincubatorDAO {
+    StudentDAO studentDAO = new StudentDAO();
+    StudentService studentService = new StudentService();
     PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
@@ -167,7 +170,6 @@ public class CoincubatorDAO {
                     coinsToPay = coinAmount - (currentDonation + coinAmount - targetDonation);
                 }
                 payCoinsToCoincubator(coincubatorId, coinsToPay);
-                StudentDAO studentDAO = new StudentDAO();
                 studentDAO.takeCoinsFromStudent(studentId, coinsToPay);
                 addDonor(studentId, coincubatorId, coinsToPay);
             }

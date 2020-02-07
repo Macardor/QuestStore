@@ -32,7 +32,7 @@ public class StudentTransactionsHandler implements HttpHandler {
         String method = httpExchange.getRequestMethod();
         ItemDAO itemDAO = new ItemDAO();
         List<ItemTransaction> transactionItemsList = itemDAO.getUsertransactionList(studentDAO.getStudentId(user));
-        int coins = studentDAO.showUserCoins(user.getId());
+        int coins = studentDAO.getStudentCoins(user.getId());
         System.out.println("enter4");
         if (method.equals("GET")){
             JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/student/transactions.twig");

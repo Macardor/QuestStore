@@ -31,7 +31,7 @@ public class StudentEditProfileHandler implements HttpHandler {
         }
 
         String method = httpExchange.getRequestMethod();
-        int coins = studentDAO.showUserCoins(user.getId());
+        int coins = studentDAO.getStudentCoins(user.getId());
 
         if (method.equals("GET")){
             JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/student/studentEditProfile.twig");

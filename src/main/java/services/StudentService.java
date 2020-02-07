@@ -91,6 +91,13 @@ public class StudentService {
     public void editStudent(Student student, int studentDetailsId) {
         studentDAO.editStudent(student, studentDetailsId);
     }
+    public boolean checkIfUserHasEnoughCoins(int studentId, int coinsToPay){
+        int studentCoins = studentDAO.getStudentCoins(studentId);
+        if (studentCoins < coinsToPay){
+            return false;
+        }
+        return true;
+    }
 }
 //    public void editChooseToStudent() {
 //        mentorDAO.getActiveStudentsFromDb();
