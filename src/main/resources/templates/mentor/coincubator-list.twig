@@ -2,17 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Quest Store Login</title>
-    <link rel="stylesheet" type="text/css" href="http://localhost:63342/QuestStore/src/main/resources/static/css/mainStyle.css">
+    <title>Quest Store</title>
+    <link rel="stylesheet" type="text/css" href="http://localhost:63342/QuestStore/static/css/mainStyle.css">
     <link href="https://fonts.googleapis.com/css?family=Quantico:400,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/c5e394a33c.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="http://localhost:63342/QuestStore/static/js/payCoins.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://localhost:63342/QuestStore/static/css/cardHolo.css">
+    <link rel="stylesheet" type="text/css" href="http://localhost:63342/QuestStore/static/css/storeStyle.css">
+    <script
+            src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+    <script src="http://localhost:63342/QuestStore/static/js/cardHolo.js"></script>
 </head>
-
-
-<!--MENU BAR-->
 <body>
-
 <nav class="navbar navbar-expand-sm navbar-light bg-dark">
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
@@ -36,45 +40,35 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item" href="../mentor/editProfile">Edit Profile</a>
-                    <a class="dropdown-item" href="../logout">Log Out</a>
+                    <a class="dropdown-item" href="../logout">Logout</a>
                 </div>
             </li>
         </ul>
     </div>
 </nav>
 
+
 <main class="main-area">
-    <div id="front">
-
-        <form method="POST">
-            <div class="form-group">
-                <label for="inputLogin">Login</label></div>
-            <div class="form-group"><label for="logindb" id="previoustext">Previous Login: {{ user.login }}</label>
-                <input type="text" class="form-control" id="login" name="login">
-            </div>
-            <div class="form-group">
-                <label for="inputPassword">Password</label></div>
-            <div class="form-group">
-                <label for="passworddb" id="previoustext">Previous password: {{ user.password }}</label>
-                <input type="password" class="form-control" id="password" name="password">
-            </div>
-            <div class="form-group">
-                <label for="inputFirstName">First Name</label></div>
-            <div class="form-group">
-                <label for="firstnamedb" id="previoustext">Previous first name: {{ user.firstname }}</label>
-                <input type="text" class="form-control" id="firstName" name="firstName">
-            </div>
-            <div class="form-group">
-                <label for="inputLastName">Last Name</label></div>
-            <div class="form-group">
-                <label for="lastnamedb" id="previoustext">Previous last name: {{ user.lastname }}</label>
-                <input type="text" class="form-control" id="lastName" name="lastName">
-            </div>
-            <div class="form-action">
-                <button type="submit" class="btn btn-primary text-center" value="Submit">Edit</button>
-            </div>
-        </form>
-
+    <div class="centered">
+        <section class="cards">
+            {% for coincubator in coincubatorsList %}
+                <article class="card">
+                    <a href="#">
+                        <figure class="thumbnail">
+                            <img src="http://localhost:63342/QuestStore/templates/cardexample3.jpg" alt="meow">
+                        </figure>
+                        <div class="card-content">
+                            <h2>{{ coincubator.name }}</h2>
+                            <p>{{ coincubator.description }}</p>
+                            <h2>{{ coincubator.currentDonation }} / {{ coincubator.targetDonation }} </h2>
+                        </div>
+                        <input type="number" min="1" placeholder="Enter amount" class="card-input">
+                        <button type="button" class="card-button">Pay up</button>
+                    </a>
+                </article>
+            {% endfor %}
+            <style class="hover"></style>
+        </section>
     </div>
 </main>
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
@@ -82,6 +76,4 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
 </body>
-<footer>
-
-</footer>
+</html>
