@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 
-public class StudentTransationsHandler implements HttpHandler {
+public class StudentTransactionsHandler implements HttpHandler {
     User user = null;
     CookieHandler cookieHandler = new CookieHandler();
 

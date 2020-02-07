@@ -53,7 +53,7 @@ public class App {
         server.createContext("/student/quests", new StudentQuestsHandler());
         server.createContext("/student/store", new StudentStoreHandler());
         server.createContext("/student/inventory", new StudentInventoryHandler());
-        server.createContext("/student/transactions", new StudentTransationsHandler());
+        server.createContext("/student/transactions", new StudentTransactionsHandler());
         server.createContext("/student/editProfile", new StudentEditProfileHandler());
 
         //CreepHandler
