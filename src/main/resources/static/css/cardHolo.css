@@ -107,8 +107,8 @@
 }
 
 .card-button{
-    width: 50%;
-    height: 2em;
+    width: 50% !important;
+    height: 2em !important;
     position: absolute;
     bottom: 0;
     right: 0;
@@ -116,8 +116,8 @@
 }
 
 .card-input{
-    width: 50%;
-    height: 2em;
+    width: 50% !important;
+    height: 2em !important;
     position: absolute;
     bottom: 0;
     left: 0;
