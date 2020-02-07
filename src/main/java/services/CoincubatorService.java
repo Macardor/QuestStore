@@ -24,15 +24,14 @@ public class CoincubatorService {
                 boolean isActive = resultSet.getBoolean("is_active");
                 Coincubator coincubator = new Coincubator(id,name,description,currentDonation, targetDonation,isActive);
                 coincubators.add(coincubator);
-                resultSet.close();
+            }
+            resultSet.close();
         }
-        }catch (SQLException e){
+        catch (SQLException e){
             e.printStackTrace();
         }
         return coincubators;
-    };
-
-
+    }
 
     public void addNewCoincubator() {
         Coincubator coincubator;

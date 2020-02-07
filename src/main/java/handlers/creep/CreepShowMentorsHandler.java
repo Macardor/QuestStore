@@ -30,7 +30,6 @@ public class CreepShowMentorsHandler implements HttpHandler {
         }
 
         String method = httpExchange.getRequestMethod();
-
         ResultSet resultSet = mentorDAO.getAllMentorsFromDb();
         List<User> showMentorsList = creepService.getAllMentorsList(resultSet);
 

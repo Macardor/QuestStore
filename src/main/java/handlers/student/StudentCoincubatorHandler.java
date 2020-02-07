@@ -1,8 +1,8 @@
 package handlers.student;
 
+import DAO.CoincubatorDAO;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import DAO.CoincubatorDAO;
 import DAO.StudentDAO;
 import helpers.CookieHandler;
 import models.Coincubator;
@@ -29,9 +29,13 @@ public class StudentCoincubatorHandler implements HttpHandler {
             httpExchange.getResponseHeaders().set("Location", "/login");
             httpExchange.sendResponseHeaders(303, 0);
         }
-        String method = httpExchange.getRequestMethod();
+
+
+
         ResultSet resultSet = coincubatorDAO.getAllCoincubatorsFromDb();
         List<Coincubator> coincubatorsList = coincubatorService.showAllCoincubators(resultSet);
+        String method = httpExchange.getRequestMethod();
+        String response = "";
         StudentDAO studentDAO = new StudentDAO();
         int coins = studentDAO.showUserCoins(user.getId());
 
@@ -40,7 +44,7 @@ public class StudentCoincubatorHandler implements HttpHandler {
             JtwigModel model = JtwigModel.newModel();
             model.with("coincubatorsList", coincubatorsList);
             model.with("coins", coins);
-            String response = template.render(model);
+            response = template.render(model);
 
             httpExchange.sendResponseHeaders(200, response.length());
             OutputStream os = httpExchange.getResponseBody();
