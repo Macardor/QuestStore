@@ -13,7 +13,7 @@ import java.util.List;
 
 public class CreepDAO {
 
-    PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
+    private PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
 
@@ -31,9 +31,11 @@ public class CreepDAO {
 
             int row = preparedStatement.executeUpdate();
             preparedStatement.close();
+            postgreSQLJDBC.disconnect();
         } catch (Exception e) {
             System.out.println(e);
         }
+        postgreSQLJDBC.disconnect();
     }
 
     public int getMentorDetails(User mentor) {
@@ -49,9 +51,11 @@ public class CreepDAO {
             }
             preparedStatement.executeQuery();
             preparedStatement.close();
+            postgreSQLJDBC.disconnect();
         } catch (SQLException e) {
             System.out.println(e);
         }
+        postgreSQLJDBC.disconnect();
         return userDetailId;
     }
 
@@ -68,9 +72,11 @@ public class CreepDAO {
 
             preparedStatement.executeUpdate();
             preparedStatement.close();
+            postgreSQLJDBC.disconnect();
         } catch (Exception e) {
             System.out.println(e);
         }
+        postgreSQLJDBC.disconnect();
     }
 
     public Mentor getMentorById(int idToEdit) {
@@ -95,9 +101,12 @@ public class CreepDAO {
                 System.out.println(mentor.toString());
             }
             preparedStatement.close();
+            postgreSQLJDBC.disconnect();
         }catch (SQLException e) {
             System.out.println(e);
-        }return mentor;
+        }
+        postgreSQLJDBC.disconnect();
+        return mentor;
     }
 
     public void editCreep(Creep creepToEdit, int creepDetailsId) {
@@ -115,8 +124,10 @@ public class CreepDAO {
 
             preparedStatement.executeUpdate();
             preparedStatement.close();
+            postgreSQLJDBC.disconnect();
         } catch (SQLException e) {
             System.out.println(e);
         }
+        postgreSQLJDBC.disconnect();
     }
 }

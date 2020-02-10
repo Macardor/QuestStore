@@ -38,11 +38,9 @@ public class CookieHandler {
             httpExchange.getResponseHeaders().add("Set-Cookie", cookie.toString());
             String cookieSessionIdToAdd = uuid.toString();
             cookieSessionIdToAdd = '"'+cookieSessionIdToAdd+'"';
-
             cookieDAO.putNewCookieToDB(cookieSessionIdToAdd);
         }
         return user;
-
     }
 
     Optional<HttpCookie> getSessionIdCookie(HttpExchange httpExchange){

@@ -30,9 +30,11 @@ public class ItemDAO {
 
             ps.executeUpdate();
             ps.close();
+            postgreSQLJDBC.disconnect();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        postgreSQLJDBC.disconnect();
     }
 
     public void deleteItem(int id) {
@@ -46,9 +48,11 @@ public class ItemDAO {
 
             ps.executeUpdate();
             ps.close();
+            postgreSQLJDBC.disconnect();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        postgreSQLJDBC.disconnect();
     }
 
     public void editItem(Item item) {
@@ -67,9 +71,11 @@ public class ItemDAO {
 
             ps.executeUpdate();
             ps.close();
+            postgreSQLJDBC.disconnect();
         } catch (SQLException e) {
             System.out.println(e);
         }
+        postgreSQLJDBC.disconnect();
     }
 
 
@@ -93,9 +99,11 @@ public class ItemDAO {
                 itemList.add(item);
             }
             ps.close();
+            postgreSQLJDBC.disconnect();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        postgreSQLJDBC.disconnect();
         return itemList;
     }
     public List<Item> getActiveItemsList() {
@@ -118,9 +126,11 @@ public class ItemDAO {
                 itemList.add(item);
             }
             ps.close();
+            postgreSQLJDBC.disconnect();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        postgreSQLJDBC.disconnect();
         return itemList;
     }
 
@@ -146,9 +156,11 @@ public class ItemDAO {
                 //test method
             }
             ps.close();
+            postgreSQLJDBC.disconnect();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        postgreSQLJDBC.disconnect();
         return itemList;
     }
 
@@ -166,9 +178,11 @@ public class ItemDAO {
                 boolean isActive = resultSet.getBoolean("is_active");
                 item = new Item(id, name, price, description, isActive);
             }
+            postgreSQLJDBC.disconnect();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        postgreSQLJDBC.disconnect();
         return item;
     }
 
@@ -198,9 +212,11 @@ public class ItemDAO {
                 System.out.println(itemTransaction.toString());
             }
             ps.close();
+            postgreSQLJDBC.disconnect();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        postgreSQLJDBC.disconnect();
         return itemTransactionListList;
     }
 
@@ -215,9 +231,11 @@ public class ItemDAO {
                 price = resultSet.getInt("price");
 
             }
+            postgreSQLJDBC.disconnect();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        postgreSQLJDBC.disconnect();
         return price;
     }
 
@@ -235,8 +253,11 @@ public class ItemDAO {
 
             ps.executeUpdate();
             ps.close();
+            postgreSQLJDBC.disconnect();
+            postgreSQLJDBC.disconnect();
         } catch (SQLException e) {
             System.out.println(e);
         }
+        postgreSQLJDBC.disconnect();
     }
 }

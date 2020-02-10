@@ -13,7 +13,7 @@ import java.util.Calendar;
 import java.util.List;
 
 public class CoincubatorDAO {
-    PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
+    private PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
 
@@ -21,6 +21,7 @@ public class CoincubatorDAO {
         String sqlQuery = "INSERT INTO coincubators (name, description, current_donation, target_donation, is_active) VALUES(?, ?, ?, ?, ?) ";
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(sqlQuery);
+            System.out.println("    addCoincubator");
 
             preparedStatement.setString(1, coincubator.getName());
             preparedStatement.setString(2, coincubator.getDescription());
@@ -31,9 +32,11 @@ public class CoincubatorDAO {
 
             preparedStatement.executeUpdate();
             preparedStatement.close();
+            postgreSQLJDBC.disconnect();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        postgreSQLJDBC.disconnect();
     }
 
     public ResultSet getAllCoincubatorsFromDb(){
@@ -41,12 +44,15 @@ public class CoincubatorDAO {
                 "WHERE is_active = true;";
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            System.out.println("    getAllCoincubatorsFromDb");
             resultSet = preparedStatement.executeQuery();
             //preparedStatement.executeQuery();
+            postgreSQLJDBC.disconnect();
         }catch (SQLException e) {
             System.out.println(e);
 
         }
+        postgreSQLJDBC.disconnect();
         return  resultSet;
     }
 
@@ -59,6 +65,7 @@ public class CoincubatorDAO {
         try {
 
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            System.out.println("    isCoincubatorWithIdInBD");
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
 
@@ -72,9 +79,11 @@ public class CoincubatorDAO {
 
             }
             preparedStatement.executeQuery();
+            postgreSQLJDBC.disconnect();
         }catch (SQLException e) {
             System.out.println(e);
         }
+        postgreSQLJDBC.disconnect();
         return  coincubator;
     }
 
@@ -84,6 +93,7 @@ public class CoincubatorDAO {
 
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderForSql);
+            System.out.println("    editCoincubator");
             preparedStatement.setString(1, coincubator.getName());
             preparedStatement.setString(2, coincubator.getDescription());
             preparedStatement.setInt(3, coincubator.getTargetDonation());
@@ -92,9 +102,11 @@ public class CoincubatorDAO {
 
             preparedStatement.executeUpdate();
             preparedStatement.close();
+            postgreSQLJDBC.disconnect();
         } catch (SQLException e) {
             System.out.println(e);
         }
+        postgreSQLJDBC.disconnect();
     }
 
     public void deleteCoincubator(Coincubator coincubator) {
@@ -103,15 +115,18 @@ public class CoincubatorDAO {
 
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderForSql);
+            System.out.println("    deleteCoincubator");
             preparedStatement.setBoolean(1, coincubator.isActive());
             preparedStatement.setInt(2, coincubator.getId());
 
 
             preparedStatement.executeUpdate();
             preparedStatement.close();
+            postgreSQLJDBC.disconnect();
         } catch (SQLException e) {
             System.out.println(e);
         }
+        postgreSQLJDBC.disconnect();
     }
 
     public ResultSet payCoinsToCoincubator(){
@@ -119,10 +134,14 @@ public class CoincubatorDAO {
             PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
             String orderToSql ="UPDATE coincubators SET current_donation = ? WHERE id = ?";
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            System.out.println("    payCoinsToCoincubator");
             preparedStatement.executeUpdate();
+            postgreSQLJDBC.disconnect();
         }catch (SQLException e){
             e.printStackTrace();
-        }return resultSet;
+        }
+        postgreSQLJDBC.disconnect();
+        return resultSet;
 
     }
     public void payCoinsToCoincubator2(int coincubatorId, int coinAmount) {
@@ -131,23 +150,28 @@ public class CoincubatorDAO {
             preparedStatement.setInt(1, newCurrentDonation);
             preparedStatement.setInt(2, coincubatorId);
             preparedStatement.close();
+            postgreSQLJDBC.disconnect();
         } catch (SQLException e) {
             System.out.println(e);
         }
+        postgreSQLJDBC.disconnect();
     }
     public void payCoinsToCoincubator(int coincubatorId, int coinAmount) {
         PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
         String orderToSql ="UPDATE coincubators SET current_donation = ? WHERE id = ?";
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            System.out.println("    payCoinsToCoincubator");
             int newCurrentDonation = resultSet.getInt("current_donation") + coinAmount;
             preparedStatement.setInt(1, newCurrentDonation);
             preparedStatement.setInt(2, coincubatorId);
             preparedStatement.executeUpdate();
             preparedStatement.close();
+            postgreSQLJDBC.disconnect();
         } catch (SQLException e) {
             System.out.println(e);
         }
+        postgreSQLJDBC.disconnect();
     }
 
 
@@ -156,6 +180,7 @@ public class CoincubatorDAO {
         String orderToSql = "SELECT current_donation, target_donation FROM coincubators WHERE id = ?";
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            System.out.println("    donateToCoincubatorDB");
             preparedStatement.setInt(1, coincubatorId);
             resultSet = preparedStatement.executeQuery();
             while(resultSet.next()){
@@ -171,7 +196,7 @@ public class CoincubatorDAO {
                 studentDAO.takeCoinsFromStudent(studentId, coinsToPay);
                 addDonor(studentId, coincubatorId, coinsToPay);
             }
-
+            postgreSQLJDBC.disconnect();
         } catch (SQLException e) {
             System.out.println(e);
         } finally {
@@ -181,6 +206,7 @@ public class CoincubatorDAO {
                 e.printStackTrace();
             }
         }
+        postgreSQLJDBC.disconnect();
     }
 
     private Date getCurrentDate() {
@@ -191,6 +217,7 @@ public class CoincubatorDAO {
         String sqlQuery = "INSERT INTO donators (coincubator_id, user_id, donation, donation_date) VALUES(?, ?, ?, ?)";
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(sqlQuery);
+            System.out.println("    addDonor");
             preparedStatement.setInt(1, coincubatorId);
             preparedStatement.setInt(2, userId);
             preparedStatement.setInt(3, donation);
@@ -198,8 +225,10 @@ public class CoincubatorDAO {
 
             preparedStatement.executeUpdate();
             preparedStatement.close();
+            postgreSQLJDBC.disconnect();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        postgreSQLJDBC.disconnect();
     }
 }

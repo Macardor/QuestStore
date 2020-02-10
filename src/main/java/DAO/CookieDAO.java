@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 public class CookieDAO {
 
-    PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
+    private PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
 
@@ -40,9 +40,12 @@ public class CookieDAO {
             }
             preparedStatement.executeQuery();
             preparedStatement.close();
+            postgreSQLJDBC.disconnect();
         }catch (SQLException e) {
             System.out.println(e);
-        }return user;
+        }
+        postgreSQLJDBC.disconnect();
+        return user;
     }
 
 
@@ -56,14 +59,18 @@ public class CookieDAO {
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()){
                 date = resultSet.getDate("expire_date");
+                postgreSQLJDBC.disconnect();
                 return date;
 
             }
             preparedStatement.executeQuery();
             preparedStatement.close();
+            postgreSQLJDBC.disconnect();
         }catch (SQLException e) {
             System.out.println(e);
-        }return date;
+        }
+        postgreSQLJDBC.disconnect();
+        return date;
 
 
     }
@@ -82,9 +89,11 @@ public class CookieDAO {
 
             preparedStatement.executeUpdate();
             preparedStatement.close();
+            postgreSQLJDBC.disconnect();
         } catch (SQLException e) {
             System.out.println(e);
         }
+        postgreSQLJDBC.disconnect();
     }
 
     public void putNewCookieToDB(String cookieSessionIdToAdd) {
@@ -97,13 +106,13 @@ public class CookieDAO {
             preparedStatement.setString(1, cookieSessionIdToAdd);
             preparedStatement.setDate(2, null);
 
-
-
             preparedStatement.executeUpdate();
             preparedStatement.close();
+            postgreSQLJDBC.disconnect();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        postgreSQLJDBC.disconnect();
     }
 
     public void putUserIdToCookieInDB(int userId, String cookieSessionId) {
@@ -119,9 +128,11 @@ public class CookieDAO {
 
             preparedStatement.executeUpdate();
             preparedStatement.close();
+            postgreSQLJDBC.disconnect();
         } catch (SQLException e) {
             System.out.println(e);
         }
+        postgreSQLJDBC.disconnect();
     }
 
     public void setCookieForLogout(String cookieSessionId) {
@@ -137,8 +148,10 @@ public class CookieDAO {
 
             preparedStatement.executeUpdate();
             preparedStatement.close();
+            postgreSQLJDBC.disconnect();
         } catch (SQLException e) {
             System.out.println(e);
         }
+        postgreSQLJDBC.disconnect();
     }
 }

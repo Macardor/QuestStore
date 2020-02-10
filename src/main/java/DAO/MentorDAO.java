@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MentorDAO {
-    PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
+    private PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
 
@@ -21,9 +21,11 @@ public class MentorDAO {
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
             resultSet = preparedStatement.executeQuery();
+            postgreSQLJDBC.disconnect();
         }catch (SQLException e) {
             System.out.println(e);
         }
+        postgreSQLJDBC.disconnect();
         return resultSet;
     }
 
@@ -41,10 +43,12 @@ public class MentorDAO {
             preparedStatement.setString(4, mentor.getLastname());
             preparedStatement.executeQuery();
             preparedStatement.close();
+            postgreSQLJDBC.disconnect();
 
         } catch (Exception e) {
             System.out.println(e);
         }
+        postgreSQLJDBC.disconnect();
     }
 
 //
@@ -91,9 +95,11 @@ public class MentorDAO {
             }
             preparedStatement.executeQuery();
             preparedStatement.close();
+            postgreSQLJDBC.disconnect();
         } catch (SQLException e) {
             System.out.println(e);
         }
+        postgreSQLJDBC.disconnect();
         return userDetailId;
     }
 
@@ -112,9 +118,11 @@ public class MentorDAO {
 
             preparedStatement.executeUpdate();
             preparedStatement.close();
+            postgreSQLJDBC.disconnect();
         } catch (SQLException e) {
             System.out.println(e);
         }
+        postgreSQLJDBC.disconnect();
     }
 }
 
