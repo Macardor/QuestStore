@@ -21,6 +21,7 @@ public class CreepDAO {
         String orderForSql = ("UPDATE user_details SET login = ?, password = ?, first_name = ?, last_name = ? WHERE id = ?");
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderForSql);
+            System.out.println("    editMentor");
 
             preparedStatement.setString(1, mentor.getLogin());
             preparedStatement.setString(2, mentor.getPassword());
@@ -43,6 +44,8 @@ public class CreepDAO {
         int userDetailId = 0;
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            System.out.println("    getMentorDetails");
+
             preparedStatement.setInt(1, mentor.getId());
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -64,6 +67,7 @@ public class CreepDAO {
         try {
 
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            System.out.println("    setMentorToUnactive");
 
             preparedStatement.setBoolean(1, false);
             preparedStatement.setInt(2, id);
@@ -86,6 +90,7 @@ public class CreepDAO {
         Mentor mentor = null;
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            System.out.println("    getMentorById");
             preparedStatement.setInt(1, idToEdit);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
@@ -115,6 +120,7 @@ public class CreepDAO {
 
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderForSql);
+            System.out.println("    editCreep");
             preparedStatement.setString(1, creepToEdit.getLogin());
             preparedStatement.setString(2, creepToEdit.getPassword());
             preparedStatement.setString(3, creepToEdit.getFirstname());

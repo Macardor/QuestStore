@@ -21,6 +21,7 @@ public class CookieDAO {
         User user = null;
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            System.out.println("    getUserByCookieSesionId");
             preparedStatement.setString(1, cookieSessionId);
             resultSet = preparedStatement.executeQuery();
 
@@ -55,6 +56,7 @@ public class CookieDAO {
         Date date = null;
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            System.out.println("    getCookieExpireDate");
             preparedStatement.setString(1, cookieSessionId);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()){
@@ -82,6 +84,7 @@ public class CookieDAO {
 
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderForSql);
+            System.out.println("    setNewExpireDate");
 
             preparedStatement.setDate(1, expireDate);
 
@@ -102,6 +105,7 @@ public class CookieDAO {
 
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(sqlQuery);
+            System.out.println("    putNewCookieToDB");
 
             preparedStatement.setString(1, cookieSessionIdToAdd);
             preparedStatement.setDate(2, null);
@@ -121,6 +125,7 @@ public class CookieDAO {
 
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderForSql);
+            System.out.println("    putUserIdToCookieInDB");
 
             preparedStatement.setInt(1, userId);
 
@@ -141,6 +146,7 @@ public class CookieDAO {
 
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderForSql);
+            System.out.println("    setCookieForLogout");
 
             preparedStatement.setDate(1, null);
 

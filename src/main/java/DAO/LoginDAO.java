@@ -27,6 +27,7 @@ public class LoginDAO {
         try {
 
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            System.out.println("    isLoginAndPasswordInDB");
             preparedStatement.setString(1, login);
             preparedStatement.setString(2, password);
             resultSet = preparedStatement.executeQuery();

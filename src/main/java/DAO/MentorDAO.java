@@ -20,6 +20,7 @@ public class MentorDAO {
         String orderToSql = "SELECT * FROM users JOIN user_details on user_details.id = users.user_details_id WHERE user_type_id = 2 and users.is_active = true ORDER BY users.id ";
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            System.out.println("    getAllMentorsFromDb");
             resultSet = preparedStatement.executeQuery();
             postgreSQLJDBC.disconnect();
         }catch (SQLException e) {
@@ -36,6 +37,7 @@ public class MentorDAO {
 
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(insertIntoTwoTables);
+            System.out.println("    addMentor");
 
             preparedStatement.setString(1, mentor.getLogin());
             preparedStatement.setString(2, mentor.getPassword());
@@ -88,6 +90,7 @@ public class MentorDAO {
         int userDetailId = 0;
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            System.out.println("    getUserDetailsId");
             preparedStatement.setInt(1, mentor.getId());
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -109,6 +112,7 @@ public class MentorDAO {
 
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderForSql);
+            System.out.println("    editMentor");
             preparedStatement.setString(1, mentorToEdit.getLogin());
             preparedStatement.setString(2, mentorToEdit.getPassword());
             preparedStatement.setString(3, mentorToEdit.getFirstname());
