@@ -66,8 +66,12 @@
                         <p>{{ coincubator.description }}</p>
                         <h2>{{ coincubator.currentDonation }} / {{ coincubator.targetDonation }} </h2>
                     </div>
-                    <input type="number" min="1" placeholder="Enter amount" class="card-input">
-                    <button type="button" class="card-button" onclick="payCoins()">Pay up</button>
+                    <form method="POST">
+                        <div>
+                            <input type="number" name="coincubatorCoinsToPay" min="1" placeholder="Enter amount" class="card-input" value="{{ coincubatorCoinsToPay }}">
+                            <button type="submit" name="coincubatorID" class="card-button" value="{{ coincubator.id }}">Pay up</button>
+                        </div>
+                    </form>
                 </a>
             </article>
             {% endfor %}

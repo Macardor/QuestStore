@@ -1,76 +1,73 @@
-package handlers.student;
+package handlers.mentor.coincubator;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import DAO.StudentDAO;
 import helpers.CookieHandler;
-import models.Student;
+import models.Quest;
 import models.User;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
-import services.StudentService;
+import services.CoincubatorService;
+import services.QuestService;
 
 import java.io.*;
 import java.net.URLDecoder;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class StudentEditProfileHandler implements HttpHandler {
+public class RemoveCoincubatorHandler implements HttpHandler {
     User user = null;
     CookieHandler cookieHandler = new CookieHandler();
-
-    StudentDAO studentDAO = new StudentDAO();
-    StudentService studentService = new StudentService();
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         user = cookieHandler.cookieChecker(httpExchange);
-        if(user == null || user.getUserType() != 1){
+        if(user == null || user.getUserType() != 2){
             httpExchange.getResponseHeaders().set("Location", "/login");
             httpExchange.sendResponseHeaders(303, 0);
         }
-
+        CoincubatorService coincubatorService = new CoincubatorService();
         String method = httpExchange.getRequestMethod();
-        int coins = studentDAO.getStudentCoins(user.getId());
+        List<Quest> coincubatorList = null;// = coincubatorService.showAllCoincubators();
+        String response = "";
 
-        if (method.equals("GET")){
-            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/student/studentEditProfile.twig");
+
+        if (method.equals("GET")) {
+            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentor/remove-coincubator.twig");
             JtwigModel model = JtwigModel.newModel();
-            model.with("user", user);
-            model.with("coins", coins);
-            String response = template.render(model);
-
-            httpExchange.sendResponseHeaders(200, response.length());
-            OutputStream os = httpExchange.getResponseBody();
-            os.write(response.getBytes());
-            os.close();
+            model.with("coincubatorList", coincubatorList);
+            response = template.render(model);
         }
 
-        if (method.equals("POST")){
+        if (method.equals("POST")) {
             InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
             BufferedReader br = new BufferedReader(isr);
             String formData = br.readLine();
 
             Map inputs = parseFormData(formData);
 
-            String login = inputs.get("login").toString();
-            String password = inputs.get("password").toString();
-            String firstName = inputs.get("firstName").toString();
-            String lastName = inputs.get("lastName").toString();
-            int studentDetailsId = studentService.getUserDetailsId(user);
+            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentor/remove-coincubator.twig");
+            JtwigModel model = JtwigModel.newModel();
+            model.with("coincubatorList", coincubatorList);
+            response = template.render(model);
+//             TODO waiting for refactored method
+//            coincubatorService.deleteCoincubatorById(Integer.parseInt(inputs.get("coincubatorId").toString()));
 
-            Student studentToEdit = new Student(login,password,1,true,firstName,lastName);
-            studentService.editStudent(studentToEdit,studentDetailsId);
-
-            httpExchange.getResponseHeaders().set("Location", "/student");
-            httpExchange.sendResponseHeaders(303, 0);
+            httpExchange.getResponseHeaders().set("Location", "/mentor/remove-coincubator" );
+            httpExchange.sendResponseHeaders(303,0);
         }
+        httpExchange.sendResponseHeaders(200, response.length());
+        OutputStream os = httpExchange.getResponseBody();
+        os.write(response.getBytes());
+        os.close();
     }
+
 
     private Map<String, String> parseFormData(String formData) {
         Map<String, String> map = new HashMap<String, String>();
         String[] pairs = formData.split("&");
-        for(String pair : pairs){
+        for (String pair : pairs) {
             String[] keyValue = pair.split("=");
             String value = null;
             try {

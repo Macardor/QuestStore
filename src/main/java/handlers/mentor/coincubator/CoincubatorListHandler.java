@@ -1,11 +1,11 @@
-package handlers.student;
+package handlers.mentor.coincubator;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import DAO.ItemDAO;
+import DAO.CoincubatorDAO;
 import DAO.StudentDAO;
 import helpers.CookieHandler;
-import models.ItemTransaction;
+import models.Coincubator;
 import models.User;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
@@ -14,30 +14,27 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 
-public class StudentTransationsHandler implements HttpHandler {
+public class CoincubatorListHandler implements HttpHandler {
     User user = null;
     CookieHandler cookieHandler = new CookieHandler();
-
-    StudentDAO studentDAO = new StudentDAO();
-
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
-        System.out.println("enter2");
         user = cookieHandler.cookieChecker(httpExchange);
-        if(user == null || user.getUserType() != 1) {
+        if (user == null || user.getUserType() != 2) {
             httpExchange.getResponseHeaders().set("Location", "/login");
             httpExchange.sendResponseHeaders(303, 0);
         }
-        System.out.println("enter3");
+        //TODO waiting for refactor
         String method = httpExchange.getRequestMethod();
-        ItemDAO itemDAO = new ItemDAO();
-        List<ItemTransaction> transactionItemsList = itemDAO.getUsertransactionList(studentDAO.getStudentId(user));
+        CoincubatorDAO coincubatorDAO = new CoincubatorDAO();
+//        List<Coincubator> coincubatorsList = coincubatorDAO.getAllCoincubatorsFromDb();
+        StudentDAO studentDAO = new StudentDAO();
         int coins = studentDAO.showUserCoins(user.getId());
-        System.out.println("enter4");
-        if (method.equals("GET")){
-            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/student/transactions.twig");
+
+        if (method.equals("GET")) {
+            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/student/coincubator.twig");
             JtwigModel model = JtwigModel.newModel();
-            model.with("itemsTransactionsLists", transactionItemsList);
+//            model.with("coincubatorsList", coincubatorsList);
             model.with("coins", coins);
             String response = template.render(model);
 
@@ -46,7 +43,5 @@ public class StudentTransationsHandler implements HttpHandler {
             os.write(response.getBytes());
             os.close();
         }
-
     }
 }
-

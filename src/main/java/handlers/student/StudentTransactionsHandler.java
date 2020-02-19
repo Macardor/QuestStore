@@ -2,11 +2,10 @@ package handlers.student;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import DAO.QuestDAO;
+import DAO.ItemDAO;
 import DAO.StudentDAO;
 import helpers.CookieHandler;
-import models.Quest;
-import models.Student;
+import models.ItemTransaction;
 import models.User;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
@@ -15,28 +14,30 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 
-public class StudentQuestsHandler implements HttpHandler {
+public class StudentTransactionsHandler implements HttpHandler {
     User user = null;
     CookieHandler cookieHandler = new CookieHandler();
 
+    StudentDAO studentDAO = new StudentDAO();
+
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
+        System.out.println("enter2");
         user = cookieHandler.cookieChecker(httpExchange);
-        if(user == null || user.getUserType() != 1){
+        if(user == null || user.getUserType() != 1) {
             httpExchange.getResponseHeaders().set("Location", "/login");
             httpExchange.sendResponseHeaders(303, 0);
         }
-
+        System.out.println("enter3");
         String method = httpExchange.getRequestMethod();
-        QuestDAO questDAO = new QuestDAO();
-        List<Quest> questsList = questDAO.getAllQuestsNotDoneByStudent((Student) user);
-        StudentDAO studentDAO = new StudentDAO();
+        ItemDAO itemDAO = new ItemDAO();
+        List<ItemTransaction> transactionItemsList = itemDAO.getUsertransactionList(studentDAO.getStudentId(user));
         int coins = studentDAO.getStudentCoins(user.getId());
-
+        System.out.println("enter4");
         if (method.equals("GET")){
-            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/student/quests.twig");
+            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/student/transactions.twig");
             JtwigModel model = JtwigModel.newModel();
-            model.with("questsList", questsList);
+            model.with("itemsTransactionsLists", transactionItemsList);
             model.with("coins", coins);
             String response = template.render(model);
 
@@ -45,5 +46,7 @@ public class StudentQuestsHandler implements HttpHandler {
             os.write(response.getBytes());
             os.close();
         }
+
     }
 }
+

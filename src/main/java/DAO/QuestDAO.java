@@ -34,6 +34,17 @@ public class QuestDAO {
         postgreSQLJDBC.disconnect();
     }
 
+    public PreparedStatement getPsForAddQuest(){
+        String sqlQuery = "INSERT INTO quests (name, description, reward, is_active) VALUES(?, ?, ?, ?)";
+        PreparedStatement ps = null;
+        try {
+            ps = postgreSQLJDBC.connect().prepareStatement(sqlQuery);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ps;
+    }
+
     public void deleteQuest(int id) {
 
         String orderForSql = "UPDATE quests SET is_active = ? WHERE id = ?";

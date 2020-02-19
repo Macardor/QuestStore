@@ -35,7 +35,7 @@ public class StudentInventoryHandler implements HttpHandler {
         String method = httpExchange.getRequestMethod();
         ItemDAO itemDAO = new ItemDAO();
         List<ItemTransaction> userItemsList = itemDAO.getUserItemsList(studentDAO.getStudentId(user));
-        int coins = studentDAO.showUserCoins(user.getId());
+        int coins = studentDAO.getStudentCoins(user.getId());
 
         if (method.equals("GET")){
             JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/student/inventory.twig");

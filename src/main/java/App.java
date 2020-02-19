@@ -3,15 +3,10 @@ import handlers.*;
 import handlers.creep.*;
 import handlers.mentor.MentorEditProfile;
 import handlers.mentor.MentorLoginPageHandler;
-import handlers.mentor.quests.AddQuestHandler;
-import handlers.mentor.quests.QuestListHandler;
-import handlers.mentor.quests.QuestMenuHandler;
-import handlers.mentor.quests.RemoveQuestHandler;
-import handlers.mentor.store.AddItemHandler;
-import handlers.mentor.store.RemoveItemHandler;
+import handlers.mentor.coincubator.*;
+import handlers.mentor.quests.*;
+import handlers.mentor.store.*;
 import handlers.student.*;
-import handlers.mentor.store.StoreHandler;
-import handlers.mentor.store.StoreMenuHandler;
 import handlers.mentor.students.*;
 
 import java.net.InetSocketAddress;
@@ -31,10 +26,9 @@ public class App {
         //Mentor handler
         server.createContext("/mentor/homepage", new MentorLoginPageHandler());
         server.createContext("/mentor/store", new StoreHandler());
-        server.createContext("/mentor/students-menu", new StudentMenuHandler()); //all students
+        server.createContext("/mentor/students-menu", new StudentMenuHandler());
         server.createContext("/mentor/add-student", new AddStudentHandler());
-//        server.createContext("/mentor/student-menu", new StudentMenuHandler());
-        server.createContext("/mentor/remove-student", new RemoveStudentHandler()); //remove student menu
+        server.createContext("/mentor/remove-student", new RemoveStudentHandler());
         server.createContext("/mentor/add-quest", new AddQuestHandler());
         server.createContext("/mentor/remove-quest", new RemoveQuestHandler());
         server.createContext("/mentor/add-item", new AddItemHandler());
@@ -45,6 +39,13 @@ public class App {
         server.createContext("/mentor/quest-list", new QuestListHandler());
         server.createContext("/mentor/store-menu", new StoreMenuHandler());
         server.createContext("/mentor/editProfile", new MentorEditProfile());
+        server.createContext("/mentor/coincubators-menu", new CoincubatorMenuHandler());
+        server.createContext("/mentor/add-coincubator", new AddCoincubatorHandler());
+        server.createContext("/mentor/edit-coincubator", new EditCoincubatorHandler());
+        server.createContext("/mentor/remove-coincubator", new RemoveCoincubatorHandler());
+        server.createContext("/mentor/coincubator-list", new CoincubatorListHandler());
+        server.createContext("/mentor/edit-quest", new EditQuestHandler());
+        server.createContext("/mentor/edit-item", new EditItemHandler());
 
 
         //Student handler
@@ -53,7 +54,7 @@ public class App {
         server.createContext("/student/quests", new StudentQuestsHandler());
         server.createContext("/student/store", new StudentStoreHandler());
         server.createContext("/student/inventory", new StudentInventoryHandler());
-        server.createContext("/student/transactions", new StudentTransationsHandler());
+        server.createContext("/student/transactions", new StudentTransactionsHandler());
         server.createContext("/student/editProfile", new StudentEditProfileHandler());
 
         //CreepHandler

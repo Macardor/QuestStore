@@ -305,7 +305,7 @@ public class StudentDAO {
         return student;
     }
 
-    public int showUserCoins(int id) {
+    public int getStudentCoins(int id) {
         String orderToSql = "SELECT * FROM students AS s \n" +
         "join users as u \n" +
         "on s.user_id = u.id \n" +
@@ -340,7 +340,7 @@ public class StudentDAO {
         PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
         String orderToSql = "INSERT INTO user_items (item_id, is_available, bought_date, used_date, student_id) VALUES (?,?,?,?,?)";
         int itemPrice = getItemPrice(itemId);
-        int studentCoins = showUserCoins(studentId);
+        int studentCoins = getStudentCoins(studentId);
 
         if (studentCoins >= itemPrice) {
             try {
@@ -440,7 +440,7 @@ public class StudentDAO {
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
             StudentDAO studentDAO = new StudentDAO();
-            int newCoins = studentDAO.showUserCoins(id) - coinAmount;
+            int newCoins = studentDAO.getStudentCoins(id) - coinAmount;
             System.out.println("Your coins after transaction: " + newCoins);
             preparedStatement.setInt(1, newCoins);
             preparedStatement.setInt(2, id);

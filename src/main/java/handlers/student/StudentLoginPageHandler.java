@@ -25,7 +25,7 @@ public class StudentLoginPageHandler implements HttpHandler {
 
         String method = httpExchange.getRequestMethod();
         StudentDAO studentDAO = new StudentDAO();
-        int coins = studentDAO.showUserCoins(user.getId());
+        int coins = studentDAO.getStudentCoins(user.getId());
 
         if (method.equals("GET")){
             JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/student/student-homepage.twig");
