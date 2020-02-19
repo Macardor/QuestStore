@@ -41,7 +41,7 @@ public class StaticUi {
         System.out.println("Enter amount of coins you wish to pay: ");
         int coinAmount = scanner.nextInt();
         StudentDAO studentDAO = new StudentDAO();
-        if (coinAmount >= studentDAO.showUserCoins(studentId)){
+        if (coinAmount >= studentDAO.getStudentCoins(studentId)){
             CoincubatorDAO coincubatorDAO = new CoincubatorDAO();
             coincubatorDAO.donateToCoincubatorDb(studentId, coincubatorId, coinAmount);
         }

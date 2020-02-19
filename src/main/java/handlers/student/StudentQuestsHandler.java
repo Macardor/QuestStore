@@ -31,7 +31,7 @@ public class StudentQuestsHandler implements HttpHandler {
         QuestDAO questDAO = new QuestDAO();
         List<Quest> questsList = questDAO.getAllQuestsNotDoneByStudent((Student) user);
         StudentDAO studentDAO = new StudentDAO();
-        int coins = studentDAO.showUserCoins(user.getId());
+        int coins = studentDAO.getStudentCoins(user.getId());
 
         if (method.equals("GET")){
             JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/student/quests.twig");
