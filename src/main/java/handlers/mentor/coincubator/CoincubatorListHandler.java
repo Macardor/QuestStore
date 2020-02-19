@@ -1,22 +1,27 @@
 package handlers.mentor.coincubator;
 
+import DAO.*;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import daoImplementation.CoincubatorDAO;
-import daoImplementation.StudentDAO;
 import helpers.CookieHandler;
 import models.Coincubator;
 import models.User;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
+import services.CoincubatorService;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.sql.ResultSet;
 import java.util.List;
 
 public class CoincubatorListHandler implements HttpHandler {
     User user = null;
     CookieHandler cookieHandler = new CookieHandler();
+    CoincubatorDAO coincubatorDAO = new CoincubatorDAO();
+    CoincubatorService coincubatorService = new CoincubatorService();
+    StudentDAO studentDAO = new StudentDAO();
+
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         user = cookieHandler.cookieChecker(httpExchange);
@@ -26,10 +31,10 @@ public class CoincubatorListHandler implements HttpHandler {
         }
         //TODO waiting for refactor
         String method = httpExchange.getRequestMethod();
-        CoincubatorDAO coincubatorDAO = new CoincubatorDAO();
-        List<Coincubator> coincubatorsList = coincubatorDAO.getAllCoincubators();
-        StudentDAO studentDAO = new StudentDAO();
-        int coins = studentDAO.showUserCoins(user.getId());
+        ResultSet resultSet = coincubatorDAO.getAllCoincubatorsFromDb();
+        List<Coincubator> coincubatorsList = coincubatorService.getAllCoincubators(resultSet);
+
+        int coins = studentDAO.getStudentCoins(user.getId());
 
         if (method.equals("GET")) {
             JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/student/coincubator.twig");

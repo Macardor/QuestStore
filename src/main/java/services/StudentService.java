@@ -2,7 +2,7 @@ package services;
 
 import DAO.MentorDAO;
 import DAO.QuestDAO;
-import DAO.StudentDAO;
+import DAO.*;
 import models.Quest;
 import models.Student;
 import models.User;
@@ -19,9 +19,6 @@ public class StudentService {
     StudentDAO studentDAO = new StudentDAO();
     MentorDAO mentorDAO = new MentorDAO();
     QuestDAO questDAO = new QuestDAO();
-
-
-
 
     //Student Refactor
     public List<Student> getActiveStudentsList(ResultSet resultSet){
