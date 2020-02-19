@@ -13,7 +13,7 @@ import java.util.List;
 
 public class CreepDAO {
 
-    PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
+    private PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
 
@@ -21,6 +21,7 @@ public class CreepDAO {
         String orderForSql = ("UPDATE user_details SET login = ?, password = ?, first_name = ?, last_name = ? WHERE id = ?");
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderForSql);
+            System.out.println("    editMentor");
 
             preparedStatement.setString(1, mentor.getLogin());
             preparedStatement.setString(2, mentor.getPassword());
@@ -31,9 +32,11 @@ public class CreepDAO {
 
             int row = preparedStatement.executeUpdate();
             preparedStatement.close();
+            postgreSQLJDBC.disconnect();
         } catch (Exception e) {
             System.out.println(e);
         }
+        postgreSQLJDBC.disconnect();
     }
 
     public int getMentorDetails(User mentor) {
@@ -41,6 +44,8 @@ public class CreepDAO {
         int userDetailId = 0;
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            System.out.println("    getMentorDetails");
+
             preparedStatement.setInt(1, mentor.getId());
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -49,9 +54,11 @@ public class CreepDAO {
             }
             preparedStatement.executeQuery();
             preparedStatement.close();
+            postgreSQLJDBC.disconnect();
         } catch (SQLException e) {
             System.out.println(e);
         }
+        postgreSQLJDBC.disconnect();
         return userDetailId;
     }
 
@@ -60,6 +67,7 @@ public class CreepDAO {
         try {
 
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            System.out.println("    setMentorToUnactive");
 
             preparedStatement.setBoolean(1, false);
             preparedStatement.setInt(2, id);
@@ -68,9 +76,11 @@ public class CreepDAO {
 
             preparedStatement.executeUpdate();
             preparedStatement.close();
+            postgreSQLJDBC.disconnect();
         } catch (Exception e) {
             System.out.println(e);
         }
+        postgreSQLJDBC.disconnect();
     }
 
     public Mentor getMentorById(int idToEdit) {
@@ -80,6 +90,7 @@ public class CreepDAO {
         Mentor mentor = null;
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            System.out.println("    getMentorById");
             preparedStatement.setInt(1, idToEdit);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
@@ -95,9 +106,12 @@ public class CreepDAO {
                 System.out.println(mentor.toString());
             }
             preparedStatement.close();
+            postgreSQLJDBC.disconnect();
         }catch (SQLException e) {
             System.out.println(e);
-        }return mentor;
+        }
+        postgreSQLJDBC.disconnect();
+        return mentor;
     }
 
     public void editCreep(Creep creepToEdit, int creepDetailsId) {
@@ -106,6 +120,7 @@ public class CreepDAO {
 
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderForSql);
+            System.out.println("    editCreep");
             preparedStatement.setString(1, creepToEdit.getLogin());
             preparedStatement.setString(2, creepToEdit.getPassword());
             preparedStatement.setString(3, creepToEdit.getFirstname());
@@ -115,8 +130,10 @@ public class CreepDAO {
 
             preparedStatement.executeUpdate();
             preparedStatement.close();
+            postgreSQLJDBC.disconnect();
         } catch (SQLException e) {
             System.out.println(e);
         }
+        postgreSQLJDBC.disconnect();
     }
 }

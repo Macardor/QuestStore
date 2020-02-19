@@ -28,7 +28,7 @@ public class LoginHandler implements HttpHandler {
                 httpExchange.sendResponseHeaders(303, 0);
             }
             else if(user.getUserType() == 2){
-                httpExchange.getResponseHeaders().add("Location", "/mentor/");
+                httpExchange.getResponseHeaders().add("Location", "/mentor/homepage");
                 httpExchange.sendResponseHeaders(303, 0);
             }else{
                 httpExchange.getResponseHeaders().add("Location", "/creep");

@@ -15,7 +15,7 @@ import java.util.List;
 
 public class StudentDAO {
 
-    PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
+    private PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
 
@@ -43,10 +43,12 @@ public class StudentDAO {
 
             preparedStatement.executeUpdate();
             preparedStatement.close();
+            postgreSQLJDBC.disconnect();
 
         } catch (Exception e) {
             System.out.println(e);
         }
+        postgreSQLJDBC.disconnect();
 
     }
 
@@ -62,9 +64,11 @@ public class StudentDAO {
 
             preparedStatement.executeUpdate();
             preparedStatement.close();
+            postgreSQLJDBC.disconnect();
         } catch (Exception e) {
             System.out.println(e);
         }
+        postgreSQLJDBC.disconnect();
     }
 
     public List<Student> getStudentsList() {
@@ -92,10 +96,12 @@ public class StudentDAO {
 
             }
             preparedStatement.close();
+            postgreSQLJDBC.disconnect();
 
         } catch (SQLException e) {
             System.out.println(e);
         }
+        postgreSQLJDBC.disconnect();
         return studentList;
     }
 
@@ -110,9 +116,11 @@ public class StudentDAO {
             preparedStatement.setBoolean(2, true);
 
             resultSet = preparedStatement.executeQuery();
+            postgreSQLJDBC.disconnect();
         } catch (SQLException e) {
             System.out.println(e);
         }
+        postgreSQLJDBC.disconnect();
         return resultSet;
     }
 
@@ -139,11 +147,12 @@ public class StudentDAO {
 
             }
             preparedStatement.close();
+            postgreSQLJDBC.disconnect();
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+        postgreSQLJDBC.disconnect();
         return student;
     }
 
@@ -166,6 +175,7 @@ public class StudentDAO {
                 System.out.println(id + "| " + name + "| " + description + "| " + currentDonation + "| " + targetDonation + "| " + isActive);
             }
             preparedStatement.executeQuery();
+            postgreSQLJDBC.disconnect();
         } catch (SQLException e) {
             System.out.println(e);
         } finally {
@@ -177,6 +187,7 @@ public class StudentDAO {
             }
 
         }
+        postgreSQLJDBC.disconnect();
         return coincubatorsList;
     }
 
@@ -195,9 +206,11 @@ public class StudentDAO {
 
             preparedStatement.executeUpdate();
             preparedStatement.close();
+            postgreSQLJDBC.disconnect();
         } catch (SQLException e) {
             System.out.println(e);
         }
+        postgreSQLJDBC.disconnect();
     }
 
     public int getUserDetailsId(User student) {
@@ -212,9 +225,11 @@ public class StudentDAO {
             }
             preparedStatement.executeQuery();
             preparedStatement.close();
+            postgreSQLJDBC.disconnect();
         } catch (SQLException e) {
             System.out.println(e);
         }
+        postgreSQLJDBC.disconnect();
         return userDetailId;
     }
 
@@ -227,9 +242,11 @@ public class StudentDAO {
             if (resultSet.next()) {
                 int userDetailId = resultSet.getInt("id");
                 System.out.println(userDetailId);
+                postgreSQLJDBC.disconnect();
                 return userDetailId;
             }
             preparedStatement.executeQuery();
+            postgreSQLJDBC.disconnect();
         } catch (SQLException e) {
             System.out.println(e);
         } finally {
@@ -241,6 +258,7 @@ public class StudentDAO {
             }
 
         }
+        postgreSQLJDBC.disconnect();
         return 0;
     }
 
@@ -271,6 +289,7 @@ public class StudentDAO {
 
             }
             preparedStatement.executeQuery();
+            postgreSQLJDBC.disconnect();
         } catch (SQLException e) {
             System.out.println(e);
         } finally {
@@ -282,6 +301,7 @@ public class StudentDAO {
             }
 
         }
+        postgreSQLJDBC.disconnect();
         return student;
     }
 
@@ -302,6 +322,7 @@ public class StudentDAO {
                 System.out.println("Your current coins: " + coins);
             }
             preparedStatement.executeQuery();
+            postgreSQLJDBC.disconnect();
         } catch (SQLException e) {
             System.out.println(e);
         } finally {
@@ -310,7 +331,9 @@ public class StudentDAO {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-        }return coins;
+        }
+        postgreSQLJDBC.disconnect();
+        return coins;
     }
 
     public void buyItem(int itemId, int studentId){
@@ -331,7 +354,7 @@ public class StudentDAO {
                 preparedStatement.setInt(5, studentId);
                 resultSet = preparedStatement.executeQuery();
                 preparedStatement.close();
-
+                postgreSQLJDBC.disconnect();
 
             } catch (SQLException e) {
                 System.out.println(e);
@@ -339,6 +362,7 @@ public class StudentDAO {
         }else {
             System.out.println("you have not enough coins!");
         }
+        postgreSQLJDBC.disconnect();
     }
 
 
@@ -353,8 +377,10 @@ public class StudentDAO {
             resultSet = ps.executeQuery();
             if(resultSet.next()){
                 price= resultSet.getInt("price");
+                postgreSQLJDBC.disconnect();
                 return price;
             }
+            postgreSQLJDBC.disconnect();
         } catch (SQLException e) {
             System.out.println(e);
         } finally {
@@ -364,7 +390,7 @@ public class StudentDAO {
                 e.printStackTrace();
             }
         }
-
+        postgreSQLJDBC.disconnect();
         return price;
     }
 
@@ -382,10 +408,11 @@ public class StudentDAO {
             ps.setInt(4, studentId);
             ps.executeUpdate();
             ps.close();
+            postgreSQLJDBC.disconnect();
         } catch (SQLException e) {
             System.out.println(e);
         }
-
+        postgreSQLJDBC.disconnect();
     }
 
     public void editStudentCoins(int studentCoins, int itemPrice, int studentId) {
@@ -400,9 +427,11 @@ public class StudentDAO {
             preparedStatement.setInt(2, studentId);
             preparedStatement.executeUpdate();
             preparedStatement.close();
+            postgreSQLJDBC.disconnect();
         } catch (SQLException e) {
             System.out.println(e);
         }
+        postgreSQLJDBC.disconnect();
     }
 
     public void takeCoinsFromStudent(int id, int coinAmount){
@@ -417,9 +446,11 @@ public class StudentDAO {
             preparedStatement.setInt(2, id);
             preparedStatement.executeUpdate();
             preparedStatement.close();
+            postgreSQLJDBC.disconnect();
         } catch (SQLException e) {
             System.out.println(e);
         }
+        postgreSQLJDBC.disconnect();
     }
 
     private Date getCurrentDate() {
@@ -437,9 +468,11 @@ public class StudentDAO {
             preparedStatement.setInt(2, studentId);
             preparedStatement.executeUpdate();
             preparedStatement.close();
+            postgreSQLJDBC.disconnect();
         } catch (SQLException e) {
             System.out.println(e);
         }
+        postgreSQLJDBC.disconnect();
     }
 }
 

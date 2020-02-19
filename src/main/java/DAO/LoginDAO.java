@@ -12,7 +12,7 @@ import java.sql.SQLException;
 
 public class LoginDAO {
 
-    PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
+    private PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
 
@@ -27,6 +27,7 @@ public class LoginDAO {
         try {
 
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            System.out.println("    isLoginAndPasswordInDB");
             preparedStatement.setString(1, login);
             preparedStatement.setString(2, password);
             resultSet = preparedStatement.executeQuery();
@@ -43,6 +44,7 @@ public class LoginDAO {
                 result = userCreatorByUserType(id, login ,password ,userTypeId , isActive, firstName, lastName);
             }
             preparedStatement.executeQuery();
+            postgreSQLJDBC.disconnect();
         }catch (SQLException e) {
             System.out.println(e);
         } finally {
@@ -54,7 +56,7 @@ public class LoginDAO {
             }
 
         }
-
+        postgreSQLJDBC.disconnect();
         return result;
     }
 

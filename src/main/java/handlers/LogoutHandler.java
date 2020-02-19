@@ -12,7 +12,7 @@ public class LogoutHandler implements HttpHandler  {
     public void handle(HttpExchange httpExchange) throws IOException {
         CookieHandler cookieHandler = new CookieHandler();
         cookieHandler.logout(httpExchange);
-        httpExchange.getResponseHeaders().add("Location", "/student");
+        httpExchange.getResponseHeaders().add("Location", "/login");
         httpExchange.sendResponseHeaders(303, 0);
     }
 }

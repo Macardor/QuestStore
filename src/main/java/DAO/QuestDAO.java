@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class QuestDAO {
-    PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
+    private PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
     PreparedStatement ps = null;
     public void addQuest(Quest quest) {
 
@@ -31,6 +31,7 @@ public class QuestDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        postgreSQLJDBC.disconnect();
     }
 
     public PreparedStatement getPsForAddQuest(){
@@ -57,6 +58,7 @@ public class QuestDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        postgreSQLJDBC.disconnect();
     }
 
     public void editQuest(Quest quest) {
@@ -76,6 +78,7 @@ public class QuestDAO {
         } catch (SQLException e) {
             System.out.println(e);
         }
+        postgreSQLJDBC.disconnect();
     }
 
     public void markQuest(int id) {
@@ -102,8 +105,10 @@ public class QuestDAO {
         }catch (SQLException e){
             System.out.println(e);
         }
+        postgreSQLJDBC.disconnect();
         return quests;
     }
+
     public List<Quest> getAllActiveQuests(){
         String orderForSql = "SELECT * FROM quests where is_active = true; ";
         List<Quest> quests = new ArrayList<>();
@@ -125,6 +130,7 @@ public class QuestDAO {
         }catch (SQLException e){
             System.out.println(e);
         }
+        postgreSQLJDBC.disconnect();
         return quests;
     }
 
@@ -159,8 +165,10 @@ public class QuestDAO {
         }catch (SQLException e){
             System.out.println(e);
         }
+        postgreSQLJDBC.disconnect();
         return quests;
     }
+
     public Quest getQuestById(int id){
         String orderToSql =  "SELECT * FROM quests where id = ?";
         Quest quest = null;
@@ -178,6 +186,7 @@ public class QuestDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        postgreSQLJDBC.disconnect();
         return quest;
     }
 
@@ -218,6 +227,7 @@ public class QuestDAO {
         }catch (SQLException e){
             System.out.println(e);
         }
+        postgreSQLJDBC.disconnect();
         return quests;
     }
 
@@ -234,8 +244,10 @@ public class QuestDAO {
 
             ps.executeUpdate();
             ps.close();
+            postgreSQLJDBC.disconnect();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        postgreSQLJDBC.disconnect();
     }
 }

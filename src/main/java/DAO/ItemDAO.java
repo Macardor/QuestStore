@@ -20,6 +20,7 @@ public class ItemDAO {
         String sqlQuery = "INSERT INTO items (name, price, description, is_active) VALUES(?, ?, ?, ?) ";
         try {
             ps = postgreSQLJDBC.connect().prepareStatement(sqlQuery);
+            System.out.println("    addItem");
 
             ps.setString(1, item.getName());
             ps.setInt(2, item.getPrice());
@@ -30,15 +31,18 @@ public class ItemDAO {
 
             ps.executeUpdate();
             ps.close();
+            postgreSQLJDBC.disconnect();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        postgreSQLJDBC.disconnect();
     }
 
     public void deleteItem(int id) {
         String orderForSql = "UPDATE items SET is_active = ? WHERE id = ?";
         try {
             ps = postgreSQLJDBC.connect().prepareStatement(orderForSql);
+            System.out.println("    deleteItem");
             ps.setBoolean(1, false);
             ps.setInt(2, id);
 
@@ -46,9 +50,11 @@ public class ItemDAO {
 
             ps.executeUpdate();
             ps.close();
+            postgreSQLJDBC.disconnect();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        postgreSQLJDBC.disconnect();
     }
 
     public void editItem(Item item) {
@@ -57,6 +63,7 @@ public class ItemDAO {
 
         try {
             ps = postgreSQLJDBC.connect().prepareStatement(orderForSql);
+            System.out.println("    editItem");
             ps.setString(1, item.getName());
             ps.setInt(2, item.getPrice());
             ps.setString(3, item.getDescription());
@@ -67,9 +74,11 @@ public class ItemDAO {
 
             ps.executeUpdate();
             ps.close();
+            postgreSQLJDBC.disconnect();
         } catch (SQLException e) {
             System.out.println(e);
         }
+        postgreSQLJDBC.disconnect();
     }
 
 
@@ -79,6 +88,7 @@ public class ItemDAO {
         List<Item> itemList = new ArrayList<>();
         try{
             ps = postgreSQLJDBC.connect().prepareStatement(orderForSql);
+            System.out.println("    getItemsList");
             resultSet = ps.executeQuery();
             while (resultSet.next()){
                 int id = resultSet.getInt("id");
@@ -93,17 +103,21 @@ public class ItemDAO {
                 itemList.add(item);
             }
             ps.close();
+            postgreSQLJDBC.disconnect();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        postgreSQLJDBC.disconnect();
         return itemList;
     }
+
     public List<Item> getActiveItemsList() {
         PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
         String orderForSql = ("SELECT * FROM items WHERE is_active = true");
         List<Item> itemList = new ArrayList<>();
         try{
             ps = postgreSQLJDBC.connect().prepareStatement(orderForSql);
+            System.out.println("    getActiveItemList");
             resultSet = ps.executeQuery();
             while (resultSet.next()){
                 int id = resultSet.getInt("id");
@@ -118,9 +132,11 @@ public class ItemDAO {
                 itemList.add(item);
             }
             ps.close();
+            postgreSQLJDBC.disconnect();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        postgreSQLJDBC.disconnect();
         return itemList;
     }
 
@@ -129,6 +145,7 @@ public class ItemDAO {
         List<ItemTransaction> itemList = new ArrayList<>();
         try{
             ps = postgreSQLJDBC.connect().prepareStatement(orderForSql);
+            System.out.println("    getUserItemsList");
             ps.setInt(1,userId);
             resultSet = ps.executeQuery();
             while (resultSet.next()){
@@ -146,9 +163,11 @@ public class ItemDAO {
                 //test method
             }
             ps.close();
+            postgreSQLJDBC.disconnect();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        postgreSQLJDBC.disconnect();
         return itemList;
     }
 
@@ -157,6 +176,7 @@ public class ItemDAO {
         Item item = null;
         try {
             ps = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            System.out.println("    getItemById");
             ps.setInt(1, id);
             ResultSet resultSet = ps.executeQuery();
             while (resultSet.next()) {
@@ -166,9 +186,11 @@ public class ItemDAO {
                 boolean isActive = resultSet.getBoolean("is_active");
                 item = new Item(id, name, price, description, isActive);
             }
+            postgreSQLJDBC.disconnect();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        postgreSQLJDBC.disconnect();
         return item;
     }
 
@@ -180,6 +202,7 @@ public class ItemDAO {
         List<ItemTransaction> itemTransactionListList = new ArrayList<>();
         try{
             ps = postgreSQLJDBC.connect().prepareStatement(orderForSql);
+            System.out.println("    getUsertransactionList");
             ps.setInt(1, studentId);
             resultSet = ps.executeQuery();
             while (resultSet.next()){
@@ -198,9 +221,11 @@ public class ItemDAO {
                 System.out.println(itemTransaction.toString());
             }
             ps.close();
+            postgreSQLJDBC.disconnect();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        postgreSQLJDBC.disconnect();
         return itemTransactionListList;
     }
 
@@ -209,15 +234,18 @@ public class ItemDAO {
         int price = 0;
         try {
             ps = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            System.out.println("    getItemPriceById");
             ps.setInt(1, itemID);
             ResultSet resultSet = ps.executeQuery();
             if (resultSet.next()) {
                 price = resultSet.getInt("price");
 
             }
+            postgreSQLJDBC.disconnect();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        postgreSQLJDBC.disconnect();
         return price;
     }
 
@@ -227,6 +255,8 @@ public class ItemDAO {
 
         try {
             ps = postgreSQLJDBC.connect().prepareStatement(orderForSql);
+            System.out.println("    setTransactionItemActive");
+
             ps.setBoolean(1, false);
             ps.setDate(2, usedDate);
             ps.setInt(3, itemId);
@@ -235,8 +265,11 @@ public class ItemDAO {
 
             ps.executeUpdate();
             ps.close();
+            postgreSQLJDBC.disconnect();
+            postgreSQLJDBC.disconnect();
         } catch (SQLException e) {
             System.out.println(e);
         }
+        postgreSQLJDBC.disconnect();
     }
 }
