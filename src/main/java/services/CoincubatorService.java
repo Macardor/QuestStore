@@ -12,7 +12,7 @@ import java.util.List;
 public class CoincubatorService {
     private CoincubatorDAO coincubatorDAO = new CoincubatorDAO();
 
-    public List<Coincubator> showAllCoincubators(ResultSet resultSet){
+    public List<Coincubator> getAllCoincubators(ResultSet resultSet){
         List<Coincubator> coincubators = new ArrayList<>();
         try {
             while (resultSet.next()){

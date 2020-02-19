@@ -3,14 +3,14 @@ package handlers.student;
 import DAO.CoincubatorDAO;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import DAO.StudentDAO;
+import DAO.*;
 import helpers.CookieHandler;
 import models.Coincubator;
 import models.User;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 import services.CoincubatorService;
-import services.StudentService;
+import services.*;
 
 import java.io.*;
 import java.net.URLDecoder;
@@ -37,7 +37,7 @@ public class StudentCoincubatorHandler implements HttpHandler {
 
 
         ResultSet resultSet = coincubatorDAO.getAllCoincubatorsFromDb();
-        List<Coincubator> coincubatorsList = coincubatorService.showAllCoincubators(resultSet);
+        List<Coincubator> coincubatorsList = coincubatorService.getAllCoincubators(resultSet);
         String method = httpExchange.getRequestMethod();
         String response = "";
         StudentDAO studentDAO = new StudentDAO();
