@@ -1,6 +1,7 @@
 package services;
 
 import DAO.CreepDAO;
+import DAO.MentorDAO;
 import models.Creep;
 import models.Mentor;
 import models.User;
@@ -14,6 +15,7 @@ import java.util.Scanner;
 
 public class CreepService {
     CreepDAO creepDAO = new CreepDAO();
+    MentorDAO mentorDAO = new MentorDAO();
 
     public void editMentorSubmenu(){
         CreepDAO creepDAO = new CreepDAO();
@@ -79,6 +81,10 @@ public class CreepService {
 
     public void editCreep(Creep creepToEdit, int creepDetailsId) {
         creepDAO.editCreep(creepToEdit, creepDetailsId);
+    }
+
+    public List<User> getAllActiveMentors() {
+        return mentorDAO.getAllActiveMentorsList(mentorDAO.getAllActiveMentors());
     }
 }
 

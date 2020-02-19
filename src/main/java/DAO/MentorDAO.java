@@ -60,7 +60,12 @@ public class MentorDAO {
 //            if (resultSet.next()) {
 //                int id = resultSet.getInt("id");
 //                String login = resultSet.getString("login");
+//                String password = resultSet.getStri resultSet.getString("login");
 //                String password = resultSet.getString("password");
+//                int userTypeId = resultSet.getInt("user_type_id");
+//                boolean isActive = resultSet.getBoolean("is_active");
+//                String firstName = resultSet.getString("first_name");
+//                String lastName = resultSet.getSng("password");
 //                int userTypeId = resultSet.getInt("user_type_id");
 //                boolean isActive = resultSet.getBoolean("is_active");
 //                String firstName = resultSet.getString("first_name");
@@ -115,6 +120,39 @@ public class MentorDAO {
         } catch (SQLException e) {
             System.out.println(e);
         }
+    }
+
+    public ResultSet getAllActiveMentors() { //TODO
+        String orderToSql = "SELECT * FROM users JOIN user_details on user_details.id = users.user_details_id WHERE user_type_id = 2 and users.is_active = true ORDER BY users.id ";
+        try {
+            preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderToSql);
+            resultSet = preparedStatement.executeQuery();
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultSet;
+    }
+
+    public List<User> getAllActiveMentorsList(ResultSet resultSet){
+        List<User> mentorsList = new ArrayList<>();
+        try {
+            while (resultSet.next()){
+                int id = resultSet.getInt("id");
+                String login = resultSet.getString("login");
+                String password = resultSet.getString("password");
+                int userTypeId2 = resultSet.getInt("user_type_id");
+                boolean isActive = resultSet.getBoolean("is_active");
+                String firstName = resultSet.getString("first_name");
+                String lastName = resultSet.getString("last_name");
+                Mentor mentor = new Mentor(id, login, password, userTypeId2, isActive, firstName, lastName);
+                mentorsList.add(mentor);
+            }
+            resultSet.close();
+        }
+        catch (SQLException e){
+            e.getMessage();
+        }
+        return mentorsList;
     }
 }
 

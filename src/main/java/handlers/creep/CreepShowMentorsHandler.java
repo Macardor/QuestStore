@@ -31,12 +31,13 @@ public class CreepShowMentorsHandler implements HttpHandler {
 
         String method = httpExchange.getRequestMethod();
         ResultSet resultSet = mentorDAO.getAllMentorsFromDb();
-        List<User> showMentorsList = creepService.getAllMentorsList(resultSet);
+        List<User> mentorsList = creepService.getAllMentorsList(resultSet); //dao
+        List<User> activeMentors = creepService.getAllActiveMentors();
 
         if (method.equals("GET")){
             JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/creep/showMentors.twig");
             JtwigModel model = JtwigModel.newModel();
-            model.with("mentorsList", showMentorsList);
+            model.with("mentorsList", mentorsList);
             String response = template.render(model);
 
             httpExchange.sendResponseHeaders(200, response.length());
