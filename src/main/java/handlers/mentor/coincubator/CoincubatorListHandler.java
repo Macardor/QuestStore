@@ -29,13 +29,13 @@ public class CoincubatorListHandler implements HttpHandler {
         CoincubatorDAO coincubatorDAO = new CoincubatorDAO();
 //        List<Coincubator> coincubatorsList = coincubatorDAO.getAllCoincubatorsFromDb();
         StudentDAO studentDAO = new StudentDAO();
-        int coins = studentDAO.showUserCoins(user.getId());
+//        int coins = studentDAO.showUserCoins(user.getId());
 
         if (method.equals("GET")) {
             JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/student/coincubator.twig");
             JtwigModel model = JtwigModel.newModel();
 //            model.with("coincubatorsList", coincubatorsList);
-            model.with("coins", coins);
+//            model.with("coins", coins);
             String response = template.render(model);
 
             httpExchange.sendResponseHeaders(200, response.length());

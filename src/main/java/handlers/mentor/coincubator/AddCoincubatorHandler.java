@@ -29,6 +29,7 @@ public class AddCoincubatorHandler implements HttpHandler {
             httpExchange.getResponseHeaders().set("Location", "/login");
             httpExchange.sendResponseHeaders(303, 0);
         }
+
         CoincubatorService coincubatorService = new CoincubatorService();
         String method = httpExchange.getRequestMethod();
         System.out.println(method);
