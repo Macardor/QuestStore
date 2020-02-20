@@ -57,7 +57,7 @@ public class CoincubatorService {
         Coincubator coincubator = coincubatorDAO.isCoincubatorWithIdInDB(coincubatorIdToEdit);
         if (coincubator != null){
             coincubator.setActive(false);
-            coincubatorDAO.deleteCoincubator(coincubator);
+//            coincubatorDAO.deleteCoincubator(coincubator);
         }else{
             StaticUi.errorMassageIdNotInDB();
         }

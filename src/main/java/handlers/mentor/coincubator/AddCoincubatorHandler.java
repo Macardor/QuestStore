@@ -1,16 +1,13 @@
 package handlers.mentor.coincubator;
 
+import DAO.CoincubatorDAO;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import helpers.CookieHandler;
 import models.Coincubator;
-import models.Mentor;
-import models.Quest;
 import models.User;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
-import services.CoincubatorService;
-import services.QuestService;
 
 import java.io.*;
 import java.net.URLDecoder;
@@ -29,7 +26,7 @@ public class AddCoincubatorHandler implements HttpHandler {
             httpExchange.getResponseHeaders().set("Location", "/login");
             httpExchange.sendResponseHeaders(303, 0);
         }
-        CoincubatorService coincubatorService = new CoincubatorService();
+        CoincubatorDAO coincubatorDAO = new CoincubatorDAO();
         String method = httpExchange.getRequestMethod();
         System.out.println(method);
 
@@ -51,8 +48,7 @@ public class AddCoincubatorHandler implements HttpHandler {
             JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentor/add-coincubator.twig");
             JtwigModel model = JtwigModel.newModel();
             response = template.render(model);
-//             TODO waiting for refactored methods
-//            coincubatorService.addNewCoincubator(new Coincubator(inputs.get("name").toString(), inputs.get("description").toString(), Integer.parseInt(inputs.get("targetdonation").toString())));
+            coincubatorDAO.addCoincubator(new Coincubator(inputs.get("name").toString(), inputs.get("description").toString(), Integer.parseInt(inputs.get("targetdonation").toString()), true));
         }
         httpExchange.sendResponseHeaders(200, response.length());
         OutputStream os = httpExchange.getResponseBody();

@@ -98,14 +98,14 @@ public class CoincubatorDAO {
         }
     }
 
-    public void deleteCoincubator(Coincubator coincubator) {
+    public void deleteCoincubator(int id) {
         PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
         String orderForSql = ("UPDATE coincubators SET is_active = ? WHERE id = ?");
 
         try {
             preparedStatement = postgreSQLJDBC.connect().prepareStatement(orderForSql);
-            preparedStatement.setBoolean(1, coincubator.isActive());
-            preparedStatement.setInt(2, coincubator.getId());
+            preparedStatement.setBoolean(1, false);
+            preparedStatement.setInt(2, id);
 
 
             preparedStatement.executeUpdate();

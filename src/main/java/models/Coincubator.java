@@ -47,6 +47,14 @@ public class Coincubator {
         this.currentDonation = 0;
         this.targetDonation = targetDonation;
     }
+    public Coincubator(String name, String description, int targetDonation, boolean isActive){
+        this.name = name;
+        this.description = description;
+        this.currentDonation = 0;
+        this.targetDonation = targetDonation;
+        this.isActive = isActive;
+    }
+
     public int getId() {
         return id;
     }

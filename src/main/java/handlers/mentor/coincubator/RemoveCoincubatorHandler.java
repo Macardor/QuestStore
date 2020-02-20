@@ -1,8 +1,10 @@
 package handlers.mentor.coincubator;
 
+import DAO.CoincubatorDAO;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import helpers.CookieHandler;
+import models.Coincubator;
 import models.Quest;
 import models.User;
 import org.jtwig.JtwigModel;
@@ -28,8 +30,9 @@ public class RemoveCoincubatorHandler implements HttpHandler {
             httpExchange.sendResponseHeaders(303, 0);
         }
         CoincubatorService coincubatorService = new CoincubatorService();
+        CoincubatorDAO coincubatorDAO = new CoincubatorDAO();
         String method = httpExchange.getRequestMethod();
-        List<Quest> coincubatorList = null;// = coincubatorService.showAllCoincubators();
+        List<Coincubator> coincubatorList = coincubatorService.getAllCoincubators(coincubatorDAO.getAllCoincubatorsFromDb());
         String response = "";
 
 
@@ -51,8 +54,7 @@ public class RemoveCoincubatorHandler implements HttpHandler {
             JtwigModel model = JtwigModel.newModel();
             model.with("coincubatorList", coincubatorList);
             response = template.render(model);
-//             TODO waiting for refactored method
-//            coincubatorService.deleteCoincubatorById(Integer.parseInt(inputs.get("coincubatorId").toString()));
+            coincubatorDAO.deleteCoincubator(Integer.parseInt(inputs.get("coincubatorId").toString()));
 
             httpExchange.getResponseHeaders().set("Location", "/mentor/remove-coincubator" );
             httpExchange.sendResponseHeaders(303,0);
